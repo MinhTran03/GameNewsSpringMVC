@@ -4,15 +4,15 @@ import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.springmvc.dao.DAOBase;
+import com.springmvc.dao.PostContentDAO;
 import com.springmvc.models.PostContent;
 
 @Service
 @Transactional
-public class PostContentServiceImpl implements ServiceBase<PostContent>{
+public class PostContentServiceImpl implements PostContentService{
 
 	@Autowired
-	DAOBase<PostContent> postContentDAOBase;
+	PostContentDAO postContentDAO;
 	
 	@Override
 	public List<PostContent> getAll() {
@@ -23,7 +23,7 @@ public class PostContentServiceImpl implements ServiceBase<PostContent>{
 	@Override
 	public PostContent getById(int id) {
 		// TODO Auto-generated method stub
-		return postContentDAOBase.getById(id);
+		return postContentDAO.getById(id);
 	}
 
 	@Override

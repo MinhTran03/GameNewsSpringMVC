@@ -11,7 +11,7 @@ import com.springmvc.entities.*;
 import com.springmvc.models.*;
 
 @Repository
-public class TopicDAOImpl implements DAOBase<Topic> {
+public class TopicDAOImpl implements TopicDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;

@@ -14,7 +14,7 @@ public class Comment {
 	
 	private int postId;
 	
-	private int readerId;
+	private int userId;
 
 	public int getCommentId() {
 		return commentId;
@@ -56,12 +56,12 @@ public class Comment {
 		this.postId = postId;
 	}
 
-	public int getReaderId() {
-		return readerId;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setReaderId(int readerId) {
-		this.readerId = readerId;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	
 }

@@ -3,7 +3,7 @@ package com.springmvc.dao;
 import java.util.List;
 import com.springmvc.models.*;
 
-public interface PostDAO {
+public interface PostDAO extends DAOBase<Post> {
 
 	public List<Post> getTopNewest(int top, int topicId);
 	

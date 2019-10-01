@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.springmvc.models.Comment;
 
 @Repository
-public class CommentDAOImpl implements DAOBase<Comment>{
+public class CommentDAOImpl implements CommentDAO{
 
 	@Override
 	public List<Comment> getAll() {

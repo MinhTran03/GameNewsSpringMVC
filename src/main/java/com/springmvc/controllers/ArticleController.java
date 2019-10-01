@@ -2,7 +2,6 @@ package com.springmvc.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -14,26 +13,19 @@ import com.springmvc.services.*;
 public class ArticleController {
 	
 	@Autowired
-	@Qualifier("postServiceImpl")
-	ServiceBase<Post> postServiceBase;
+	PostService postService;
 	
 	@Autowired
-	@Qualifier("authorServiceImpl")
-	ServiceBase<Author> authorServiceBase;
+	UserService userService;
 	
 	@Autowired
-	@Qualifier("postContentServiceImpl")
-	ServiceBase<PostContent> postContentServiceBase;
+	PostContentService postContentService;
 	
 	@Autowired
-	@Qualifier("topicServiceImpl")
-	ServiceBase<Topic> topicServiceBase;
+	TopicService topicServiceBase;
 	
 	@Autowired
 	TagService tagService;
-	
-	@Autowired
-	AuthorService authorService;
 	
 	@ModelAttribute(name = "listTopic")
 	public List<Topic> getListTopic(){
@@ -45,10 +37,10 @@ public class ArticleController {
 	@RequestMapping(value = "/{shortTitle:[a-zA-z0-9-]+}/{postId}")
 	public String showPost(@PathVariable("postId") int postId, ModelMap model) {
 		
-		Post post = postServiceBase.getById(postId);
-		PostContent postContent = postContentServiceBase.getById(post.getPostContentId());
+		Post post = postService.getById(postId);
+		PostContent postContent = postContentService.getById(post.getPostContentId());
 		Topic topic = topicServiceBase.getById(post.getTopicId());
-		String authorName = authorService.getFullName(post.getAuthorId());
+		String authorName = userService.getFullName(post.getUserId());
 		List<Tag> listTag = tagService.getByPostId(postId);
 		
 		model.addAttribute("post", post);

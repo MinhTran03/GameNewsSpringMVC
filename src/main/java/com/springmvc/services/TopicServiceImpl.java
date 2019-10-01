@@ -9,7 +9,7 @@ import com.springmvc.models.*;
 
 @Service
 @Transactional
-public class TopicServiceImpl implements ServiceBase<Topic> {
+public class TopicServiceImpl implements TopicService{
 
 	@Autowired
 	DAOBase<Topic> topicDAO;

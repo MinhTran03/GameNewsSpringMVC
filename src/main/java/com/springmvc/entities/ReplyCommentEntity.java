@@ -28,16 +28,16 @@ public class ReplyCommentEntity {
 	private CommentEntity comment;
 	
 	@ManyToOne
-	@JoinColumn(name = "reader_id")
-	private ReaderEntity reader;
+	@JoinColumn(name = "user_id")
+	private UserEntity user;
 	
 	//-------------------------------------------------------
 	
-	public ReaderEntity getReader() {
-		return reader;
+	public UserEntity getUser() {
+		return user;
 	}
-	public void setReader(ReaderEntity reader) {
-		this.reader = reader;
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 	public CommentEntity getComment() {
 		return comment;

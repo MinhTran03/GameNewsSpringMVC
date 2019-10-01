@@ -30,8 +30,8 @@ public class CommentEntity {
 	private PostEntity post;
 	
 	@ManyToOne
-	@JoinColumn(name = "reader_id")
-	private ReaderEntity reader;
+	@JoinColumn(name = "user_id")
+	private UserEntity user;
 	
 	@OneToMany(mappedBy = "comment")
 	private Set<ReplyCommentEntity> replyComments;
@@ -44,11 +44,11 @@ public class CommentEntity {
 	public void setReplyComments(Set<ReplyCommentEntity> replyComments) {
 		this.replyComments = replyComments;
 	}
-	public ReaderEntity getReader() {
-		return reader;
+	public UserEntity getUser() {
+		return user;
 	}
-	public void setReader(ReaderEntity reader) {
-		this.reader = reader;
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 	public PostEntity getPost() {
 		return post;

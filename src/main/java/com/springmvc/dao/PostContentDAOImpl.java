@@ -11,7 +11,7 @@ import com.springmvc.entities.PostContentEntity;
 import com.springmvc.models.*;
 
 @Repository
-public class PostContentDAOImpl implements DAOBase<PostContent>{
+public class PostContentDAOImpl implements PostContentDAO{
 
 	@Autowired
 	private SessionFactory sessionFactory;

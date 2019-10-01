@@ -6,7 +6,7 @@ import javax.transaction.Transactional;
 import com.springmvc.models.ReplyComment;
 
 @Service
-public class ReplyCommentServiceImpl implements ServiceBase<ReplyComment> {
+public class ReplyCommentServiceImpl implements ReplyCommentService {
 
 	@Override
 	@Transactional

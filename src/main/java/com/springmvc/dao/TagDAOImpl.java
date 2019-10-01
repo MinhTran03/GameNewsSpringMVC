@@ -13,7 +13,7 @@ import com.springmvc.entities.*;
 import com.springmvc.models.*;
 
 @Repository
-public class TagDAOImpl implements DAOBase<Tag>, TagDAO {
+public class TagDAOImpl implements TagDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;

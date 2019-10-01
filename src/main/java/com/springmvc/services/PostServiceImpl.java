@@ -4,20 +4,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-
-import com.springmvc.dao.DAOBase;
 import com.springmvc.dao.PostDAO;
 import com.springmvc.models.*;
 
 @Service
 @Transactional
-public class PostServiceImpl implements ServiceBase<Post>, PostService {
+public class PostServiceImpl implements PostService {
 
 	@Autowired
 	PostDAO postDAO;
 	
-	@Autowired
-	DAOBase<Post> postDAOBase;
+	//@Autowired
+	//DAOBase<Post> postDAOBase;
 	
 	@Override
 	public List<Post> getAll() {
@@ -27,7 +25,7 @@ public class PostServiceImpl implements ServiceBase<Post>, PostService {
 
 	@Override
 	public Post getById(int id) {
-		return postDAOBase.getById(id);
+		return postDAO.getById(id);
 	}
 
 	@Override
@@ -50,7 +48,6 @@ public class PostServiceImpl implements ServiceBase<Post>, PostService {
 
 	@Override
 	public List<Post> getTopNewest(int top, int topicId) {
-		// TODO Auto-generated method stub
 		return postDAO.getTopNewest(top, topicId);
 	}
 

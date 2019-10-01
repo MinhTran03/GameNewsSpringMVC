@@ -10,7 +10,7 @@ import com.springmvc.models.*;
 
 @Service
 @Transactional
-public class TagServiceImpl implements ServiceBase<Tag>, TagService {
+public class TagServiceImpl implements TagService {
 
 	@Autowired
 	DAOBase<Tag> tagDAOBase;

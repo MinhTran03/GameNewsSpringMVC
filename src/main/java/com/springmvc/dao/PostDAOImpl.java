@@ -14,7 +14,7 @@ import com.springmvc.entities.*;
 import com.springmvc.models.*;
 
 @Repository
-public class PostDAOImpl implements DAOBase<Post>, PostDAO {
+public class PostDAOImpl implements PostDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -73,7 +73,7 @@ public class PostDAOImpl implements DAOBase<Post>, PostDAO {
 			
 			@SuppressWarnings("unchecked")
 			List<PostEntity> listPOE = (List<PostEntity>) spQuery.getResultList();
-
+			
 			for (int i = 0; i < listPOE.size(); i++) {
 				Post post = new Post();
 				post.entity2model(listPOE.get(i));

@@ -3,7 +3,6 @@ package com.springmvc.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,22 +17,13 @@ public class TopicController {
 	public final int MAX_POST_PER_PAGE = 10;
 	
 	@Autowired
-	@Qualifier("topicServiceImpl")
-	ServiceBase<Topic> topicServiceBase;
-
-	@Autowired
-	@Qualifier("postServiceImpl")
-	ServiceBase<Post> postServiceBase;
-
-	@Autowired
-	@Qualifier("authorServiceImpl")
-	ServiceBase<Author> authorServiceBase;
+	TopicService topicService;
 
 	@Autowired
 	PostService postService;
 
 	@Autowired
-	AuthorService authorService;
+	UserService userService;
 
 //	@ModelAttribute(name = "listTopic")
 //	public List<Topic> getListTopic() {
@@ -61,7 +51,7 @@ public class TopicController {
 	public String home(ModelMap model, @PathVariable("topicName") String topicName) {
 
 		// Topic taskbar
-		List<Topic> listTopic = topicServiceBase.getAll();
+		List<Topic> listTopic = topicService.getAll();
 		model.addAttribute("listTopic", listTopic);
 
 		// Map topicName to topicId
@@ -82,17 +72,17 @@ public class TopicController {
 
 			List<String> topAuthorName = new ArrayList<>();
 			for (int i = 0; i < topNPost.size(); i++) {
-				topAuthorName.add(authorService.getFullName(topNPost.get(i).getAuthorId()));
+				topAuthorName.add(userService.getFullName(topNPost.get(i).getUserId()));
 			}
 			model.addAttribute("topAuthorName", topAuthorName);
-
+			
 			// Page post
 			List<Post> listPost = postService.getInRange(3, MAX_POST_PER_PAGE, topicId);
 			model.addAttribute("listPost", listPost);
-
+			
 			List<String> listAuthorName = new ArrayList<>();
 			for (int i = 0; i < listPost.size(); i++) {
-				listAuthorName.add(authorService.getFullName(listPost.get(i).getAuthorId()));
+				listAuthorName.add(userService.getFullName(listPost.get(i).getUserId()));
 			}
 			model.addAttribute("listAuthorName", listAuthorName);
 		}
