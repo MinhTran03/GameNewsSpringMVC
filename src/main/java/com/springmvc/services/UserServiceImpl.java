@@ -27,9 +27,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean save(UserInfo entity) {
+	public int save(UserInfo entity) {
 		// TODO Auto-generated method stub
-		return false;
+		return -1;
 	}
 
 	@Override
@@ -54,6 +54,12 @@ public class UserServiceImpl implements UserService {
 	public List<Role> checkLogin(String email, String password) {
 		// TODO Auto-generated method stub
 		return userDAO.checkLogin(email, password);
+	}
+
+	@Override
+	public int getIdByEmail(String email) {
+		// TODO Auto-generated method stub
+		return userDAO.getIdByEmail(email);
 	}
 
 }

@@ -36,9 +36,11 @@ public class LoginController {
 			model.addAttribute("message", "Login fail");
 			return "login/login-page";
 		}else {
-			id = 1;
+			loggingIn = true;
 			userName = username;
 			roles = listRole;
+			id = userService.getIdByEmail(username);
+			System.out.println(id);
 			
 			listRole.forEach(item -> {
 				System.out.println(item.getRoleId());

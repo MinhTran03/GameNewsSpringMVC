@@ -20,9 +20,9 @@ public class ReplyCommentDAOImpl implements ReplyCommentDAO {
 	}
 
 	@Override
-	public boolean save(ReplyComment entity) {
+	public int save(ReplyComment entity) {
 		// TODO Auto-generated method stub
-		return false;
+		return -1;
 	}
 
 	@Override

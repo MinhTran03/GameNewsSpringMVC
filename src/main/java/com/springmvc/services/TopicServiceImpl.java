@@ -27,9 +27,9 @@ public class TopicServiceImpl implements TopicService{
 	}
 
 	@Override
-	public boolean save(Topic entity) {
+	public int save(Topic entity) {
 		// TODO Auto-generated method stub
-		return false;
+		return -1;
 	}
 
 	@Override

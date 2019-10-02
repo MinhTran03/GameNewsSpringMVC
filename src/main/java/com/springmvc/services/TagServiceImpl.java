@@ -4,7 +4,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.springmvc.dao.DAOBase;
 import com.springmvc.dao.TagDAO;
 import com.springmvc.models.*;
 
@@ -13,14 +12,11 @@ import com.springmvc.models.*;
 public class TagServiceImpl implements TagService {
 
 	@Autowired
-	DAOBase<Tag> tagDAOBase;
-	
-	@Autowired
 	TagDAO tagDAO;
 	
 	@Override
 	public List<Tag> getAll() {
-		return tagDAOBase.getAll();
+		return tagDAO.getAll();
 	}
 
 	@Override
@@ -30,9 +26,9 @@ public class TagServiceImpl implements TagService {
 	}
 
 	@Override
-	public boolean save(Tag entity) {
+	public int save(Tag entity) {
 		// TODO Auto-generated method stub
-		return false;
+		return tagDAO.save(entity);
 	}
 
 	@Override

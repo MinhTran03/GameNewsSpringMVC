@@ -43,7 +43,15 @@ p,
 .navbar-inverse .navbar-nav .nav-link,
 .header .dropdown-menu,
 .navbar-nav .nav-link {
-    font-family: 'Roboto', serif;
+    font-family: -apple-system,".SFNSText-Regular",BlinkMacSystemFont,"San Francisco","Roboto","Segoe UI","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue","Helvetica","Lucida Grande",sans-serif;
+    /* font-family: "ArgumentumBold","Franklin Gothic Medium","Arial Narrow Bold","Helvetica Neue",Arial,sans-serif;
+    font-weight: normal;
+    font-style: normal; */
+}
+
+.blog-content p,
+.blog-content ul li{
+	font-size: 18px;
 }
 
 .navbar{

@@ -9,4 +9,6 @@ public interface UserService extends ServiceBase<UserInfo> {
 	public String getFullName(int id);
 	
 	public List<Role> checkLogin(String email, String password);
+	
+	public int getIdByEmail(String email);
 }

@@ -11,6 +11,15 @@ public class PostContent {
 	private int upvote;
 	
 	private String content;
+	
+	public static PostContent NewPostContent(String content) {
+		PostContent p = new PostContent();
+		p.setCommentCount(0);
+		p.setContent(content);
+		p.setUpvote(0);
+		p.setPostContentId(0);
+		return p;
+	}
 
 	public int getPostContentId() {
 		return postContentId;

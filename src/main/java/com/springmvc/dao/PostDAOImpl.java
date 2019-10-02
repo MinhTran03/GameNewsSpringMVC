@@ -1,10 +1,9 @@
 package com.springmvc.dao;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.ParameterMode;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.procedure.ProcedureCall;
@@ -43,9 +42,28 @@ public class PostDAOImpl implements PostDAO {
 	}
 
 	@Override
-	public boolean save(Post entity) {
-		// TODO Auto-generated method stub
-		return false;
+	public int save(Post entity) {
+		int result = -1;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+			ProcedureCall spQuery = session.createStoredProcedureCall("sp_Post_insert");
+			spQuery.registerParameter("topicId", Integer.class, ParameterMode.IN).bindValue(entity.getTopicId());
+			spQuery.registerParameter("contentId", Integer.class, ParameterMode.IN).bindValue(entity.getPostContentId());
+			spQuery.registerParameter("title", String.class, ParameterMode.IN).bindValue(entity.getTitle());
+			spQuery.registerParameter("description", String.class, ParameterMode.IN).bindValue(entity.getDescription());
+			spQuery.registerParameter("image", String.class, ParameterMode.IN).bindValue(entity.getImage());
+			spQuery.registerParameter("views", Integer.class, ParameterMode.IN).bindValue(entity.getViews());
+			spQuery.registerParameter("time", LocalDate.class, ParameterMode.IN).bindValue(entity.getTime());
+			spQuery.registerParameter("shortTitle", String.class, ParameterMode.IN).bindValue(entity.getShortTitle());
+			spQuery.registerParameter("userId", Integer.class, ParameterMode.IN).bindValue(entity.getUserId());
+			
+			result = (int)spQuery.getResultList().get(0);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
@@ -113,6 +131,24 @@ public class PostDAOImpl implements PostDAO {
 		}
 
 		return listPost;
+	}
+
+	@Override
+	public boolean saveTags(int postId, int tagId) {
+		try {
+			Session session = sessionFactory.getCurrentSession();
+
+			ProcedureCall spQuery = session.createStoredProcedureCall("sp_TagPost_insert");
+			spQuery.registerParameter("postId", Integer.class, ParameterMode.IN).bindValue(postId);
+			spQuery.registerParameter("tagId", Integer.class, ParameterMode.IN).bindValue(tagId);
+			
+			spQuery.execute();
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 }

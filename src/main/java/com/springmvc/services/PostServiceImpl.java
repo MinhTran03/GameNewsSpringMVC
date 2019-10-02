@@ -14,9 +14,6 @@ public class PostServiceImpl implements PostService {
 	@Autowired
 	PostDAO postDAO;
 	
-	//@Autowired
-	//DAOBase<Post> postDAOBase;
-	
 	@Override
 	public List<Post> getAll() {
 		// TODO Auto-generated method stub
@@ -29,9 +26,9 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public boolean save(Post entity) {
+	public int save(Post entity) {
 		// TODO Auto-generated method stub
-		return false;
+		return postDAO.save(entity);
 	}
 
 	@Override
@@ -54,6 +51,12 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<Post> getInRange(int skip, int take, int topicId) {
 		return postDAO.getInRange(skip, take, topicId);
+	}
+
+	@Override
+	public boolean saveTags(int postId, int tagId) {
+		// TODO Auto-generated method stub
+		return postDAO.saveTags(postId, tagId);
 	}
 
 }

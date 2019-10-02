@@ -24,9 +24,9 @@ public class ReplyCommentServiceImpl implements ReplyCommentService {
 
 	@Override
 	@Transactional
-	public boolean save(ReplyComment entity) {
+	public int save(ReplyComment entity) {
 		// TODO Auto-generated method stub
-		return false;
+		return -1;
 	}
 
 	@Override

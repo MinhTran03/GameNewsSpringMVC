@@ -6,6 +6,8 @@ import com.springmvc.entities.PostEntity;
 
 public class Post {
 
+	public static int shortTitleLength = 40;
+	
 	private int postId;
 	
 	private int userId;
@@ -25,6 +27,24 @@ public class Post {
 	private LocalDate time;
 	
 	private String shortTitle;
+	
+	public static Post NewPost(String title, String description, int userId, int topicId, int postContentId, String imagePath) {
+		Post p = new Post();
+		p.setDescription(description);
+		p.setPostContentId(postContentId);
+		p.setImage(imagePath);
+		p.setTitle(title);
+		p.setUserId(userId);
+		p.setTopicId(topicId);
+		
+		p.setViews(0);
+		p.setTime(LocalDate.now());
+		p.setShortTitle(title.toLowerCase().
+								substring(0, title.length() < shortTitleLength ? title.length() : shortTitleLength).
+								replaceAll("[ \"]", "-"));
+		
+		return p;
+	}
 	
 	public int getPostId() {
 		return postId;

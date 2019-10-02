@@ -5,12 +5,13 @@ import java.util.List;
 import com.springmvc.models.Role;
 
 public class CurrentLogin {
-	public static int id = -1;
+	public static boolean loggingIn = false;
 	public static String userName = null;
 	public static List<Role> roles = null;
+	public static int id = -1;
 	
 	public static String isLogin() {
-		if(id == -1) {
+		if(loggingIn == false) {
 			return "redirect:/login/";
 		}
 		return "";

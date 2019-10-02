@@ -3,11 +3,8 @@ package com.springmvc.dao;
 import com.springmvc.entities.*;
 import com.springmvc.models.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.persistence.ParameterMode;
-import javax.persistence.TypedQuery;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.procedure.ProcedureCall;
@@ -45,9 +42,9 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean save(UserInfo entity) {
+	public int save(UserInfo entity) {
 		// TODO Auto-generated method stub
-		return false;
+		return -1;
 	}
 
 	@Override
@@ -96,12 +93,6 @@ public class UserDAOImpl implements UserDAO {
 			@SuppressWarnings("unchecked")
 			List<RoleEntity> listRE = (List<RoleEntity>)spQuery.getResultList();
 			
-//			TypedQuery<RoleEntity> lQuery = session.createQuery("exec sp_User_checkLogin", RoleEntity.class);
-//			lQuery.setParameter("email", email);
-//			lQuery.setParameter("password", password);
-//			
-//			List<RoleEntity> listRE = lQuery.getResultList();
-			
 			for (int i = 0; i < listRE.size(); i++) {
 				Role role = new Role();
 				role.entity2model(listRE.get(i));
@@ -110,8 +101,26 @@ public class UserDAOImpl implements UserDAO {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			roles = null;
 		}
 		return roles;
+	}
+
+	@Override
+	public int getIdByEmail(String email) {
+		int id = -1;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+
+			ProcedureCall spQuery = session.createStoredProcedureCall("sp_User_getIdByEmail");
+			spQuery.registerParameter("email", String.class, ParameterMode.IN).bindValue(email);
+
+			id = (int)spQuery.getResultList().get(0);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			id = -1;
+		}
+		return id;
 	}
 }

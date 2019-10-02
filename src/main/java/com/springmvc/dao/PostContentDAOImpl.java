@@ -41,9 +41,24 @@ public class PostContentDAOImpl implements PostContentDAO{
 	}
 
 	@Override
-	public boolean save(PostContent entity) {
-		// TODO Auto-generated method stub
-		return false;
+	public int save(PostContent entity) {
+		int id = -1;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+			PostContentEntity p = new PostContentEntity();
+			p.setComment_count(entity.getCommentCount());
+			p.setContent(entity.getContent());
+			p.setUpvote(entity.getUpvote());
+			
+			session.save(p);
+			id = p.getPost_content_id();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			id = -1;
+		}
+		return id;
 	}
 
 	@Override

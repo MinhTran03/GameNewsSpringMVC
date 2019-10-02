@@ -6,45 +6,49 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Post page</title>
-
-<!-- Main Quill library -->
-<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
-<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<!-- Theme included stylesheets -->
-<link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-
-<%-- <link rel="stylesheet" href="<c:url value="/lib/author/css/quill.css" />"> --%>
-<link rel="stylesheet"
-	href="<c:url value="/lib/author/css/style.css" />">
-
-<link rel="stylesheet"
-	href="<c:url value="/lib/bootstrap/css/bootstrap.min.css" />">
-<script src="<c:url value="/lib/bootstrap/js/bootstrap.min.js" />"></script>
-
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-	integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-	crossorigin="anonymous">
+	<base href="${ pageContext.servletContext.contextPath }/" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Post page</title>
+	
+	<!-- Main Quill library -->
+	<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+	<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	
+	<!-- Theme included stylesheets -->
+	<link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+	
+	<%-- <link rel="stylesheet" href="<c:url value="/lib/author/css/quill.css" />"> --%>
+	<link rel="stylesheet"
+		href="<c:url value="/lib/author/css/style.css" />">
+	
+	<link rel="stylesheet"
+		href="<c:url value="/lib/bootstrap/css/bootstrap.min.css" />">
+	<script src="<c:url value="/lib/bootstrap/js/bootstrap.min.js" />"></script>
+	
+	<link rel="stylesheet"
+		href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+		integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+		crossorigin="anonymous">
 </head>
 
 <body>
 
-	<form action="create-post" method="post">
+	<form action="author/demo-post" method="post" enctype="multipart/form-data">
 
 		<div class="row">
 			<div class="post col-md-9">
 				<p class="title">Add New Post</p>
 				<div class="post-title">
-					<input name="title" class="title-content" type="text"
-						placeholder="Enter title here">
+					<input name="title" class="title-content" type="text" placeholder="Enter title here">
 				</div>
+				<!-- <p class="title">Add Description</p> -->
+	         <div class="post-description">
+	            <input name="description" class="description-content" type="text" placeholder="Enter description here">
+	         </div>
 				<p class="title">Content</p>
 				<div class="post-content">
 					<div id="toolbar"></div>
@@ -67,6 +71,10 @@
 						</select>
 					</div>
 				</div>
+				<div class="image-header">
+	            <p class="title">Pick a image</p>
+	            <input name="imageHeader" type="file" />
+	         </div>
 				<div class="tag-container">
 					<p class="title">Add tag</p>
 					<div class="new-tag">

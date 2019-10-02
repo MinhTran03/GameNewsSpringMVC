@@ -38,9 +38,15 @@ select{
 	padding-bottom: 0 !important;
 }
 
+.post-description{
+   margin-top: 10px;
+}
+
 .post-title,
 .title-content,
+.description-content,
 .topic-select,
+.post-description,
 table{
    width: 100%;
    height: 100%;
@@ -48,6 +54,7 @@ table{
 
 .form-control,
 .post-title,
+.post-description,
 .btn-outline-secondary{
    height: 35px !important;
 }
@@ -56,7 +63,8 @@ table{
    font-size: 16px;
 }
 
-.title-content{
+.title-content,
+.description-content{
    border: 1px solid #ccc;
    box-sizing: border-box;
    padding: 12px 15px;

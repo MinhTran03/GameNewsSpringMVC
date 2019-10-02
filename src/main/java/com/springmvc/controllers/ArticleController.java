@@ -34,7 +34,7 @@ public class ArticleController {
 		return listTopic;
 	}
 	
-	@RequestMapping(value = "/{shortTitle:[a-zA-z0-9-]+}/{postId}")
+	@RequestMapping(value = "/{shortTitle:[\\w\\W]+}/{postId}")
 	public String showPost(@PathVariable("postId") int postId, ModelMap model) {
 		
 		Post post = postService.getById(postId);

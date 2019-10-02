@@ -48,9 +48,22 @@ public class TagDAOImpl implements TagDAO {
 	}
 
 	@Override
-	public boolean save(Tag entity) {
-		// TODO Auto-generated method stub
-		return false;
+	public int save(Tag entity) {
+		int id = -1;
+		
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+			ProcedureCall spQuery = session.createStoredProcedureCall("sp_Tag_insert");
+			spQuery.registerParameter("name", String.class, ParameterMode.IN).bindValue(entity.getName());
+			
+			id = (int)spQuery.getResultList().get(0);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return id;
 	}
 
 	@Override

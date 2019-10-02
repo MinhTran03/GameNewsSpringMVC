@@ -20,9 +20,9 @@ public class CommentDAOImpl implements CommentDAO{
 	}
 
 	@Override
-	public boolean save(Comment entity) {
+	public int save(Comment entity) {
 		// TODO Auto-generated method stub
-		return false;
+		return -1;
 	}
 
 	@Override
