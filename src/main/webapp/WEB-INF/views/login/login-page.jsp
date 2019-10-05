@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	isELIgnored="false" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +28,11 @@
 	<!-- //web font -->
 	
 	<base href="${ pageContext.servletContext.contextPath }/" />
+	<style>
+      .error{
+         color: red;
+      }
+   </style>
 </head>
 <body>
 
@@ -39,14 +45,16 @@
 					<span class="fa fa-eercast"></span>
 				</div>
 				<div class="header-left-bottom">
-					<form name="f" action="login/check" method="POST">
+					<form:form name="f" modelAttribute="userLogin" action="login/check" method="POST">
 						<div class="icon1">
 							<span class="fa fa-user"></span>
-							<input name="username" type="email" placeholder="Email Address" required=""/>
+							<form:input path="email" type="email" placeholder="Email Address" required=""/>
+							<form:errors path="email" cssClass="error" />
 						</div>
 						<div class="icon1">
 							<span class="fa fa-lock"></span>
-							<input name="password" type="password" placeholder="Password" required=""/>
+							<form:input path="password" type="password" placeholder="Password" required=""/>
+							<form:errors path="password" cssClass="error" />
 						</div>
 						<div class="login-check">
 							 <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i> Keep me logged in</label>
@@ -59,7 +67,7 @@
 							<p class="right"><a href="#">New User? Register</a></p>
 							<div class="clear"></div>
 						</div>
-					</form>	
+					</form:form>	
 				</div>
 				<div class="social">
 					<ul>

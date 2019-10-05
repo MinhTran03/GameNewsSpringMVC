@@ -10,4 +10,8 @@ public interface PostDAO extends DAOBase<Post> {
 	public List<Post> getInRange(int skip, int take, int topicId);
 	
 	public boolean saveTags(int postId, int tagId);
+	
+	public int count(int topicId);
+	
+	public int saveWithContent(Post post, String postContent);
 }

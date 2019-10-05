@@ -1,32 +1,38 @@
 package com.springmvc.models;
 
 import java.time.LocalDate;
+
+import javax.validation.constraints.NotBlank;
+
 import com.springmvc.entities.UserEntity;
 
 public class UserInfo {
 	
 	private int userId;
-	
 	private String address;
-	
 	private LocalDate birthday;
 	
+	@NotBlank(message = "Please enter your email")
 	private String email;
 	
 	private String firstName;
-	
 	private String lastName;
-	
 	private String image;
-	
 	private String phoneNumber;
-	
 	private LocalDate registrationDay;
-	
 	private int totalPost;
 	
+	@NotBlank(message = "Password is requied")
 	private String password;
 
+	public UserInfo() {
+		super();
+	}
+
+	public String getFullName() {
+		return this.getFirstName() + " " + this.getLastName();
+	}
+	
 	public String getPassword() {
 		return password;
 	}
@@ -114,6 +120,7 @@ public class UserInfo {
 	public void setTotalPost(int totalPost) {
 		this.totalPost = totalPost;
 	}
+	
 	public void entity2model(UserEntity entity) {
 		this.setAddress(entity.getAddress());
 		this.setUserId(entity.getUser_id());
@@ -125,5 +132,12 @@ public class UserInfo {
 		this.setPhoneNumber(entity.getPhone_number());
 		this.setRegistrationDay(entity.getRegistration_day());
 		this.setTotalPost(entity.getTotal_post());
+	}
+	
+	public void entity2modelMode(UserEntity entity) {
+		this.setUserId(entity.getUser_id());
+		this.setFirstName(entity.getFirst_name());
+		this.setImage(entity.getImage());
+		this.setLastName(entity.getLast_name());
 	}
 }

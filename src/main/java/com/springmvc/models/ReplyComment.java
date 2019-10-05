@@ -1,6 +1,6 @@
 package com.springmvc.models;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ReplyComment {
 	
@@ -10,7 +10,7 @@ public class ReplyComment {
 	
 	private int like;
 	
-	private LocalDate time;
+	private LocalDateTime time;
 	
 	private int commentId;
 	
@@ -48,11 +48,11 @@ public class ReplyComment {
 		this.like = like;
 	}
 
-	public LocalDate getTime() {
+	public LocalDateTime getTime() {
 		return time;
 	}
 
-	public void setTime(LocalDate time) {
+	public void setTime(LocalDateTime time) {
 		this.time = time;
 	}
 

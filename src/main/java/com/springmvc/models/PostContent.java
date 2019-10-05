@@ -1,5 +1,7 @@
 package com.springmvc.models;
 
+import javax.validation.constraints.NotNull;
+
 import com.springmvc.entities.PostContentEntity;
 
 public class PostContent {
@@ -10,15 +12,30 @@ public class PostContent {
 	
 	private int upvote;
 	
+	@NotNull(message = "Content can not empty")
 	private String content;
 	
-	public static PostContent NewPostContent(String content) {
+	private int postId;
+	
+	public PostContent() {
+		super();
+		this.postContentId = 0;
+		this.commentCount = 0;
+		this.upvote = 0;
+	}
+
+	public static PostContent newPostContent(String content) {
 		PostContent p = new PostContent();
-		p.setCommentCount(0);
 		p.setContent(content);
-		p.setUpvote(0);
-		p.setPostContentId(0);
 		return p;
+	}
+
+	public int getPostId() {
+		return postId;
+	}
+
+	public void setPostId(int postId) {
+		this.postId = postId;
 	}
 
 	public int getPostContentId() {

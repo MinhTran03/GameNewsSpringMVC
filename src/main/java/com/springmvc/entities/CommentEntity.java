@@ -1,9 +1,19 @@
 package com.springmvc.entities;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.springmvc.models.Comment;
 
 @Entity
 @Table(name = "Comment")
@@ -21,7 +31,7 @@ public class CommentEntity {
 	private int like;
 	
 	@Column(nullable = false)
-	private LocalDate time;
+	private LocalDateTime time;
 	
 	//-------------------------------------------------------------
 	
@@ -37,6 +47,24 @@ public class CommentEntity {
 	private Set<ReplyCommentEntity> replyComments;
 	
 	//-------------------------------------------------------------
+	
+	public static CommentEntity newEntity(Comment comment) {
+		
+		CommentEntity entity = new CommentEntity();
+		
+		entity.comment_id = comment.getCommentId();
+		entity.content = comment.getContent();
+		entity.like = comment.getLike();
+		PostEntity p = new PostEntity();
+		p.setPost_id(comment.getPostId());
+		entity.post = p;
+		entity.time = comment.getTime();
+		UserEntity u = new UserEntity();
+		u.setUser_id(comment.getUserId());
+		entity.user = u;
+		
+		return entity;
+	}
 	
 	public Set<ReplyCommentEntity> getReplyComments() {
 		return replyComments;
@@ -74,10 +102,10 @@ public class CommentEntity {
 	public void setLike(int like) {
 		this.like = like;
 	}
-	public LocalDate getTime() {
+	public LocalDateTime getTime() {
 		return time;
 	}
-	public void setTime(LocalDate time) {
+	public void setTime(LocalDateTime time) {
 		this.time = time;
 	}
 

@@ -7,6 +7,8 @@
 <head>
 	<title>Video Game News, Game News, Entertainment News - Game Sport</title>
 	<jsp:include page="../import/importHeader.jsp"></jsp:include>
+	<style type="text/css">
+	</style>
 </head>
 <body>
 	<div class="wrapper">
@@ -39,15 +41,10 @@
                               	<a href="tech-author.html" title="">by <c:out value="${ topAuthorName.get(0) }" /></a>
                              	</small>
                            </div>
-                           <!-- end meta -->
                         </div>
-                        <!-- end shadow-desc -->
                      </div>
-                     <!-- end shadow -->
                   </div>
-                  <!-- end post-media -->
                </div>
-               <!-- end first-side -->
 
                <div class="second-slot">
                   <div class="masonry-box post-media">
@@ -64,15 +61,10 @@
                                     <c:out value="${ topPost.get(1).stringTime }" /></a></small> <small><a
                                     href="tech-author.html" title="">by <c:out value="${ topAuthorName.get(1) }" /></a></small>
                            </div>
-                           <!-- end meta -->
                         </div>
-                        <!-- end shadow-desc -->
                      </div>
-                     <!-- end shadow -->
                   </div>
-                  <!-- end post-media -->
                </div>
-               <!-- end second-side -->
 
                <div class="last-slot">
                   <div class="masonry-box post-media">
@@ -89,18 +81,12 @@
                                     <c:out value="${ topPost.get(2).stringTime }" /></a></small> <small><a
                                     href="tech-author.html" title="">by <c:out value="${ topAuthorName.get(2) }" /></a></small>
                            </div>
-                           <!-- end meta -->
                         </div>
-                        <!-- end shadow-desc -->
                      </div>
-                     <!-- end shadow -->
                   </div>
-                  <!-- end post-media -->
                </div>
-               <!-- end second-side -->
 
             </div>
-            <!-- end masonry -->
          </div>
       </section>
 		<!-- ================================= End Section_1 ========================================== -->
@@ -124,7 +110,7 @@
 										
 											<div class="col-md-4">
 												<div class="post-media">
-													<a href="tech-single.html" title="">
+													<a href="${ rootName }/articles/<c:out value="${ post.shortTitle }" />/<c:out value="${ post.postId }" />" title="">
 														<img src="<c:url value="${ post.image }" />" alt="" class="img-fluid">
 														<div class="hovereffect"></div>
 													</a>
@@ -157,11 +143,11 @@
 							<div class="col-md-12">
 								<nav aria-label="Page navigation">
 									<ul class="pagination justify-content-start">
-										<li class="page-item"><a class="page-link" href="#">1</a></li>
-										<li class="page-item"><a class="page-link" href="#">2</a></li>
-										<li class="page-item"><a class="page-link" href="#">3</a></li>
-										<li class="page-item"><a class="page-link" href="#">Next</a>
-										</li>
+										<li class="page-item"><a class="page-link" href="#">Previous</a>
+											<c:forEach begin="0" end="${ pageCount }" varStatus="status">
+												<li class="page-item"><a class="page-link" href="${ rootName }/${ topic }/?page=${ status.index + 1 }">${ status.index + 1 }</a></li>
+											</c:forEach>
+										<li class="page-item"><a class="page-link" href="#">Next</a></li>
 									</ul>
 								</nav>
 							</div>
@@ -174,7 +160,7 @@
 							<div class="widget">
 								<div class="banner-spot clearfix">
 									<div class="banner-img">
-										<img src="upload/banner_07.jpg" alt="" class="img-fluid">
+										<img src="<c:url value="/lib/upload/banner_07.jpg" />" alt="" class="img-fluid">
 									</div>
 									<!-- end banner-img -->
 								</div>
@@ -188,7 +174,7 @@
 									<div class="blog-box">
 										<div class="post-media">
 											<a href="tech-single.html" title=""> <img
-												src="upload/tech_video_01.jpg" alt="" class="img-fluid">
+												src="<c:url value="/lib/upload/tech_video_01.jpg" />" alt="" class="img-fluid">
 												<div class="hovereffect">
 													<span class="videohover"></span>
 												</div> <!-- end hover -->
@@ -210,7 +196,7 @@
 									<div class="blog-box">
 										<div class="post-media">
 											<a href="tech-single.html" title=""> <img
-												src="upload/tech_video_02.jpg" alt="" class="img-fluid">
+												src="<c:url value="/lib/upload/tech_video_02.jpg" />" alt="" class="img-fluid">
 												<div class="hovereffect">
 													<span class="videohover"></span>
 												</div> <!-- end hover -->
@@ -232,7 +218,7 @@
 									<div class="blog-box">
 										<div class="post-media">
 											<a href="tech-single.html" title=""> <img
-												src="upload/tech_video_03.jpg" alt="" class="img-fluid">
+												src="<c:url value="/lib/upload/tech_video_03.jpg" />" alt="" class="img-fluid">
 												<div class="hovereffect">
 													<span class="videohover"></span>
 												</div> <!-- end hover -->
@@ -260,7 +246,7 @@
 										<a href="tech-single.html"
 											class="list-group-item list-group-item-action flex-column align-items-start">
 											<div class="w-100 justify-content-between">
-												<img src="upload/tech_blog_08.jpg" alt=""
+												<img src="<c:url value="/lib/upload/tech_blog_08.jpg" />" alt=""
 													class="img-fluid float-left">
 												<h5 class="mb-1">5 Beautiful buildings you need..</h5>
 												<small>12 Jan, 2016</small>
@@ -268,7 +254,7 @@
 										</a> <a href="tech-single.html"
 											class="list-group-item list-group-item-action flex-column align-items-start">
 											<div class="w-100 justify-content-between">
-												<img src="upload/tech_blog_01.jpg" alt=""
+												<img src="<c:url value="/lib/upload/tech_blog_01.jpg" />" alt=""
 													class="img-fluid float-left">
 												<h5 class="mb-1">Let's make an introduction for..</h5>
 												<small>11 Jan, 2016</small>
@@ -276,7 +262,7 @@
 										</a> <a href="tech-single.html"
 											class="list-group-item list-group-item-action flex-column align-items-start">
 											<div class="w-100 last-item justify-content-between">
-												<img src="upload/tech_blog_03.jpg" alt=""
+												<img src="<c:url value="/lib/upload/tech_blog_03.jpg" />" alt=""
 													class="img-fluid float-left">
 												<h5 class="mb-1">Did you see the most beautiful..</h5>
 												<small>07 Jan, 2016</small>
@@ -295,7 +281,7 @@
 										<a href="tech-single.html"
 											class="list-group-item list-group-item-action flex-column align-items-start">
 											<div class="w-100 justify-content-between">
-												<img src="upload/tech_blog_02.jpg" alt=""
+												<img src="<c:url value="/lib/upload/tech_blog_02.jpg" />" alt=""
 													class="img-fluid float-left">
 												<h5 class="mb-1">Banana-chip chocolate cake recipe..</h5>
 												<span class="rating"> <i class="fa fa-star"></i> <i
@@ -306,7 +292,7 @@
 										</a> <a href="tech-single.html"
 											class="list-group-item list-group-item-action flex-column align-items-start">
 											<div class="w-100 justify-content-between">
-												<img src="upload/tech_blog_03.jpg" alt=""
+												<img src="<c:url value="/lib/upload/tech_blog_03.jpg" />" alt=""
 													class="img-fluid float-left">
 												<h5 class="mb-1">10 practical ways to choose organic..</h5>
 												<span class="rating"> <i class="fa fa-star"></i> <i
@@ -317,7 +303,7 @@
 										</a> <a href="tech-single.html"
 											class="list-group-item list-group-item-action flex-column align-items-start">
 											<div class="w-100 last-item justify-content-between">
-												<img src="upload/tech_blog_07.jpg" alt=""
+												<img src="<c:url value="/lib/upload/tech_blog_07.jpg" />" alt=""
 													class="img-fluid float-left">
 												<h5 class="mb-1">We are making homemade ravioli..</h5>
 												<span class="rating"> <i class="fa fa-star"></i> <i
@@ -370,7 +356,7 @@
 							<div class="widget">
 								<div class="banner-spot clearfix">
 									<div class="banner-img">
-										<img src="upload/banner_03.jpg" alt="" class="img-fluid">
+										<img src="<c:url value="/lib/upload/banner_03.jpg" />" alt="" class="img-fluid">
 									</div>
 									<!-- end banner-img -->
 								</div>

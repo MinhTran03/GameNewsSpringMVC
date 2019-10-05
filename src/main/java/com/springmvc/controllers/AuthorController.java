@@ -1,7 +1,6 @@
 package com.springmvc.controllers;
 
-import static com.springmvc.models.Post.NewPost;
-import static com.springmvc.models.PostContent.NewPostContent;
+import static com.springmvc.models.PostContent.newPostContent;
 import static com.springmvc.util.CurrentLogin.id;
 import static com.springmvc.util.CurrentLogin.loggingIn;
 
@@ -11,8 +10,12 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,6 +49,19 @@ public class AuthorController {
 	@Autowired
 	ServletContext context;
 
+	// this will trim all data binder pass in
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		StringTrimmerEditor ste = new StringTrimmerEditor(true);
+		dataBinder.registerCustomEditor(String.class, ste);
+	}
+	
+	@ModelAttribute("listTopic")
+	public List<Topic> getTopics() {
+		List<Topic> listTopic = topicService.getAll();
+		return listTopic;
+	}
+	
 	@RequestMapping(value = "/post", method = RequestMethod.GET)
 	public String post(ModelMap model) {
 
@@ -53,37 +69,28 @@ public class AuthorController {
 			return "redirect:/login/";
 		}
 		
-		List<Tag> listTag = tagService.getAll();
-		model.addAttribute("listTag", listTag);
-
-		List<Topic> listTopic = topicService.getAll();
-		model.addAttribute("listTopic", listTopic);
+		model.addAttribute("post", new Post());
 
 		return "author/post-news";
 	}
 
 	@RequestMapping(value = "/demo-post", method = RequestMethod.POST)
 	public String demoPost(ModelMap model, 
-			@RequestParam String title,
-			@RequestParam String content,
+			@ModelAttribute Post post,
 			@RequestParam String tags,
-			@RequestParam String topic,
-			@RequestParam String description,
 			@RequestParam MultipartFile imageHeader) {
 
 		String tagArr[] = tags.split(",");
 
-		model.addAttribute("title", title);
-		model.addAttribute("content", content);
+		model.addAttribute("title", post.getTitle());
+		model.addAttribute("content", post.getContent());
 		model.addAttribute("tagList", tagArr);
-		model.addAttribute("topic", topic);
+		model.addAttribute("topic", post.getTopicId());
 		
-		// =============== save content ==========================
-		PostContent postContent = NewPostContent(content);
+		PostContent postContent = newPostContent(post.getContent());
 		int postContentId = postContentService.save(postContent);
-		//========================================================
 		
-		// ================= save post ====================================================================
+		// ======================================== save post =============================================
 		String imageSavePath = "/lib/post-image/id" + postContentId + ".jpg";
 		try {
 			String photoPath = context.getRealPath(imageSavePath);
@@ -94,8 +101,8 @@ public class AuthorController {
 			e.printStackTrace();
 		}
 		
-		Post post = NewPost(title, description, id, Integer.parseInt(topic), postContentId, imageSavePath);
-		int postId = postService.save(post);
+		post = post.setPost(id, postContentId, imageSavePath);
+		int postId = postService.saveWithContent(post, postContent.getContent());
 		//===================================================================================================
 		
 		// ======================= save tags ===========================

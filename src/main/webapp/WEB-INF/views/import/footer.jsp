@@ -11,7 +11,7 @@
 					<div class="widget">
 						<div class="footer-text text-left">
 							<a href="index.html"><img
-								src="images/version/tech-footer-logo.png" alt=""
+								src="<c:url value="/lib/images/version/tech-footer-logo.png" />" alt=""
 								class="img-fluid"></a>
 							<p>Tech Blog is a technology blog, we sharing marketing, news
 								and gadget articles.</p>

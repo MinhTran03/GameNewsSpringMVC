@@ -1,7 +1,15 @@
 package com.springmvc.entities;
 
-import java.time.LocalDate;
-import javax.persistence.*;
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "ReplyComment")
@@ -19,7 +27,7 @@ public class ReplyCommentEntity {
 	private int like;
 	
 	@Column(nullable = false)
-	private LocalDate time;
+	private LocalDateTime time;
 	
 	//-------------------------------------------------------
 	
@@ -63,10 +71,10 @@ public class ReplyCommentEntity {
 	public void setLike(int like) {
 		this.like = like;
 	}
-	public LocalDate getTime() {
+	public LocalDateTime getTime() {
 		return time;
 	}
-	public void setTime(LocalDate time) {
+	public void setTime(LocalDateTime time) {
 		this.time = time;
 	} 
 

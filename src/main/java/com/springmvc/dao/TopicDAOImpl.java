@@ -48,6 +48,7 @@ public class TopicDAOImpl implements TopicDAO {
 			Session session = sessionFactory.getCurrentSession();
 			
 			TopicEntity topicEntity = (TopicEntity) session.get(TopicEntity.class, id);
+			
 			topic.entity2model(topicEntity);
 			
 		} catch (Exception e) {

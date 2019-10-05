@@ -1,16 +1,20 @@
 package com.springmvc.dao;
 
-import java.time.LocalDate;
+import static com.springmvc.entities.PostEntity.newEntity;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.ParameterMode;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.procedure.ProcedureCall;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.springmvc.entities.*;
-import com.springmvc.models.*;
+
+import com.springmvc.entities.PostEntity;
+import com.springmvc.models.Post;
 
 @Repository
 public class PostDAOImpl implements PostDAO {
@@ -42,38 +46,31 @@ public class PostDAOImpl implements PostDAO {
 	}
 
 	@Override
-	public int save(Post entity) {
-		int result = -1;
-		try {
-			Session session = sessionFactory.getCurrentSession();
-			
-			ProcedureCall spQuery = session.createStoredProcedureCall("sp_Post_insert");
-			spQuery.registerParameter("topicId", Integer.class, ParameterMode.IN).bindValue(entity.getTopicId());
-			spQuery.registerParameter("contentId", Integer.class, ParameterMode.IN).bindValue(entity.getPostContentId());
-			spQuery.registerParameter("title", String.class, ParameterMode.IN).bindValue(entity.getTitle());
-			spQuery.registerParameter("description", String.class, ParameterMode.IN).bindValue(entity.getDescription());
-			spQuery.registerParameter("image", String.class, ParameterMode.IN).bindValue(entity.getImage());
-			spQuery.registerParameter("views", Integer.class, ParameterMode.IN).bindValue(entity.getViews());
-			spQuery.registerParameter("time", LocalDate.class, ParameterMode.IN).bindValue(entity.getTime());
-			spQuery.registerParameter("shortTitle", String.class, ParameterMode.IN).bindValue(entity.getShortTitle());
-			spQuery.registerParameter("userId", Integer.class, ParameterMode.IN).bindValue(entity.getUserId());
-			
-			result = (int)spQuery.getResultList().get(0);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
+	public int save(Post object) {
+		int id = -1;
+//		try {
+//			Session session = sessionFactory.getCurrentSession();
+//			
+//			PostEntity postEntity = newEntity(object);
+//			
+//			session.save(postEntity);
+//			
+//			id = postEntity.getPost_id();
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		return id;
 	}
 
 	@Override
-	public boolean update(Post entity) {
+	public boolean update(Post object) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(Post entity) {
+	public boolean delete(Post object) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -149,6 +146,41 @@ public class PostDAOImpl implements PostDAO {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public int count(int topicId) {
+		int count = -1;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+
+			ProcedureCall spQuery = session.createStoredProcedureCall("sp_Post_countAccorTopic");
+			spQuery.registerParameter("topicId", Integer.class, ParameterMode.IN).bindValue(topicId);
+			
+			count = (int)spQuery.getResultList().get(0);
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return count;
+	}
+
+	@Override
+	public int saveWithContent(Post post, String postContent) {
+		int id = -1;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+			PostEntity postEntity = newEntity(post, postContent);
+			
+			session.save(postEntity);
+			
+			id = postEntity.getPost_id();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return id;
 	}
 
 }

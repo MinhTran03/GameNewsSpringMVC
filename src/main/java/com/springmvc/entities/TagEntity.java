@@ -4,6 +4,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.springmvc.models.Tag;
+
 @Entity
 @Table(name = "Tag")
 public class TagEntity {
@@ -22,6 +24,15 @@ public class TagEntity {
 	public Set<PostEntity> posts;
 	
 	//-----------------------------------------------------------
+	
+	public static TagEntity newEntity(Tag tag) {
+		TagEntity tagEntity = new TagEntity();
+		
+		tagEntity.setName(tag.getName());
+		tagEntity.setTag_id(tag.getTagId());
+		
+		return tagEntity;
+	}
 	
 	public Set<PostEntity> getPosts() {
 		return posts;

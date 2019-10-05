@@ -25,20 +25,20 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public UserInfo getById(int id) {
-		UserInfo author = new UserInfo();
+		UserInfo user = new UserInfo();
 
 		try {
 			Session session = sessionFactory.getCurrentSession();
 
 			UserEntity authorEntity = (UserEntity) session.get(UserEntity.class, id);
 
-			author.entity2model(authorEntity);
+			user.entity2model(authorEntity);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return author;
+		return user;
 	}
 
 	@Override

@@ -1,51 +1,62 @@
 package com.springmvc.models;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import javax.validation.constraints.NotNull;
+
 import com.springmvc.entities.PostEntity;
 
 public class Post {
 
-	public static int shortTitleLength = 40;
+	public final static int SHORT_TITLE_LENGTH = 40;
 	
+	private String content;
 	private int postId;
-	
 	private int userId;
-	
 	private int topicId;
-	
 	private int postContentId;
 	
+	@NotNull(message = "Please enter title for your post")
 	private String title;
 	
+	@NotNull(message = "Please enter description")
 	private String description;
 	
 	private String image;
-	
 	private int views;
-	
-	private LocalDate time;
-	
+	private LocalDateTime time;
 	private String shortTitle;
 	
-	public static Post NewPost(String title, String description, int userId, int topicId, int postContentId, String imagePath) {
-		Post p = new Post();
-		p.setDescription(description);
-		p.setPostContentId(postContentId);
-		p.setImage(imagePath);
-		p.setTitle(title);
-		p.setUserId(userId);
-		p.setTopicId(topicId);
+	public Post() {
+		super();
+		this.views = 0;
+	}
+
+	public Post setPost(int userId, int postContentId, String imagePath) {
+		String title = this.getTitle();
 		
-		p.setViews(0);
-		p.setTime(LocalDate.now());
-		p.setShortTitle(title.toLowerCase().
-								substring(0, title.length() < shortTitleLength ? title.length() : shortTitleLength).
+		this.setPostContentId(postContentId);
+		this.setImage(imagePath);
+		this.setUserId(userId);
+		this.setTopicId(topicId);
+		
+		this.setTime(LocalDateTime.now());
+		this.setShortTitle(title.toLowerCase().
+								substring(0, title.length() < SHORT_TITLE_LENGTH ? title.length() : SHORT_TITLE_LENGTH).
 								replaceAll("[ \"]", "-"));
 		
-		return p;
+		return this;
 	}
 	
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
 	public int getPostId() {
 		return postId;
 	}
@@ -110,11 +121,11 @@ public class Post {
 		this.views = views;
 	}
 
-	public LocalDate getTime() {
+	public LocalDateTime getTime() {
 		return time;
 	}
 
-	public void setTime(LocalDate time) {
+	public void setTime(LocalDateTime time) {
 		this.time = time;
 	}
 
@@ -127,7 +138,7 @@ public class Post {
 	}
 
 	public String getStringTime() {
-		return time.format(DateTimeFormatter.ofPattern("dd MMM,yyyy"));
+		return time.format(DateTimeFormatter.ofPattern("dd MMM, yyyy"));
 	}
 	
 	public void entity2model(PostEntity entity) {

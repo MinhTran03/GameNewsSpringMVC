@@ -59,4 +59,16 @@ public class PostServiceImpl implements PostService {
 		return postDAO.saveTags(postId, tagId);
 	}
 
+	@Override
+	public int count(int topicId) {
+		// TODO Auto-generated method stub
+		return postDAO.count(topicId);
+	}
+
+	@Override
+	public int saveWithContent(Post post, String postContent) {
+		// TODO Auto-generated method stub
+		return postDAO.saveWithContent(post, postContent);
+	}
+
 }

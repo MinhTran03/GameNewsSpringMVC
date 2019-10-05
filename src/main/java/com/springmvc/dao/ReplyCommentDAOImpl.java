@@ -20,19 +20,19 @@ public class ReplyCommentDAOImpl implements ReplyCommentDAO {
 	}
 
 	@Override
-	public int save(ReplyComment entity) {
+	public int save(ReplyComment object) {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
 	@Override
-	public boolean update(ReplyComment entity) {
+	public boolean update(ReplyComment object) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(ReplyComment entity) {
+	public boolean delete(ReplyComment object) {
 		// TODO Auto-generated method stub
 		return false;
 	}

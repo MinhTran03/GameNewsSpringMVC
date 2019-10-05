@@ -15,7 +15,6 @@
 </script> -->
 </head>
 <body>
-
 	<div id="wrapper">
 		<section class="section single-wrapper">
 			<div class="container">
@@ -64,7 +63,7 @@
 							<!-- end media -->
 
 							<div class="blog-content">
-								<%-- <c:out value="${ content }" /> --%>
+								<c:out value="${ content }" />
 								${ content }
 							</div>
 							<!-- end content -->
@@ -357,8 +356,6 @@
 			<!-- end container -->
 		</section>
 	</div>
-	<!-- end wrapper -->
-
 	<!-- Core JavaScript
     ================================================== -->
 	<script src="js/jquery.min.js"></script>

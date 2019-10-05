@@ -2,19 +2,26 @@ package com.springmvc.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.springmvc.models.*;
-import com.springmvc.services.*;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.springmvc.models.Post;
+import com.springmvc.models.Topic;
+import com.springmvc.services.PostService;
+import com.springmvc.services.TopicService;
+import com.springmvc.services.UserService;
 
 @Controller
 public class TopicController {
 
 	public final int MAX_POST_PER_PAGE = 10;
+	public final int TOP_POST_PER_PAGE = 3;
 	
 	@Autowired
 	TopicService topicService;
@@ -48,12 +55,14 @@ public class TopicController {
 //	}
 
 	@RequestMapping(value = "/{topicName:[a-zA-Z0-9-]+}", method = RequestMethod.GET)
-	public String home(ModelMap model, @PathVariable("topicName") String topicName) {
+	public String home(ModelMap model, @PathVariable String topicName,
+										@RequestParam(defaultValue = "1") int page) {
 
 		// Topic taskbar
 		List<Topic> listTopic = topicService.getAll();
 		model.addAttribute("listTopic", listTopic);
 
+		model.addAttribute("topic", topicName);
 		// Map topicName to topicId
 		int topicId = -1;
 		topicName = topicName.replace('-', ' ').toUpperCase();
@@ -63,11 +72,16 @@ public class TopicController {
 				break;
 			}
 		}
-
+		
 		if (topicId != -1) {
-
+			
+			int totalPost = postService.count(topicId);
+			int pageCount = (totalPost - TOP_POST_PER_PAGE) / MAX_POST_PER_PAGE;
+			System.out.println("++++++++++++++++++++++++++++++++++++++++Page count: " + pageCount);
+			model.addAttribute("pageCount", pageCount);
+			
 			// Top newest post
-			List<Post> topNPost = postService.getTopNewest(3, topicId);
+			List<Post> topNPost = postService.getTopNewest(TOP_POST_PER_PAGE, topicId);
 			model.addAttribute("topPost", topNPost);
 
 			List<String> topAuthorName = new ArrayList<>();
@@ -77,7 +91,9 @@ public class TopicController {
 			model.addAttribute("topAuthorName", topAuthorName);
 			
 			// Page post
-			List<Post> listPost = postService.getInRange(3, MAX_POST_PER_PAGE, topicId);
+			int skip = TOP_POST_PER_PAGE + (page - 1) * MAX_POST_PER_PAGE;
+			int take = (totalPost - skip) < MAX_POST_PER_PAGE ? (totalPost - skip) : MAX_POST_PER_PAGE;
+			List<Post> listPost = postService.getInRange(skip, take, topicId);
 			model.addAttribute("listPost", listPost);
 			
 			List<String> listAuthorName = new ArrayList<>();

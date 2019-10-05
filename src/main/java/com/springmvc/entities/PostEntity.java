@@ -1,9 +1,24 @@
 package com.springmvc.entities;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.springmvc.models.Post;
 
 @Entity
 @Table(name = "Post")
@@ -14,11 +29,11 @@ public class PostEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int post_id;
 	
-	@Column(nullable = false)
+	@Column(length = 110, nullable = false)
 	private String title;
 	
 	@Column(nullable = false)
-	private LocalDate time;
+	private LocalDateTime time;
 	
 	@Column(nullable = false)
 	private int views;
@@ -26,7 +41,7 @@ public class PostEntity {
 	@Column(nullable = false)
 	private String image;
 	
-	@Column(nullable = false)
+	@Column(length = 140, nullable = false)
 	private String description;
 	
 	@Column(nullable = false)
@@ -58,6 +73,30 @@ public class PostEntity {
 
 	//-----------------------------------------------------------------------------------
 	
+	public static PostEntity newEntity(Post post, String postContent) {
+		PostEntity postEntity = new PostEntity();
+		
+		postEntity.setDescription(post.getDescription());
+		postEntity.setImage(post.getImage());
+		postEntity.setPost_id(post.getPostId());
+		PostContentEntity p = new PostContentEntity();
+		p.setPost_content_id(post.getPostContentId());
+		p.setContent(postContent);
+		postEntity.setPostContent(p);
+		postEntity.setShort_title(post.getShortTitle());
+		postEntity.setTime(post.getTime());
+		postEntity.setTitle(post.getTitle());
+		postEntity.setViews(post.getViews());
+		UserEntity u = new UserEntity();
+		u.setUser_id(post.getUserId());
+		postEntity.setUser(u);
+		TopicEntity t = new TopicEntity();
+		t.setTopic_id(post.getTopicId());
+		postEntity.setTopic(t);
+		
+		return postEntity;
+	}
+	
 	public int getPost_id() {
 		return post_id;
 	}
@@ -74,11 +113,11 @@ public class PostEntity {
 		this.title = title;
 	}
 
-	public LocalDate getTime() {
+	public LocalDateTime getTime() {
 		return time;
 	}
 
-	public void setTime(LocalDate time) {
+	public void setTime(LocalDateTime time) {
 		this.time = time;
 	}
 

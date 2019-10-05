@@ -1,5 +1,7 @@
 package com.springmvc.dao;
 
+import static com.springmvc.entities.PostContentEntity.newEntity;
+
 import java.util.List;
 
 import org.hibernate.Session;
@@ -8,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.springmvc.entities.PostContentEntity;
-import com.springmvc.models.*;
-
+import com.springmvc.models.PostContent;
 @Repository
 public class PostContentDAOImpl implements PostContentDAO{
 
@@ -41,34 +42,31 @@ public class PostContentDAOImpl implements PostContentDAO{
 	}
 
 	@Override
-	public int save(PostContent entity) {
+	public int save(PostContent object) {
 		int id = -1;
 		try {
 			Session session = sessionFactory.getCurrentSession();
 			
-			PostContentEntity p = new PostContentEntity();
-			p.setComment_count(entity.getCommentCount());
-			p.setContent(entity.getContent());
-			p.setUpvote(entity.getUpvote());
+			PostContentEntity p = newEntity(object);
 			
 			session.save(p);
+			
 			id = p.getPost_content_id();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			id = -1;
 		}
 		return id;
 	}
 
 	@Override
-	public boolean update(PostContent entity) {
+	public boolean update(PostContent object) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(PostContent entity) {
+	public boolean delete(PostContent object) {
 		// TODO Auto-generated method stub
 		return false;
 	}

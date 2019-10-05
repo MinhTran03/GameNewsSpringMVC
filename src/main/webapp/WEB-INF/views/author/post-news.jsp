@@ -33,21 +33,28 @@
 		href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
 		integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
 		crossorigin="anonymous">
+	<style>
+      .error{
+         color: red;
+      }
+   </style>
 </head>
 
 <body>
 
-	<form action="author/demo-post" method="post" enctype="multipart/form-data">
+	<form:form action="author/demo-post" modelAttribute="post" method="post" enctype="multipart/form-data">
 
 		<div class="row">
 			<div class="post col-md-9">
 				<p class="title">Add New Post</p>
 				<div class="post-title">
-					<input name="title" class="title-content" type="text" placeholder="Enter title here">
+					<form:input path="title" cssClass="title-content" type="text" placeholder="Enter title here" />
+					<form:errors path="title" cssClass="error" />
 				</div>
 				<!-- <p class="title">Add Description</p> -->
 	         <div class="post-description">
-	            <input name="description" class="description-content" type="text" placeholder="Enter description here">
+	            <form:input path="description" cssClass="description-content" type="text" placeholder="Enter description here" />
+	            <form:errors path="description" cssClass="error" />
 	         </div>
 				<p class="title">Content</p>
 				<div class="post-content">
@@ -55,20 +62,21 @@
 					<div id="editor"></div>
 					<!-- class="editorC" -->
 					<button id="save">Save</button>
-					<input id="content" type="hidden" name="content" value="">
+					<form:input id="content" type="hidden" path="content" value="" />
+					<form:errors path="content" cssClass="error" />
 				</div>
 			</div>
 			<div class="prop-post col-md-3">
 				<div class="topic-container">
 					<p class="title">Select topic for your post</p>
 					<div class="topic-select">
-						<select class="form-control" name="topic">
-							<c:if test="${ not empty listTopic }">
+						<form:select cssClass="form-control" path="topicId" items="${ listTopic }" itemLabel="name" itemValue="topicId" />
+							<%-- <c:if test="${ not empty listTopic }">
 								<c:forEach var="topic" items="${ listTopic }">
 									<option class="topic-name" value="${ topic.topicId }">${ topic.name }</option>
 								</c:forEach>
-							</c:if>
-						</select>
+							</c:if> --%>
+						<%-- </form:select> --%>
 					</div>
 				</div>
 				<div class="image-header">
@@ -112,7 +120,7 @@
 			</div>
 		</div>
 
-	</form>
+	</form:form>
 
 	<!-- <div id="justHtml"></div> -->
 

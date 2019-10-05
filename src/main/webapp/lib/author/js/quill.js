@@ -21,7 +21,7 @@ let toolbarOption = [
    [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
    [{ 'indent': '-1' }, { 'indent': '+1' }],
    [{ 'direction': 'rtl' }],
-   ['link', 'image'],
+   ['link', 'image', 'video'],
    ['blockquote'],
 ];
 

@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.springmvc.models.PostContent;
+
 @Entity
 @Table(name = "PostContent")
 public class PostContentEntity {
@@ -33,6 +35,18 @@ public class PostContentEntity {
 	
 	//----------------------------------------------------------------
 
+	public static PostContentEntity newEntity(PostContent postContent) {
+		
+		PostContentEntity entity = new PostContentEntity();
+		
+		entity.setPost_content_id(postContent.getPostContentId());
+		entity.setComment_count(postContent.getCommentCount());
+		entity.setContent(postContent.getContent());
+		entity.setUpvote(postContent.getUpvote());
+		
+		return entity;
+	}
+	
 	public PostEntity getPost() {
 		return post;
 	}
