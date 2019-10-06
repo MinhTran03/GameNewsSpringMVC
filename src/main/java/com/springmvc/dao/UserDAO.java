@@ -11,4 +11,6 @@ public interface UserDAO extends DAOBase<UserInfo> {
 	public List<Role> checkLogin(String email, String password);
 	
 	public int getIdByEmail(String email);
+	
+//	public boolean isExist(String email);
 }

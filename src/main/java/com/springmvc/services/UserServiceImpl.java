@@ -27,19 +27,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int save(UserInfo entity) {
+	public int save(UserInfo userInfo) {
 		// TODO Auto-generated method stub
-		return -1;
+		return userDAO.save(userInfo);
 	}
 
 	@Override
-	public boolean update(UserInfo entity) {
+	public boolean update(UserInfo userInfo) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(UserInfo entity) {
+	public boolean delete(UserInfo userInfo) {
 		// TODO Auto-generated method stub
 		return false;
 	}

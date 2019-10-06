@@ -5,13 +5,18 @@ import static com.springmvc.util.CurrentLogin.id;
 import static com.springmvc.util.CurrentLogin.loggingIn;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.internet.MimeMessage;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,46 +38,51 @@ import com.springmvc.services.PostService;
 import com.springmvc.services.TagService;
 import com.springmvc.services.TopicService;
 import com.springmvc.services.UserService;
+import com.springmvc.util.PasswordGenerator;
 
 @Controller
 @RequestMapping("/articles")
 public class ArticleController {
-	
+
 	@Autowired
 	PostService postService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	PostContentService postContentService;
-	
+
 	@Autowired
 	TopicService topicServiceBase;
-	
+
 	@Autowired
 	TagService tagService;
-	
+
 	@Autowired
 	CommentService commentService;
-	
+
+	@Autowired
+	JavaMailSender mailer;
+
 	@ModelAttribute(name = "listTopic")
-	public List<Topic> getListTopic(){
+	public List<Topic> getListTopic() {
 		List<Topic> listTopic = topicServiceBase.getAll();
 
 		return listTopic;
 	}
-	
+
 	@RequestMapping(value = "/{shortTitle:[\\w\\W]+}/{postId}")
 	public String showPost(@PathVariable int postId, ModelMap model) {
-		
-		// ==================================== LOAD CONTENT ===============================
+
+		// ==================================== LOAD CONTENT
+		// ===============================
 		Post post = postService.getById(postId);
 		PostContent postContent = postContentService.getById(post.getPostContentId());
 		Topic topic = topicServiceBase.getById(post.getTopicId());
 		String authorName = userService.getFullName(post.getUserId());
 		List<Tag> listTag = tagService.getByPostId(postId);
-		
+
 		model.addAttribute("loggingIn", loggingIn);
 		model.addAttribute("post", post);
 		model.addAttribute("content", postContent.getContent());
@@ -80,37 +90,36 @@ public class ArticleController {
 		model.addAttribute("topic", topic.getName());
 		model.addAttribute("authorName", authorName);
 		// ===================================================================================
-		
-		// ================================== LOAD COMMENT ====================================
+
+		// ================================== LOAD COMMENT
+		// ====================================
 		Map<Comment, UserInfo> commentInfo = commentService.getByPostId(postId);
 		List<Comment> comments = new ArrayList<Comment>(commentInfo.keySet());
 		List<UserInfo> users = new ArrayList<UserInfo>(commentInfo.values());
 		model.addAttribute("listComment", comments);
 		model.addAttribute("listUser", users);
 		// ====================================================================================
-		
+
 		return "article/single-post";
 	}
-	
+
 	@RequestMapping(value = "/{shortTitle:[\\w\\W]+}/comment", method = RequestMethod.GET)
 	@ResponseBody
-	public String postCommentLogin(ModelMap model,
-								@RequestParam int postId,
-								@RequestParam String content) {
-		
+	public String postCommentLogin(@RequestParam int postId, @RequestParam String content) {
+
 		Comment comment = newComment(content, postId, id);
 		int cmId = commentService.save(comment);
-		
+
 		Map<String, String> json = new HashMap<String, String>();
-		if(cmId != -1) {
+		if (cmId != -1) {
 			UserInfo user = userService.getById(id);
 			json.put("imageSrc", user.getImage());
 			json.put("name", user.getFirstName() + ' ' + user.getLastName());
 			json.put("valid", "1");
-		}else {
+		} else {
 			json.put("valid", "0");
 		}
-		
+
 		String jsonAsString = "";
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -118,51 +127,37 @@ public class ArticleController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return jsonAsString;
 	}
-	
-	@RequestMapping(value = "/{shortTitle:[\\w\\W]+}/commentWithoutLogin", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/{shortTitle:[\\w\\W]+}/commentWithoutLogin", method = RequestMethod.POST)
 	@ResponseBody
-	public String postCommentNotLogin(ModelMap model,
-								@RequestParam String name,
-								@RequestParam String email,
-								@RequestParam int postId,
-								@RequestParam String content) {
-		
-//		// Kiểm tra thông tin user
-//		List<Role> listRole = userService.checkLogin(userLogin.getEmail(), userLogin.getPassword());
-//		
-//		if(listRole == null) {
-//			// login fail
-//			model.addAttribute("message", "Login fail");
-//			return "login/login-page";
-//		}else {
-//			loggingIn = true;
-//			userName = userLogin.getEmail();
-//			roles = listRole;
-//			id = userService.getIdByEmail(userName);
-//			System.out.println(id);
-//			
-//			listRole.forEach(item -> {
-//				System.out.println(item.getRoleId());
-//				System.out.println(item.getRoleName());
-//			});
-//		}
-		
-		Comment comment = newComment(content, postId, id);
+	public String postCommentNotLogin(@RequestParam String name, @RequestParam String email, @RequestParam int postId,
+			@RequestParam String content) {
+
+		int userId = userService.getIdByEmail(email);
+
+		UserInfo user = new UserInfo();
+		if (userId == -1) {
+			user = newUserCommentHander(user, name, email);
+		} else {
+			// email đã tồn tại => hiện popup đăng nhập
+		}
+
+		userId = user.getUserId();
+		Comment comment = newComment(content, postId, userId);
 		int cmId = commentService.save(comment);
-		
+
 		Map<String, String> json = new HashMap<String, String>();
-		if(cmId != -1) {
-			UserInfo user = userService.getById(id);
+		if (cmId != -1) {
 			json.put("imageSrc", user.getImage());
-			json.put("name", user.getFirstName() + ' ' + user.getLastName());
+			json.put("name", user.getLastName());
 			json.put("valid", "1");
-		}else {
+		} else {
 			json.put("valid", "0");
 		}
-		
+
 		String jsonAsString = "";
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -170,7 +165,52 @@ public class ArticleController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return jsonAsString;
+	}
+
+	public UserInfo newUserCommentHander(UserInfo user, String name, String email) {
+		// User chưa có => tạo mới => gửi pass tới email đó
+		user.setRegistrationDay(LocalDate.now());
+		user.setLastName(name);
+		user.setTotalPost(0);
+		user.setEmail(email);
+
+		// Tạo password ngẫu nhiên
+		PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder().useDigits(true)
+				.useLower(true).useUpper(true).build();
+		String password = passwordGenerator.generate(8);
+		user.setPassword(password);
+
+		// Gửi password tới email đăng ký
+		sendMail(email, "Game News send password", "Username: " + email + "\nPassword: " + password);
+
+		// Lưu user xuống csdl
+		user.setUserId(userService.save(user));
+		return user;
+	}
+
+	public boolean sendMail(String to, String subject, String body) {
+		try {
+			// tạo mail
+			MimeMessage mail = mailer.createMimeMessage();
+
+			// sử dụng lớp trợ giúp
+			MimeMessageHelper helper = new MimeMessageHelper(mail);
+			String from = "tranconminh503@gmail.com";
+			helper.setFrom(from);
+			helper.setTo(to);
+			helper.setReplyTo(from, from);
+			helper.setSubject(subject);
+			helper.setText(body, true);
+
+			mailer.send(mail);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
 	}
 }

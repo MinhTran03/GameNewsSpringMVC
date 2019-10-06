@@ -276,7 +276,7 @@
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="form-wrapper">
-											<c:if test="${ lformoggingIn == false }">
+											<c:if test="${ loggingIn == false }">
 												<input id="input-name" type="text" class="form-control" placeholder="Your name">
 												<input id="input-email" type="text" class="form-control" placeholder="Email address">
 											</c:if>

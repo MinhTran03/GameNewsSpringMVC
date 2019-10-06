@@ -1,92 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	isELIgnored="false" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Video Game News, Game News, Entertainment News - Game Sport</title>
 	<jsp:include page="../import/importHeader.jsp"></jsp:include>
-	<style type="text/css">
-	</style>
 </head>
 <body>
 	<div class="wrapper">
 		<c:set var="rootName" value="${ pageContext.request.contextPath }" />
-		
+
 		<jsp:include page="../import/header.jsp"></jsp:include>
 
-		<section class="section first-section">
-         <div class="container-fluid">
-            <div class="masonry-blog clearfix">
+		<div class="page-title lb single-wrapper">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+						<h2>
+							<i class="fa fa-star bg-orange"></i>
+							Author by: Jessica
+						</h2>
+					</div>
+					<div
+						class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item"><a href="#">Author</a></li>
+							<li class="breadcrumb-item active">Jessica</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
 
-               <div class="first-slot">
-                  <div class="masonry-box post-media">
-                     <img src="<c:url value="${ topPost.get(0).image }" />" alt="" class="img-fluid" style="height: 370px">
-                     <div class="shadoweffect">
-                        <div class="shadow-desc">
-                           <div class="blog-meta">
-                              <h4>
-                                 <a href="${ rootName }/articles/<c:out value="${ topPost.get(0).shortTitle }" />/<c:out value="${ topPost.get(0).postId }" />" title="">
-                                 	<c:out value="${ topPost.get(0).title }" />
-                                 </a>
-                              </h4>
-                              <small>
-                              	<a href="tech-single.html" title=""> <c:out value="${ topPost.get(0).stringTime }" /></a>
-                              </small>
-                              <small>
-                              	<a href="tech-author.html" title="">by <c:out value="${ topAuthorName.get(0) }" /></a>
-                             	</small>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-
-               <div class="second-slot">
-                  <div class="masonry-box post-media">
-                     <img src="<c:url value="${ topPost.get(1).image }" />" alt="" class="img-fluid" style="height: 370px">
-                     <div class="shadoweffect">
-                        <div class="shadow-desc">
-                           <div class="blog-meta">
-                              <h4>
-                                 <a href="${ rootName }/articles/<c:out value="${ topPost.get(1).shortTitle }" />/<c:out value="${ topPost.get(1).postId }" />" title="">
-                                 	<c:out value="${ topPost.get(1).title }" />
-                                 </a>
-                              </h4>
-                              <small><a href="tech-single.html" title="">
-                                    <c:out value="${ topPost.get(1).stringTime }" /></a></small> <small><a
-                                    href="tech-author.html" title="">by <c:out value="${ topAuthorName.get(1) }" /></a></small>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-
-               <div class="last-slot">
-                  <div class="masonry-box post-media">
-                     <img src="<c:url value="${ topPost.get(2).image }" />" alt="" class="img-fluid" style="height: 370px">
-                     <div class="shadoweffect">
-                        <div class="shadow-desc">
-                           <div class="blog-meta">
-                              <h4>
-                                 <a href="${ rootName }/articles/<c:out value="${ topPost.get(2).shortTitle }" />/<c:out value="${ topPost.get(2).postId }" />" title="">
-                                 	<c:out value="${ topPost.get(2).title }" />
-                                 </a>
-                              </h4>
-                              <small><a href="tech-single.html" title="">
-                                    <c:out value="${ topPost.get(2).stringTime }" /></a></small> <small><a
-                                    href="tech-author.html" title="">by <c:out value="${ topAuthorName.get(2) }" /></a></small>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-
-            </div>
-         </div>
-      </section>
-		
 		<section class="section">
 			<div class="container">
 				<div class="row">
@@ -341,9 +288,7 @@
 			</div>
 		</section>
 
-
 		<div class="dmtop">Scroll to Top</div>
-
 
 		<jsp:include page="../import/footer.jsp"></jsp:include>
 

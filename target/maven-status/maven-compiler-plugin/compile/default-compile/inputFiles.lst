@@ -36,6 +36,7 @@ D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\models\Post.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\models\UserInfo.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\models\Tag.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\PostDAO.java
+D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\util\PasswordGenerator.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\entities\PostEntity.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\TagServiceImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\models\PostContent.java
@@ -44,6 +45,7 @@ D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\UserServ
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\UserDAOImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\controllers\AuthorController.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\UserServiceImpl.java
+D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\util\MailSenderSupport.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\controllers\LoginController.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\entities\CommentEntity.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\models\Topic.java

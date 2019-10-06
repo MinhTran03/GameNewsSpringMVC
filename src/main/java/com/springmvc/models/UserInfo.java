@@ -17,7 +17,7 @@ public class UserInfo {
 	
 	private String firstName;
 	private String lastName;
-	private String image;
+	private String image = "/lib/user/default.jpg";
 	private String phoneNumber;
 	private LocalDate registrationDay;
 	private int totalPost;

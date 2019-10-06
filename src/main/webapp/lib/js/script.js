@@ -43,7 +43,7 @@ let submit = document.getElementsByClassName('post-comment')[0];
 let commentContent = document.getElementsByClassName('comment-content')[0];
 let arr = window.location.href.split('/');
 let commentCount = document.getElementsByClassName('commen-count')[0];
-let commentArea = document.getElementByClassName('form-wrapper')[0];
+let commentArea = document.getElementsByClassName('form-wrapper')[0];
 
 submit.addEventListener('click', (event) => {
    console.log("comment");
@@ -71,26 +71,40 @@ submit.addEventListener('click', (event) => {
    }else{
 	   let email = document.getElementById('input-email');
 	   let name = document.getElementById('input-name');
+	   
 	   $.ajax({
-		   url: "commentWithoutLogin",
-		   dataType: "json",
-		   data: {
-			   email: email,
-			   name: name,
-			   postId: arr[arr.length - 1],
-			   content: commentContent.value,
-		   },
-		   success: function (response) {
-			   console.log(response);
-			   if (response.valid == "1") {
-				   let comment = createComment("/" + arr[3] + response.imageSrc, response.name, commentContent.value);
-				   commentsList.appendChild(comment);
-				   commentContent.value = '';
-				   commentCount.innerText = commentsList.childElementCount + " Comments";
-			   }else{
-				   alert("ERROR");
-			   }
-		   },
+	      url: "https://app.verify-email.org/api/v1/Nr7HDGjMCznsDqL6OQNQ6gqVl3nPYEEDStB9a9IeJjbTGNHSb9/verify/" + email.value,
+	      type: 'GET',
+	      dataType: 'JSON',
+	      success: function (response) {
+	    	  // Email exist
+	         if(response.smtp_code === 250){
+	        	 $.ajax({
+	      		   url: "commentWithoutLogin",
+	      		   type: "POST",
+	      		   dataType: "json",
+	      		   data: {
+	      			   email: email.value,
+	      			   name: name.value,
+	      			   postId: arr[arr.length - 1],
+	      			   content: commentContent.value,
+	      		   },
+	      		   success: function (response) {
+	      			   console.log(response);
+	      			   if (response.valid == "1") {
+	      				   let comment = createComment("/" + arr[3] + response.imageSrc, response.name, commentContent.value);
+	      				   commentsList.appendChild(comment);
+	      				   commentContent.value = '';
+	      				   commentCount.innerText = commentsList.childElementCount + " Comments";
+	      			   }else{
+	      				   alert("ERROR");
+	      			   }
+	      		   },
+	      	   })
+	         }else{
+	        	 alert("Email not exist");
+	         }
+	      }
 	   })
    }
 })

@@ -3,7 +3,20 @@ package com.springmvc.entities;
 import java.time.LocalDate;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.springmvc.models.UserInfo;
 
 @Entity
 @Table(name = "`User`")
@@ -14,13 +27,13 @@ public class UserEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int user_id;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String first_name;
 	
 	@Column(nullable = false)
 	private String last_name;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private LocalDate birthday;
 	
 	@Column(nullable = false)
@@ -29,16 +42,16 @@ public class UserEntity {
 	@Column(nullable = false)
 	private int total_post;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String image;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String phone_number;
 
 	@Column(nullable = false)
 	private String email;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String address;
 	
 	@Column(nullable = false)
@@ -63,6 +76,19 @@ public class UserEntity {
 	private Set<RoleEntity> roles;
 
 	//---------------------------------------
+	
+	public static UserEntity newEntity(UserInfo user) {
+		UserEntity entity = new UserEntity();
+		
+		entity.setEmail(user.getEmail());
+		entity.setLast_name(user.getLastName());
+		entity.setPassword(user.getPassword());
+		entity.setRegistration_day(user.getRegistrationDay());
+		entity.setTotal_post(user.getTotalPost());
+		entity.setImage(user.getImage());
+		
+		return entity;
+	}
 	
 	public Set<RoleEntity> getRoles() {
 		return roles;

@@ -1,9 +1,13 @@
 package com.springmvc.dao;
 
 import com.springmvc.entities.*;
+import static com.springmvc.entities.UserEntity.newEntity;
 import com.springmvc.models.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.ParameterMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -42,19 +46,37 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public int save(UserInfo entity) {
-		// TODO Auto-generated method stub
-		return -1;
+	public int save(UserInfo userInfo) {
+		int userId = -1;
+		
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+			UserEntity entity = newEntity(userInfo);
+			RoleEntity role = (RoleEntity)session.get(RoleEntity.class, 1);
+			Set<RoleEntity> roles = new HashSet<RoleEntity>();
+			roles.add(role);
+			entity.setRoles(roles);
+			
+			session.save(entity);
+			
+			userId = entity.getUser_id();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return userId;
 	}
 
 	@Override
-	public boolean update(UserInfo entity) {
+	public boolean update(UserInfo userInfo) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(UserInfo entity) {
+	public boolean delete(UserInfo userInfo) {
 		// TODO Auto-generated method stub
 		return false;
 	}
