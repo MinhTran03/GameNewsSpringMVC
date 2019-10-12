@@ -14,7 +14,9 @@ D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\PostContentDA
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\PostDAOImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\controllers\ArticleController.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\models\ReplyComment.java
+D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\controllers\ManagementController.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\entities\TopicEntity.java
+D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\validator\UserValidator.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\entities\UserEntity.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\ServiceBase.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\DAOBase.java

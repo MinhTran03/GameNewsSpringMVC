@@ -1,6 +1,8 @@
 package com.springmvc.dao;
 
 import java.util.List;
+
+import com.springmvc.models.Post;
 import com.springmvc.models.Role;
 import com.springmvc.models.UserInfo;
 
@@ -13,4 +15,10 @@ public interface UserDAO extends DAOBase<UserInfo> {
 	public int getIdByEmail(String email);
 	
 //	public boolean isExist(String email);
+	
+	public List<Post> getInRange(int skip, int take, int userId);
+	
+	public List<UserInfo> getInRange(int skip, int take, String roleName);
+	
+	public int countUserOfRole(String role);
 }

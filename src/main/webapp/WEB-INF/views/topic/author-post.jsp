@@ -19,7 +19,7 @@
 					<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 						<h2>
 							<i class="fa fa-star bg-orange"></i>
-							Author by: Jessica
+							Author by: ${ authorName }
 						</h2>
 					</div>
 					<div
@@ -27,7 +27,7 @@
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="#">Home</a></li>
 							<li class="breadcrumb-item"><a href="#">Author</a></li>
-							<li class="breadcrumb-item active">Jessica</li>
+							<li class="breadcrumb-item active">${ authorName }</li>
 						</ol>
 					</div>
 				</div>
@@ -68,7 +68,7 @@
 												<p>${ post.description }</p>
 												<!-- <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">Gadgets</a></small> -->
 												<small><a href="tech-single.html" title="">${ post.stringTime }</a></small>
-												<small><a href="tech-author.html" title="">by ${ listAuthorName[status.index] }</a></small>
+												<small><a href="" title="">by ${ authorName }</a></small>
 												<small><a href="tech-single.html" title=""><i class="fa fa-eye"></i>${ post.views }</a></small>
 											</div>
 										</div>
@@ -82,14 +82,19 @@
 						<hr class="invis">
 
 						<div class="row">
+							<c:set var="pageLink" value="${ rootName }/profile/${ listPost.get(0).userId }/?page=" />
 							<div class="col-md-12">
 								<nav aria-label="Page navigation">
 									<ul class="pagination justify-content-start">
-										<li class="page-item"><a class="page-link" href="#">Previous</a>
-											<c:forEach begin="0" end="${ pageCount }" varStatus="status">
-												<li class="page-item"><a class="page-link" href="${ rootName }/${ topic }/?page=${ status.index + 1 }">${ status.index + 1 }</a></li>
-											</c:forEach>
-										<li class="page-item"><a class="page-link" href="#">Next</a></li>
+										<c:if test="${ currentPage > 1 }">
+											<li class="page-item"><a class="page-link" href="${ pageLink }${ currentPage - 1 }">Previous</a>
+										</c:if>
+										<c:forEach begin="0" end="${ pageCount }" varStatus="status">
+											<li class="page-item"><a class="page-link" href="${ pageLink }${ status.index + 1 }">${ status.index + 1 }</a></li>
+										</c:forEach>
+										<c:if test="${ currentPage < pageCount }">
+											<li class="page-item"><a class="page-link" href="${ pageLink }${ currentPage + 1 }">Next</a></li>
+										</c:if>
 									</ul>
 								</nav>
 							</div>

@@ -1,8 +1,9 @@
 package com.springmvc.models;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.springmvc.entities.UserEntity;
 
@@ -12,7 +13,7 @@ public class UserInfo {
 	private String address;
 	private LocalDate birthday;
 	
-	@NotBlank(message = "Please enter your email")
+	@NotNull(message = "Please enter your email")
 	private String email;
 	
 	private String firstName;
@@ -22,7 +23,7 @@ public class UserInfo {
 	private LocalDate registrationDay;
 	private int totalPost;
 	
-	@NotBlank(message = "Password is requied")
+	@NotNull(message = "Password is requied")
 	private String password;
 
 	public UserInfo() {
@@ -59,6 +60,10 @@ public class UserInfo {
 
 	public LocalDate getBirthday() {
 		return birthday;
+	}
+	
+	public String getFormatBirthday(String pattern) {
+		return birthday.format(DateTimeFormatter.ofPattern(pattern));
 	}
 
 	public void setBirthday(LocalDate birthday) {
@@ -107,6 +112,10 @@ public class UserInfo {
 
 	public LocalDate getRegistrationDay() {
 		return registrationDay;
+	}
+	
+	public String getFormatRegistrationDay(String pattern) {
+		return registrationDay.format(DateTimeFormatter.ofPattern(pattern));
 	}
 
 	public void setRegistrationDay(LocalDate registrationDay) {

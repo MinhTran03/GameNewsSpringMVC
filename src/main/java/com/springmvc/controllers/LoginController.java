@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,10 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.springmvc.models.Role;
 import com.springmvc.models.UserInfo;
 import com.springmvc.services.UserService;
+import com.springmvc.validator.UserValidator;
 
 @Controller
 @RequestMapping("/login")
 public class LoginController {
+	
+	@Autowired
+	UserValidator userValidator;
 
 	@Autowired
 	UserService userService;
@@ -35,7 +40,12 @@ public class LoginController {
 	
 	@RequestMapping(value = "/check", method = RequestMethod.POST)
 	public String check(ModelMap model,
-						@ModelAttribute("userLogin") UserInfo userLogin) {
+						@ModelAttribute("userLogin") UserInfo userLogin, BindingResult bind) {
+		
+		userValidator.validate(userLogin, bind);
+		if (bind.hasErrors()) {
+			return "login/login-page";
+		}
 		
 		// Kiểm tra thông tin user
 		List<Role> listRole = userService.checkLogin(userLogin.getEmail(), userLogin.getPassword());

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.springmvc.models.Post;
 import com.springmvc.models.Topic;
+import com.springmvc.models.UserInfo;
 import com.springmvc.services.PostService;
 import com.springmvc.services.TopicService;
 import com.springmvc.services.UserService;
@@ -22,7 +23,7 @@ public class TopicController {
 
 	public final int MAX_POST_PER_PAGE = 10;
 	public final int TOP_POST_PER_PAGE = 3;
-	
+
 	@Autowired
 	TopicService topicService;
 
@@ -55,9 +56,10 @@ public class TopicController {
 //	}
 
 	@RequestMapping(value = "/{topicName:[a-zA-Z0-9-]+}", method = RequestMethod.GET)
-	public String home(ModelMap model, @PathVariable String topicName,
-										@RequestParam(defaultValue = "1") int page) {
+	public String home(ModelMap model, @PathVariable String topicName, @RequestParam(defaultValue = "1") int page) {
 
+		model.addAttribute("currentPage", page);
+		
 		// Topic taskbar
 		List<Topic> listTopic = topicService.getAll();
 		model.addAttribute("listTopic", listTopic);
@@ -72,14 +74,14 @@ public class TopicController {
 				break;
 			}
 		}
-		
+
 		if (topicId != -1) {
-			
+
 			int totalPost = postService.count(topicId);
-			int pageCount = (totalPost - TOP_POST_PER_PAGE) / MAX_POST_PER_PAGE;
-			System.out.println("++++++++++++++++++++++++++++++++++++++++Page count: " + pageCount);
+			int pageCount = (totalPost - TOP_POST_PER_PAGE) / MAX_POST_PER_PAGE - ((totalPost % MAX_POST_PER_PAGE) == 0 ? 1 : 0);
+
 			model.addAttribute("pageCount", pageCount);
-			
+
 			// Top newest post
 			List<Post> topNPost = postService.getTopNewest(TOP_POST_PER_PAGE, topicId);
 			model.addAttribute("topPost", topNPost);
@@ -89,13 +91,13 @@ public class TopicController {
 				topAuthorName.add(userService.getFullName(topNPost.get(i).getUserId()));
 			}
 			model.addAttribute("topAuthorName", topAuthorName);
-			
+
 			// Page post
 			int skip = TOP_POST_PER_PAGE + (page - 1) * MAX_POST_PER_PAGE;
 			int take = (totalPost - skip) < MAX_POST_PER_PAGE ? (totalPost - skip) : MAX_POST_PER_PAGE;
 			List<Post> listPost = postService.getInRange(skip, take, topicId);
 			model.addAttribute("listPost", listPost);
-			
+
 			List<String> listAuthorName = new ArrayList<>();
 			for (int i = 0; i < listPost.size(); i++) {
 				listAuthorName.add(userService.getFullName(listPost.get(i).getUserId()));
@@ -106,4 +108,29 @@ public class TopicController {
 		return "topic/topic-page";
 	}
 
+	@RequestMapping(value = "/profile/{authorId:[0-9]+}", method = RequestMethod.GET)
+	public String authorProfile(@PathVariable int authorId, @RequestParam(defaultValue = "1") int page,
+			ModelMap model) {
+
+		model.addAttribute("currentPage", page);
+		
+		// Topic taskbar
+		List<Topic> listTopic = topicService.getAll();
+		model.addAttribute("listTopic", listTopic);
+
+		UserInfo user = userService.getById(authorId);
+		int totalPost = user.getTotalPost();
+		int pageCount = totalPost / MAX_POST_PER_PAGE - ((totalPost % MAX_POST_PER_PAGE) == 0 ? 1 : 0);
+
+		model.addAttribute("pageCount", pageCount);
+		// Page post
+		int skip = (page - 1) * MAX_POST_PER_PAGE;
+		int take = (totalPost - skip) < MAX_POST_PER_PAGE ? (totalPost - skip) : MAX_POST_PER_PAGE;
+		List<Post> listPost = userService.getInRange(skip, take, authorId);
+		model.addAttribute("listPost", listPost);
+
+		model.addAttribute("authorName", user.getFullName());
+
+		return "topic/author-post";
+	}
 }

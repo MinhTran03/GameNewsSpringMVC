@@ -1,6 +1,7 @@
 package com.springmvc.entities;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.springmvc.models.UserInfo;
 
@@ -34,9 +37,11 @@ public class UserEntity {
 	private String last_name;
 	
 	@Column(nullable = true)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate birthday;
 	
 	@Column(nullable = false)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate registration_day;
 	
 	@Column(nullable = false)
@@ -140,6 +145,10 @@ public class UserEntity {
 
 	public LocalDate getRegistration_day() {
 		return registration_day;
+	}
+	
+	public String getFormatRegistration_day(String pattern) {
+		return registration_day.format(DateTimeFormatter.ofPattern(pattern));
 	}
 
 	public void setRegistration_day(LocalDate registration_day) {

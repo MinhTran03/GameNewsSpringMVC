@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.springmvc.dao.UserDAO;
+import com.springmvc.models.Post;
 import com.springmvc.models.Role;
 import com.springmvc.models.UserInfo;
 
@@ -28,7 +29,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int save(UserInfo userInfo) {
-		// TODO Auto-generated method stub
 		return userDAO.save(userInfo);
 	}
 
@@ -46,7 +46,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String getFullName(int id) {
-		// TODO Auto-generated method stub
 		return userDAO.getFullName(id);
 	}
 
@@ -60,6 +59,22 @@ public class UserServiceImpl implements UserService {
 	public int getIdByEmail(String email) {
 		// TODO Auto-generated method stub
 		return userDAO.getIdByEmail(email);
+	}
+
+	@Override
+	public List<Post> getInRange(int skip, int take, int userId) {
+		return userDAO.getInRange(skip, take, userId);
+	}
+
+	@Override
+	public List<UserInfo> getInRange(int skip, int take, String roleName) {
+		return userDAO.getInRange(skip, take, roleName);
+	}
+
+	@Override
+	public int countUserOfRole(String role) {
+		// TODO Auto-generated method stub
+		return userDAO.countUserOfRole(role);
 	}
 
 }

@@ -145,4 +145,82 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return id;
 	}
+
+	@Override
+	public List<Post> getInRange(int skip, int take, int userId) {
+		List<Post> listPost = new ArrayList<Post>();
+
+		try {
+			Session session = sessionFactory.getCurrentSession();
+
+			ProcedureCall spQuery = session.createStoredProcedureCall("sp_User_getPostInRange", PostEntity.class);
+			spQuery.registerParameter("skip", Integer.class, ParameterMode.IN).bindValue(skip);
+			spQuery.registerParameter("take", Integer.class, ParameterMode.IN).bindValue(take);
+			spQuery.registerParameter("userId", Integer.class, ParameterMode.IN).bindValue(userId);
+			
+			@SuppressWarnings("unchecked")
+			List<PostEntity> listPOE = (List<PostEntity>) spQuery.getResultList();
+
+			for (int i = 0; i < listPOE.size(); i++) {
+				Post post = new Post();
+				post.entity2model(listPOE.get(i));
+				listPost.add(post);
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return listPost;
+	}
+
+	@Override
+	public List<UserInfo> getInRange(int skip, int take, String roleName) {
+		List<UserInfo> listUser = new ArrayList<UserInfo>();
+
+		try {
+			Session session = sessionFactory.getCurrentSession();
+
+			ProcedureCall spQuery = session.createStoredProcedureCall("sp_User_getRoleInRange", UserEntity.class);
+			spQuery.registerParameter("skip", Integer.class, ParameterMode.IN).bindValue(skip);
+			spQuery.registerParameter("take", Integer.class, ParameterMode.IN).bindValue(take);
+			spQuery.registerParameter("role_name", String.class, ParameterMode.IN).bindValue(roleName);
+			
+			@SuppressWarnings("unchecked")
+			List<UserEntity> listUE = (List<UserEntity>) spQuery.getResultList();
+
+			for (int i = 0; i < listUE.size(); i++) {
+				UserInfo user = new UserInfo();
+				user.entity2model(listUE.get(i));
+				listUser.add(user);
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return listUser;
+	}
+
+	@Override
+	public int countUserOfRole(String role) {
+		int count = -1;
+		
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+			ProcedureCall spQuery = session.createStoredProcedureCall("sp_User_countRole");
+			spQuery.registerParameter("role_name", String.class, ParameterMode.IN).bindValue(role);
+			spQuery.registerParameter("result", Integer.class, ParameterMode.OUT);
+			
+			spQuery.execute();
+			
+			count = (int)spQuery.getOutputParameterValue("result");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return count;
+	}
 }
