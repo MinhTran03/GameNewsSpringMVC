@@ -3,7 +3,7 @@ package com.springmvc.models;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import javax.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.springmvc.entities.UserEntity;
 
@@ -11,23 +11,22 @@ public class UserInfo {
 	
 	private int userId;
 	private String address;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
-	
-	@NotNull(message = "Please enter your email")
 	private String email;
-	
 	private String firstName;
 	private String lastName;
 	private String image = "/lib/user/default.jpg";
 	private String phoneNumber;
 	private LocalDate registrationDay;
 	private int totalPost;
-	
-	@NotNull(message = "Password is requied")
 	private String password;
 
 	public UserInfo() {
 		super();
+		this.totalPost = 0;
+		this.registrationDay = LocalDate.now();
 	}
 
 	public String getFullName() {

@@ -108,3 +108,50 @@ submit.addEventListener('click', (event) => {
 	   })
    }
 })
+
+//let pageNext = document.getElementsByClassName('page-next')[0];
+//
+//pageNext.addEventListener('click', (event) => {
+//   let nextPage = Number.parseInt(event.target.innerText);
+//
+//   $ajax({
+//      url: nextPage,
+//      type: 'GET',
+////      dataType: 'JSON',
+//      success: function (response) {
+//         alert(response);
+//      }
+//   })
+//})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

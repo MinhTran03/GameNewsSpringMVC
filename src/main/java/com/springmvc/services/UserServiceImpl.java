@@ -77,4 +77,10 @@ public class UserServiceImpl implements UserService {
 		return userDAO.countUserOfRole(role);
 	}
 
+	@Override
+	public boolean isContainEmail(String email) {
+		// TODO Auto-generated method stub
+		return userDAO.isContainEmail(email);
+	}
+
 }

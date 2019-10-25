@@ -38,9 +38,8 @@ public class LoginController {
 		return "login/login-page";
 	}
 	
-	@RequestMapping(value = "/check", method = RequestMethod.POST)
-	public String check(ModelMap model,
-						@ModelAttribute("userLogin") UserInfo userLogin, BindingResult bind) {
+	@RequestMapping(name = "/check", method = RequestMethod.POST)
+	public String check(ModelMap model, @ModelAttribute("userLogin") UserInfo userLogin, BindingResult bind) {
 		
 		userValidator.validate(userLogin, bind);
 		if (bind.hasErrors()) {

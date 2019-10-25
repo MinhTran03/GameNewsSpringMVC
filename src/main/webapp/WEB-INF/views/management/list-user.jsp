@@ -240,21 +240,17 @@
             </tbody>
          </table>
          <div class="clearfix">
+         	<c:set var="pageLink" value="${ rootName }/management/user-list/?page=" />
             <div class="hint-text">Showing <b>5</b> out of <b>${ totalUser }</b> entries</div>
             <ul class="pagination">
             	<c:if test="${ currentPage > 1 }">
-               	<li class="page-item"><a href="#">Previous</a></li>
+               	<li class="page-item page-pre"><a href="${ pageLink }${ currentPage - 1 }">Previous</a></li>
               	</c:if>
               	<c:forEach begin="0" end="${ pageCount }" varStatus="status">
-              		<li class="page-item"><a href="#" class="page-link">${ status.index + 1 }</a></li>
+              		<li class="page-item page-num"><a href="${ pageLink }${ status.index + 1 }" class="page-link">${ status.index + 1 }</a></li>
               	</c:forEach>
-               <!-- <li class="page-item active"><a href="#" class="page-link">1</a></li>
-               <li class="page-item"><a href="#" class="page-link">2</a></li>
-               <li class="page-item"><a href="#" class="page-link">3</a></li>
-               <li class="page-item"><a href="#" class="page-link">4</a></li>
-               <li class="page-item"><a href="#" class="page-link">5</a></li> -->
                <c:if test="${ currentPage <= pageCount }">
-               	<li class="page-item"><a href="#" class="page-link">Next</a></li>
+               	<li class="page-item page-next"><a href="${ pageLink }${ currentPage + 1 }" class="page-link">Next</a></li>
               	</c:if>
             </ul>
          </div>

@@ -5,11 +5,14 @@ import static com.springmvc.util.CurrentLogin.id;
 import static com.springmvc.util.CurrentLogin.loggingIn;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -54,6 +57,9 @@ public class AuthorController {
 	public void initBinder(WebDataBinder dataBinder) {
 		StringTrimmerEditor ste = new StringTrimmerEditor(true);
 		dataBinder.registerCustomEditor(String.class, ste);
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		dataBinder.registerCustomEditor(LocalDate.class, new CustomDateEditor(dateFormat, true));
 	}
 	
 	@ModelAttribute("listTopic")

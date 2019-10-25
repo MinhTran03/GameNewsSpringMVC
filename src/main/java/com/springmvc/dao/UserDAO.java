@@ -21,4 +21,6 @@ public interface UserDAO extends DAOBase<UserInfo> {
 	public List<UserInfo> getInRange(int skip, int take, String roleName);
 	
 	public int countUserOfRole(String role);
+	
+	public boolean isContainEmail(String email);
 }

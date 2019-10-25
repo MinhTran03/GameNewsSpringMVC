@@ -32,6 +32,7 @@ D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\entities\ReplyCom
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\ReplyCommentServiceImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\TopicServiceImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\PostContentDAO.java
+D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\controllers\RegisterController.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\TagDAOImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\TopicDAOImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\models\Post.java

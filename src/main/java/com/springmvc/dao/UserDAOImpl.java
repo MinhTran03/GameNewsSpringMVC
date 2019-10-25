@@ -1,19 +1,26 @@
 package com.springmvc.dao;
 
-import com.springmvc.entities.*;
 import static com.springmvc.entities.UserEntity.newEntity;
-import com.springmvc.models.*;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.ParameterMode;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.procedure.ProcedureCall;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.springmvc.entities.PostEntity;
+import com.springmvc.entities.RoleEntity;
+import com.springmvc.entities.UserEntity;
+import com.springmvc.models.Post;
+import com.springmvc.models.Role;
+import com.springmvc.models.UserInfo;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -45,6 +52,23 @@ public class UserDAOImpl implements UserDAO {
 		return user;
 	}
 
+	@Override
+	public boolean isContainEmail(String email) {
+		boolean isContain = false;
+		
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+			int result = (int)session.createSQLQuery("select 0 from [User] where email = :email").setParameter("email", email).uniqueResult();
+			isContain = result == 0;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return isContain;
+	}
+	
 	@Override
 	public int save(UserInfo userInfo) {
 		int userId = -1;

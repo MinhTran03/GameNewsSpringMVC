@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Slide Login Form Flat Responsive Widget Template :: w3layouts</title>
+	<title>${ message }</title>
 	
 	<script>
         addEventListener("load", function () {
@@ -47,17 +47,17 @@
 				<div class="header-left-bottom">
 					<form:form name="f" modelAttribute="userLogin" action="login/check" method="POST">
 						<div class="icon1">
-						<spring:bind path="email">
-							<span class="fa fa-user"></span>
-							<form:input path="email" type="email" placeholder="Email Address" required=""/>
-							<form:errors path="email" cssClass="error" />
+							<spring:bind path="email">
+								<span class="fa fa-user"></span>
+								<form:input path="email" type="email" placeholder="Email Address" required=""/>
+								<form:errors path="email" cssClass="error" />
 							</spring:bind>
 						</div>
 						<div class="icon1">
-						<spring:bind path="password">
-							<span class="fa fa-lock"></span>
-							<form:input path="password" type="password" placeholder="Password" required=""/>
-							<form:errors path="password" cssClass="error" />
+							<spring:bind path="password">
+								<span class="fa fa-lock"></span>
+								<form:input path="password" type="password" placeholder="Password" required=""/>
+								<form:errors path="password" cssClass="error" />
 							</spring:bind>
 						</div>
 						<div class="login-check">
