@@ -31,5 +31,12 @@ public class ManagementController {
 		
 		return "management/list-user";
 	}
-	
+
+	@RequestMapping("/dashboard")
+	public String dashBoard(ModelMap model) {
+		
+		
+		
+		return "management/dashboard";
+	}
 }

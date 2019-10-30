@@ -25,6 +25,8 @@ public class UserInfo {
 
 	public UserInfo() {
 		super();
+		this.firstName = "firstname";
+		this.lastName = "lastname";
 		this.totalPost = 0;
 		this.registrationDay = LocalDate.now();
 	}

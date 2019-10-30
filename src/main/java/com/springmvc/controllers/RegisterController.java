@@ -13,6 +13,7 @@ import com.springmvc.services.UserService;
 import com.springmvc.validator.UserValidator;
 
 @Controller
+@RequestMapping("/sign-up")
 public class RegisterController {
 	
 	@Autowired
@@ -21,7 +22,7 @@ public class RegisterController {
 	@Autowired
 	UserService userService;
 	
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String register(ModelMap model) {
 		
 		model.addAttribute("newUser", new UserInfo());
@@ -29,7 +30,7 @@ public class RegisterController {
 		return "login/register-page";
 	}
 	
-	@RequestMapping(value = "/sign-up", method = RequestMethod.POST)
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String signUp(ModelMap model, @ModelAttribute("newUser") UserInfo newUser, BindingResult bind) {
 		
 		userValidator.validate(newUser, bind);

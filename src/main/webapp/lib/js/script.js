@@ -97,7 +97,8 @@ submit.addEventListener('click', (event) => {
 	      				   commentContent.value = '';
 	      				   commentCount.innerText = commentsList.childElementCount + " Comments";
 	      			   }else{
-	      				   alert("ERROR");
+	      				 window.location.href = response.url;
+	      				 document.getElementsByClassName('email')[0].innerText = response.email;
 	      			   }
 	      		   },
 	      	   })

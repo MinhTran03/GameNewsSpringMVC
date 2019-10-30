@@ -42,10 +42,12 @@ public class UserValidator implements Validator {
 		}
 		
 		LocalDate birth = userInfo.getBirthday();
-		LocalDate today = LocalDate.now();
-		if (birth.isAfter(today)) {
-			if(errors.getFieldErrorCount("birthday") == 0) {
-				errors.rejectValue("birthday", "BirthDate.NotValid");
+		if(birth != null) {
+			LocalDate today = LocalDate.now();
+			if (birth.isAfter(today)) {
+				if(errors.getFieldErrorCount("birthday") == 0) {
+					errors.rejectValue("birthday", "BirthDate.NotValid");
+				}
 			}
 		}
 	}

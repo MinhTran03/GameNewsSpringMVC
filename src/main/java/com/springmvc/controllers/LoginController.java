@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.springmvc.models.Role;
 import com.springmvc.models.UserInfo;
 import com.springmvc.services.UserService;
+import com.springmvc.util.CurrentLogin;
 import com.springmvc.validator.UserValidator;
 
 @Controller
@@ -35,14 +36,16 @@ public class LoginController {
 		
 		model.addAttribute("userLogin", new UserInfo());
 		
+		System.out.println("======================================new user");
 		return "login/login-page";
 	}
 	
-	@RequestMapping(name = "/check", method = RequestMethod.POST)
+	@RequestMapping(name = "/", method = RequestMethod.POST)
 	public String check(ModelMap model, @ModelAttribute("userLogin") UserInfo userLogin, BindingResult bind) {
-		
+		System.out.println("====================");
 		userValidator.validate(userLogin, bind);
 		if (bind.hasErrors()) {
+			System.out.println("===error");
 			return "login/login-page";
 		}
 		
@@ -65,8 +68,9 @@ public class LoginController {
 				System.out.println(item.getRoleName());
 			});
 		}
-		
-		return "redirect:/author/post";
+		CurrentLogin.redirectStr = CurrentLogin.redirectStr.substring(9, CurrentLogin.redirectStr.length());
+		System.out.println(CurrentLogin.redirectStr);
+		return String.format("redirect:%s", CurrentLogin.redirectStr);//"redirect:/" + CurrentLogin.redirectStr;
 	}
 	
 }

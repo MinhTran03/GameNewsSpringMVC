@@ -47,7 +47,7 @@
 </head>
 <body>
 	<div class="container">
-	    <form:form class="form-horizontal" name="f" modelAttribute="newUser" action="sign-up" method="POST" role="form">
+	    <form:form class="form-horizontal" name="f" modelAttribute="newUser" action="register" method="POST" role="form">
 	        <h2>Registration</h2>
 	        ${ message }
 	        <div class="form-group">

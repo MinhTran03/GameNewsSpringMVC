@@ -134,7 +134,7 @@ public class ArticleController {
 	@RequestMapping(value = "/{shortTitle:[\\w\\W]+}/commentWithoutLogin", method = RequestMethod.POST)
 	@ResponseBody
 	public String postCommentNotLogin(@RequestParam String name, @RequestParam String email, @RequestParam int postId,
-			@RequestParam String content) {
+			@RequestParam String content, ModelMap model) {
 
 		int userId = userService.getIdByEmail(email);
 
@@ -167,9 +167,11 @@ public class ArticleController {
 		}
 
 		return jsonAsString;
+		
 	}
 
 	public UserInfo newUserCommentHander(UserInfo user, String name, String email) {
+		
 		// User chưa có => tạo mới => gửi pass tới email đó
 		user.setRegistrationDay(LocalDate.now());
 		user.setLastName(name);

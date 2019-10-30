@@ -39,13 +39,14 @@
 	<div class="w3layouts-main"> 
 	<div class="bg-layer">
 		<h1>Slide Login form</h1>
-		
+			
 			<div class="header-main">
 				<div class="main-icon">
 					<span class="fa fa-eercast"></span>
 				</div>
 				<div class="header-left-bottom">
-					<form:form name="f" modelAttribute="userLogin" action="login/check" method="POST">
+					${ message }
+					<form:form name="f" modelAttribute="userLogin" action="login" method="POST">
 						<div class="icon1">
 							<spring:bind path="email">
 								<span class="fa fa-user"></span>

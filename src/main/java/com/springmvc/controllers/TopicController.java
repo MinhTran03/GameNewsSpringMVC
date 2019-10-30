@@ -17,8 +17,10 @@ import com.springmvc.models.UserInfo;
 import com.springmvc.services.PostService;
 import com.springmvc.services.TopicService;
 import com.springmvc.services.UserService;
+import com.springmvc.util.*;
 
 @Controller
+@RequestMapping("/topic")
 public class TopicController {
 
 	public final int MAX_POST_PER_PAGE = 10;
@@ -104,7 +106,7 @@ public class TopicController {
 			}
 			model.addAttribute("listAuthorName", listAuthorName);
 		}
-
+		model.addAttribute("redirectUrl", CurrentLogin.redirectStr);
 		return "topic/topic-page";
 	}
 
@@ -132,5 +134,11 @@ public class TopicController {
 		model.addAttribute("authorName", user.getFullName());
 
 		return "topic/author-post";
+	}
+	
+	@RequestMapping(value = "/login2cmt", method = RequestMethod.GET)
+	public String logintocmt(@RequestParam("url") String url) {
+		CurrentLogin.redirectStr = url;
+		return "redirect:/login";
 	}
 }

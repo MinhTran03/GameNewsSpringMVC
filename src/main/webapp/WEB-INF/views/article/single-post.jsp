@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	isELIgnored="false" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -274,16 +274,22 @@
 							<div class="custombox clearfix">
 								<h4 class="small-title">Leave a Reply</h4>
 								<div class="row">
-									<div class="col-lg-12">
-										<div class="form-wrapper">
-											<c:if test="${ loggingIn == false }">
-												<input id="input-name" type="text" class="form-control" placeholder="Your name">
-												<input id="input-email" type="text" class="form-control" placeholder="Email address">
-											</c:if>
-											<textarea class="form-control comment-content" placeholder="Your comment"></textarea>
-											<button type="submit" class="btn btn-primary post-comment">Submit Comment</button>
+									<form:form name="f" modelAttribute="userComment" action="login" method="POST" style="width:100%">
+										<div class="col-lg-12">
+											<div class="form-wrapper">
+												<c:if test="${ loggingIn == false }">
+													<!-- <input id="input-name" type="text" class="form-control" placeholder="Your name" />
+													<input id="input-email" type="text" class="form-control" placeholder="Email address" /> -->
+													<a id="cmtLinkLogin" href="${ rootName }/login2cmt">Đăng nhập để bình luận</a>
+													
+												</c:if>
+												<c:if test="${ loggingIn == true }">
+													<textarea class="form-control comment-content" placeholder="Your comment"></textarea>
+													<button type="submit" class="btn btn-primary post-comment">Submit Comment</button>												
+												</c:if>
+											</div>
 										</div>
-									</div>
+									</form:form>
 								</div>
 							</div>
 							
@@ -296,6 +302,12 @@
 
 	<!-- Core JavaScript
     ================================================== -->
+    <c:if test="${ loggingIn == false }">
+	    <script type="text/javascript">
+	    	let a = document.getElementById("cmtLinkLogin");
+	    	a.href = "/GameNews/topic/login2cmt?url=" + window.location.pathname;
+	    </script>
+    </c:if>
 	<script src="<c:url value="/lib/js/jquery.min.js" />"></script>
 	<script src="<c:url value="/lib/js/tether.min.js" />"></script>
 	<script src="<c:url value="/lib/js/bootstrap.min.js" />"></script>
