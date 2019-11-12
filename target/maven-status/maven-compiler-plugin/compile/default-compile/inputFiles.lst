@@ -5,6 +5,7 @@ D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\controllers\Topic
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\TopicDAO.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\entities\PostContentEntity.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\ReplyCommentService.java
+D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\controllers\LogoutController.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\TagDAO.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\CommentServiceImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\PostContentServiceImpl.java

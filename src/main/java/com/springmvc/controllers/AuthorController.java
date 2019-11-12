@@ -6,7 +6,8 @@ import static com.springmvc.util.CurrentLogin.loggingIn;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -19,9 +20,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.springmvc.models.Post;
@@ -32,9 +35,10 @@ import com.springmvc.services.PostContentService;
 import com.springmvc.services.PostService;
 import com.springmvc.services.TagService;
 import com.springmvc.services.TopicService;
+import com.springmvc.util.CurrentLogin;
 
 @Controller
-@RequestMapping("/author")
+@RequestMapping("/author/")
 public class AuthorController {
 
 	@Autowired
@@ -52,14 +56,13 @@ public class AuthorController {
 	@Autowired
 	ServletContext context;
 
-	// this will trim all data binder pass in
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
 		StringTrimmerEditor ste = new StringTrimmerEditor(true);
 		dataBinder.registerCustomEditor(String.class, ste);
 		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		dataBinder.registerCustomEditor(LocalDate.class, new CustomDateEditor(dateFormat, true));
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		dataBinder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 	
 	@ModelAttribute("listTopic")
@@ -68,47 +71,65 @@ public class AuthorController {
 		return listTopic;
 	}
 	
-	@RequestMapping(value = "/post", method = RequestMethod.GET)
-	public String post(ModelMap model) {
+	@RequestMapping(value = "/addPost", method = RequestMethod.GET)
+	public String addPost(ModelMap model) {
 
 		if (loggingIn == false) {
 			return "redirect:/login/";
 		}
 		
-		model.addAttribute("post", new Post());
+		Post p = new Post();
+		model.addAttribute("newPost", p);
 
-		return "author/post-news";
+		return "/author/post-news";
 	}
 
-	@RequestMapping(value = "/demo-post", method = RequestMethod.POST)
-	public String demoPost(ModelMap model, 
-			@ModelAttribute Post post,
-			@RequestParam String tags,
-			@RequestParam MultipartFile imageHeader) {
+	@RequestMapping(value = "/demoPost", method = RequestMethod.POST)
+	public String demoPost(ModelMap model,
+			@ModelAttribute("newPost") Post post,
+			@RequestParam("tags") String tags,
+			@RequestParam("imageHeader") MultipartFile imageHeader) {
 
 		String tagArr[] = tags.split(",");
 
-		model.addAttribute("title", post.getTitle());
-		model.addAttribute("content", post.getContent());
-		model.addAttribute("tagList", tagArr);
-		model.addAttribute("topic", post.getTopicId());
-		
 		PostContent postContent = newPostContent(post.getContent());
-		int postContentId = postContentService.save(postContent);
+		int postContentId = post.getPostContentId();
+		postContent.setPostContentId(postContentId);
+		
+		boolean isEdit = postContentId != 0;
+		
+		// nếu thêm mới thì postContentId = 0
+		if(!isEdit) {
+			postContentId = postContentService.save(postContent);
+		}else {
+			postContentService.update(postContent);
+		}
 		
 		// ======================================== save post =============================================
 		String imageSavePath = "/lib/post-image/id" + postContentId + ".jpg";
-		try {
-			String photoPath = context.getRealPath(imageSavePath);
-			System.out.println(photoPath);
-			imageHeader.transferTo(new File(photoPath));
-			
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(!imageHeader.isEmpty()) {
+			try {
+				String photoPath = context.getRealPath(imageSavePath);
+				System.out.println(photoPath);
+				File file = new File(photoPath);
+				if(file.exists()) {
+					file.delete();
+				}
+				imageHeader.transferTo(new File(photoPath));
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		post = post.setPost(id, postContentId, imageSavePath);
-		int postId = postService.saveWithContent(post, postContent.getContent());
+		post.setPostContentId(postContentId);
+		int postId = post.getPostId();
+		if(!isEdit) {
+			postId = postService.saveWithContent(post, postContent.getContent());
+		}else {
+			postService.update(post);
+		}
 		//===================================================================================================
 		
 		// ======================= save tags ===========================
@@ -123,5 +144,55 @@ public class AuthorController {
 
 		return "author/post-demo";
 	}
-
+	
+	@RequestMapping("/dashboard")
+	public String dashBoard(ModelMap model) {
+		
+		if(CurrentLogin.loggingIn == false) {
+			return "redirect:/login/";
+		}
+		
+		if(CurrentLogin.roles.get(0).getRoleName().equals("AUTHOR")) {
+			List<Post> list = postService.getByAuthorId(CurrentLogin.id);
+			model.addAttribute("listPost", list);
+			
+			List<String> topicName = new ArrayList<String>();
+			for(Post item : list) {
+				topicName.add(topicService.getById(item.getTopicId()).getName());
+			}
+			model.addAttribute("listTopicName", topicName);
+			
+			return "author/dashboard";
+		}
+		
+		return "author/dashboard";
+	}
+	
+	@RequestMapping("/editPost/{id:\\d+}")
+	public String edit(ModelMap model, @PathVariable("id") int postId) {
+		
+		if(CurrentLogin.loggingIn == false) {
+			return "redirect:/login/";
+		}
+		
+		Post postEdit = postService.getById(postId);
+		model.addAttribute("newPost", postEdit);
+		
+		return "author/post-news";
+	}
+	
+	@RequestMapping(value = "/deletePost", method = RequestMethod.GET)
+	@ResponseBody
+	public String delete(ModelMap model, @RequestParam int postId) {
+		
+		if(CurrentLogin.loggingIn == false) {
+			return "redirect:/login/";
+		}
+		
+		boolean result = postService.deleteById(postId) == true;
+//		boolean result = true;
+		
+		return result ? "true" : "false";
+	}
+	
 }

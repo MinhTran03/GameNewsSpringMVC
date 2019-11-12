@@ -72,12 +72,13 @@ public class ArticleController {
 		return listTopic;
 	}
 
-	@RequestMapping(value = "/{shortTitle:[\\w\\W]+}/{postId}")
+	@RequestMapping(value = "/{shortTitle:[\\w\\W]+}/{postId:\\d+}")
 	public String showPost(@PathVariable int postId, ModelMap model) {
 
 		// ==================================== LOAD CONTENT
 		// ===============================
 		Post post = postService.getById(postId);
+		postService.increaseViews(postId);
 		PostContent postContent = postContentService.getById(post.getPostContentId());
 		Topic topic = topicServiceBase.getById(post.getTopicId());
 		String authorName = userService.getFullName(post.getUserId());
@@ -131,44 +132,44 @@ public class ArticleController {
 		return jsonAsString;
 	}
 
-	@RequestMapping(value = "/{shortTitle:[\\w\\W]+}/commentWithoutLogin", method = RequestMethod.POST)
-	@ResponseBody
-	public String postCommentNotLogin(@RequestParam String name, @RequestParam String email, @RequestParam int postId,
-			@RequestParam String content, ModelMap model) {
-
-		int userId = userService.getIdByEmail(email);
-
-		UserInfo user = new UserInfo();
-		if (userId == -1) {
-			user = newUserCommentHander(user, name, email);
-		} else {
-			// email đã tồn tại => hiện popup đăng nhập
-		}
-
-		userId = user.getUserId();
-		Comment comment = newComment(content, postId, userId);
-		int cmId = commentService.save(comment);
-
-		Map<String, String> json = new HashMap<String, String>();
-		if (cmId != -1) {
-			json.put("imageSrc", user.getImage());
-			json.put("name", user.getLastName());
-			json.put("valid", "1");
-		} else {
-			json.put("valid", "0");
-		}
-
-		String jsonAsString = "";
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			jsonAsString = mapper.writeValueAsString(json);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return jsonAsString;
-		
-	}
+//	@RequestMapping(value = "/{shortTitle:[\\w\\W]+}/commentWithoutLogin", method = RequestMethod.POST)
+//	@ResponseBody
+//	public String postCommentNotLogin(@RequestParam String name, @RequestParam String email, @RequestParam int postId,
+//			@RequestParam String content, ModelMap model) {
+//
+//		int userId = userService.getIdByEmail(email);
+//
+//		UserInfo user = new UserInfo();
+//		if (userId == -1) {
+//			user = newUserCommentHander(user, name, email);
+//		} else {
+//			// email đã tồn tại => hiện popup đăng nhập
+//		}
+//
+//		userId = user.getUserId();
+//		Comment comment = newComment(content, postId, userId);
+//		int cmId = commentService.save(comment);
+//
+//		Map<String, String> json = new HashMap<String, String>();
+//		if (cmId != -1) {
+//			json.put("imageSrc", user.getImage());
+//			json.put("name", user.getLastName());
+//			json.put("valid", "1");
+//		} else {
+//			json.put("valid", "0");
+//		}
+//
+//		String jsonAsString = "";
+//		try {
+//			ObjectMapper mapper = new ObjectMapper();
+//			jsonAsString = mapper.writeValueAsString(json);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return jsonAsString;
+//		
+//	}
 
 	public UserInfo newUserCommentHander(UserInfo user, String name, String email) {
 		

@@ -2,8 +2,8 @@ package com.springmvc.models;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.springmvc.entities.PostEntity;
 
@@ -16,17 +16,14 @@ public class Post {
 	private int userId;
 	private int topicId;
 	private int postContentId;
-	
-	@NotNull(message = "Please enter title for your post")
 	private String title;
-	
-	@NotNull(message = "Please enter description")
 	private String description;
-	
 	private String image;
 	private int views;
 	private LocalDateTime time;
 	private String shortTitle;
+	private boolean status;
+	private List<Tag> listTag;
 	
 	public Post() {
 		super();
@@ -45,10 +42,27 @@ public class Post {
 		this.setShortTitle(title.toLowerCase().
 								substring(0, title.length() < SHORT_TITLE_LENGTH ? title.length() : SHORT_TITLE_LENGTH).
 								replaceAll("[ \"]", "-"));
-		
+		this.setStatus(false);
+		this.listTag = new ArrayList<Tag>();
 		return this;
 	}
 	
+	public List<Tag> getListTag() {
+		return listTag;
+	}
+
+	public void setListTag(List<Tag> listTag) {
+		this.listTag = listTag;
+	}
+
+	public boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
 	public String getContent() {
 		return content;
 	}
@@ -152,6 +166,8 @@ public class Post {
 		this.setImage(entity.getImage());
 		this.setPostContentId(entity.getPostContent().getPost_content_id());
 		this.setShortTitle(entity.getShort_title());
+		this.setStatus(entity.getStatus());
+		this.setContent(entity.getPostContent().getContent());
 	}
 	
 }

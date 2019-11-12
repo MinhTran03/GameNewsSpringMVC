@@ -7,9 +7,7 @@ import com.springmvc.entities.PostContentEntity;
 public class PostContent {
 
 	private int postContentId;
-	
 	private int commentCount;
-	
 	private int upvote;
 	
 	@NotNull(message = "Content can not empty")

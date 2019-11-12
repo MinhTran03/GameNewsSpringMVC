@@ -6,7 +6,6 @@
 <html lang="en">
 
 <head>
-	<base href="${ pageContext.servletContext.contextPath }/" />
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -41,13 +40,15 @@
 </head>
 
 <body>
-
-	<form:form action="author/demo-post" modelAttribute="post" method="post" enctype="multipart/form-data">
+	<base href="${ pageContext.servletContext.contextPath }/" />
+	<form:form action="/GameNews/author/demoPost" modelAttribute="newPost" method="POST" enctype="multipart/form-data">
 
 		<div class="row">
 			<div class="post col-md-9">
 				<p class="title">Add New Post</p>
 				<div class="post-title">
+					<form:input path="postId" type="hidden"/>
+					<form:input path="postContentId" type="hidden" />
 					<form:input path="title" cssClass="title-content" type="text" placeholder="Enter title here" />
 					<form:errors path="title" cssClass="error" />
 				</div>
@@ -113,8 +114,16 @@
 								00001
 								<i class="close fas fa-times"></i>
 							</div> -->
+							<c:if test="${ not empty newPost.listTag }">
+								<c:forEach items="${ newPost.listTag }" var="item">
+									<div class="chip">
+									${ item.name }
+									<i class="close fas fa-times"></i>
+								</div>
+								</c:forEach>							
+							</c:if>
 						</div>
-						<input id="tags" type="hidden" name="tags" value="">
+						<input type="hidden" name="tags" id="tags" />
 					</section>
 				</div>
 			</div>

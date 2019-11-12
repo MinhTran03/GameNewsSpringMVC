@@ -35,7 +35,7 @@ public class PostContentServiceImpl implements PostContentService{
 	@Override
 	public boolean update(PostContent entity) {
 		// TODO Auto-generated method stub
-		return false;
+		return postContentDAO.update(entity);
 	}
 
 	@Override

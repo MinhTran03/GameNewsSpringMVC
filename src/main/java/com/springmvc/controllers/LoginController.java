@@ -34,6 +34,10 @@ public class LoginController {
 	@RequestMapping(name = "/", method = RequestMethod.GET)
 	public String login(ModelMap model) {
 		
+		if(CurrentLogin.loggingIn == true) {
+			return "redirect:" + CurrentLogin.redirectStr;
+		}
+		
 		model.addAttribute("userLogin", new UserInfo());
 		
 		System.out.println("======================================new user");
@@ -68,9 +72,12 @@ public class LoginController {
 				System.out.println(item.getRoleName());
 			});
 		}
-		CurrentLogin.redirectStr = CurrentLogin.redirectStr.substring(9, CurrentLogin.redirectStr.length());
+		if(CurrentLogin.redirectStr.startsWith("/GameNews")) {
+			CurrentLogin.redirectStr = CurrentLogin.redirectStr.substring(9, CurrentLogin.redirectStr.length());
+		}
+		
 		System.out.println(CurrentLogin.redirectStr);
-		return String.format("redirect:%s", CurrentLogin.redirectStr);//"redirect:/" + CurrentLogin.redirectStr;
+		return "redirect:" + CurrentLogin.redirectStr;//"redirect:/" + CurrentLogin.redirectStr;
 	}
 	
 }

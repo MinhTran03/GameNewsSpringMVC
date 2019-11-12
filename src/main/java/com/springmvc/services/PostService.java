@@ -15,4 +15,10 @@ public interface PostService extends ServiceBase<Post> {
 	public int count(int topicId);
 	
 	public int saveWithContent(Post post, String postContent);
+	
+	public boolean increaseViews(int postId);
+	
+	public List<Post> getByAuthorId(int id);
+	
+	public boolean deleteById(int id);
 }

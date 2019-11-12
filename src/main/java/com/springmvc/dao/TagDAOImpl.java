@@ -54,9 +54,13 @@ public class TagDAOImpl implements TagDAO {
 		try {
 			Session session = sessionFactory.getCurrentSession();
 			
-			TagEntity tagEntity = newEntity(object);
+			// dùng tên để tìm
+			TagEntity tagEntity = (TagEntity)session.createQuery("from TagEntity where name='" + object.getName() + "'").uniqueResult();
 			
-			session.save(tagEntity);
+			if(tagEntity == null) {
+				tagEntity = newEntity(object);
+				session.save(tagEntity);
+			}
 			
 			id = tagEntity.getTag_id();
 			

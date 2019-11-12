@@ -47,6 +47,9 @@ public class PostEntity {
 	@Column(nullable = false)
 	private String short_title;
 	
+	@Column(name = "[status]", nullable = false)
+	private boolean status;
+	
 	//-----------------------------------------------------------------------------------
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -87,6 +90,7 @@ public class PostEntity {
 		postEntity.setTime(post.getTime());
 		postEntity.setTitle(post.getTitle());
 		postEntity.setViews(post.getViews());
+		postEntity.setStatus(post.getStatus());
 		UserEntity u = new UserEntity();
 		u.setUser_id(post.getUserId());
 		postEntity.setUser(u);
@@ -97,6 +101,35 @@ public class PostEntity {
 		return postEntity;
 	}
 	
+	public static PostEntity newEntity(Post post) {
+		PostEntity postEntity = new PostEntity();
+		
+		postEntity.setPost_id(post.getPostId());
+		postEntity.setDescription(post.getDescription());
+		postEntity.setImage(post.getImage());
+		postEntity.setShort_title(post.getShortTitle());
+		postEntity.setTime(post.getTime());
+		postEntity.setTitle(post.getTitle());
+		postEntity.setViews(post.getViews());
+		postEntity.setStatus(post.getStatus());
+		UserEntity u = new UserEntity();
+		u.setUser_id(post.getUserId());
+		postEntity.setUser(u);
+		TopicEntity t = new TopicEntity();
+		t.setTopic_id(post.getTopicId());
+		postEntity.setTopic(t);
+		
+		return postEntity;
+	}
+	
+	public boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
 	public int getPost_id() {
 		return post_id;
 	}

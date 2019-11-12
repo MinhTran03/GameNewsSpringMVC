@@ -33,8 +33,7 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public boolean update(Post entity) {
-		// TODO Auto-generated method stub
-		return false;
+		return postDAO.update(entity);
 	}
 
 	@Override
@@ -71,4 +70,19 @@ public class PostServiceImpl implements PostService {
 		return postDAO.saveWithContent(post, postContent);
 	}
 
+	@Override
+	public boolean increaseViews(int postId) {
+		return postDAO.increaseViews(postId);
+	}
+
+	@Override
+	public List<Post> getByAuthorId(int id) {
+		// TODO Auto-generated method stub
+		return postDAO.getByAuthorId(id);
+	}
+	
+	@Override
+	public boolean deleteById(int id) {
+		return postDAO.deleteById(id);
+	}
 }

@@ -61,8 +61,19 @@ public class PostContentDAOImpl implements PostContentDAO{
 
 	@Override
 	public boolean update(PostContent object) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+			PostContentEntity p = newEntity(object);
+			p.setPost_content_id(object.getPostContentId());
+			
+			session.update(p);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	@Override

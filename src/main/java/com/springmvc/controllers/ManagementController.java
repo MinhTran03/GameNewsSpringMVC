@@ -6,7 +6,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.springmvc.services.PostService;
+import com.springmvc.services.TopicService;
 import com.springmvc.services.UserService;
+import com.springmvc.util.CurrentLogin;
 
 @Controller
 @RequestMapping("/management")
@@ -17,8 +20,18 @@ public class ManagementController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	PostService postService;
+	
+	@Autowired
+	TopicService topicService;
+	
 	@RequestMapping("/user-list")
 	public String userList(ModelMap model, @RequestParam(defaultValue = "1") int page) {
+		
+		if(CurrentLogin.loggingIn == false) {
+			return "redirect:/login/";
+		}
 		
 		int calPage = page - 1;
 		int totalUser = userService.countUserOfRole("AUTHOR");
@@ -32,11 +45,4 @@ public class ManagementController {
 		return "management/list-user";
 	}
 
-	@RequestMapping("/dashboard")
-	public String dashBoard(ModelMap model) {
-		
-		
-		
-		return "management/dashboard";
-	}
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.ParameterMode;
+import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.springmvc.entities.PostEntity;
+import com.springmvc.entities.TagEntity;
 import com.springmvc.models.Post;
+import com.springmvc.models.Tag;
 
 @Repository
 public class PostDAOImpl implements PostDAO {
@@ -36,11 +39,22 @@ public class PostDAOImpl implements PostDAO {
 			Session session = sessionFactory.getCurrentSession();
 
 			PostEntity postEntity = (PostEntity) session.get(PostEntity.class, id);
-
+			
+			List<TagEntity> listTE = (List<TagEntity>) session.createNativeQuery("SELECT * FROM dbo.Tag WHERE tag_id IN (SELECT tag_id FROM dbo.Post_Tag WHERE post_id = " + id + ")", TagEntity.class).list();
+			
+			List<Tag> listTag = new ArrayList<Tag>();
+			for (int i = 0; i < listTE.size(); i++) {
+				Tag tag = new Tag();
+				tag.entity2model(listTE.get(i));
+				listTag.add(tag);
+			}
+			
+			post.setListTag(listTag);
 			post.entity2model(postEntity);
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			post = null;
 		}
 		return post;
 	}
@@ -65,7 +79,16 @@ public class PostDAOImpl implements PostDAO {
 
 	@Override
 	public boolean update(Post object) {
-		// TODO Auto-generated method stub
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+			PostEntity postEntity = newEntity(object, object.getContent());
+			
+			session.update(postEntity);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
@@ -183,4 +206,69 @@ public class PostDAOImpl implements PostDAO {
 		return id;
 	}
 
+	@Override
+	public boolean increaseViews(int postId) {
+		boolean flag = true;
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+			Query query = session.createSQLQuery("UPDATE Post SET views = views + 1 WHERE post_id = " + postId);
+			
+			query.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
+	
+	public List<Post> getByAuthorId(int id){
+		List<Post> list = new ArrayList<Post>();
+		
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+//			Query query = session.createSQLQuery("select * from Post where user_id = " + id);
+			Query query = session.createNativeQuery("select * from Post where user_id = " + id, PostEntity.class);
+			
+			@SuppressWarnings("unchecked")
+			List<PostEntity> listE = (List<PostEntity>)query.getResultList();
+			
+			for(PostEntity item : listE) {
+				Post p = new Post();
+				p.entity2model(item);
+				list.add(p);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			list = null;
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public boolean deleteById(int id) {
+		
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+			Post p = this.getById(id);
+			
+			int result = -1;
+			if(p != null) {
+				result = session.createNativeQuery("DELETE FROM dbo.Post_Tag WHERE post_id = " + id).executeUpdate();
+				result = session.createNativeQuery("DELETE FROM dbo.Post WHERE post_id = " + id).executeUpdate();				
+				result = session.createNativeQuery("DELETE FROM dbo.PostContent WHERE post_content_id = " + p.getPostContentId()).executeUpdate();
+			}
+			
+			
+			return result == 1;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
