@@ -41,7 +41,7 @@
 
 <body>
 	<base href="${ pageContext.servletContext.contextPath }/" />
-	<form:form action="/GameNews/author/demoPost" modelAttribute="newPost" method="POST" enctype="multipart/form-data">
+	<form:form action="author/save-post" modelAttribute="newPost" method="POST" enctype="multipart/form-data">
 
 		<div class="row">
 			<div class="post col-md-9">

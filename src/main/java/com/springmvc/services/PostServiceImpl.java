@@ -85,4 +85,24 @@ public class PostServiceImpl implements PostService {
 	public boolean deleteById(int id) {
 		return postDAO.deleteById(id);
 	}
+	
+	@Override
+	public List<Post> getAllNotConfirm(){
+		return postDAO.getAllNotConfirm();
+	}
+	
+	@Override
+	public boolean acceptPost(int postId, int authorId) {
+		return postDAO.acceptPost(postId, authorId);
+	}
+	
+	@Override
+	public List<Post> getByTag(String tagName){
+		return postDAO.getByTag(tagName);
+	}
+	
+	@Override
+	public List<Post> search(String keyword){
+		return postDAO.search(keyword);
+	}
 }

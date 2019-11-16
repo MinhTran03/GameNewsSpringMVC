@@ -6,6 +6,7 @@ import static com.springmvc.util.CurrentLogin.loggingIn;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,11 +72,13 @@ public class AuthorController {
 		return listTopic;
 	}
 	
-	@RequestMapping(value = "/addPost", method = RequestMethod.GET)
+	@RequestMapping(value = "/add-post", method = RequestMethod.GET)
 	public String addPost(ModelMap model) {
 
 		if (loggingIn == false) {
 			return "redirect:/login/";
+		}else if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("AUTHOR")) {
+			return "author/cannotmodify";
 		}
 		
 		Post p = new Post();
@@ -84,13 +87,52 @@ public class AuthorController {
 		return "/author/post-news";
 	}
 
-	@RequestMapping(value = "/demoPost", method = RequestMethod.POST)
+	@RequestMapping(value = "/review-post", method = RequestMethod.POST)
 	public String demoPost(ModelMap model,
 			@ModelAttribute("newPost") Post post,
 			@RequestParam("tags") String tags,
 			@RequestParam("imageHeader") MultipartFile imageHeader) {
-
+		
+		List<Tag> listTag = new ArrayList<Tag>();
+		post.setTime(LocalDateTime.now());
 		String tagArr[] = tags.split(",");
+		for(int i = 0; i < tagArr.length; i++) {
+			Tag t = new Tag();
+			t.setName(tagArr[i]);
+			
+			listTag.add(t);
+		}
+		model.addAttribute("post", post);
+		model.addAttribute("content", post.getContent());
+		model.addAttribute("listTag", listTag);
+		Topic topic = topicService.getById(post.getTopicId());
+		model.addAttribute("topic", topic.getName());
+		model.addAttribute("authorName", CurrentLogin.fullName);
+		
+		return "author/post-demo";
+	}
+	
+	@RequestMapping(value = "/save-post", method = RequestMethod.POST)
+	public String savePost(ModelMap model,
+			@ModelAttribute("newPost") Post post,
+			@RequestParam("tags") String tags,
+			@RequestParam("imageHeader") MultipartFile imageHeader) {
+
+		List<Tag> listTag = new ArrayList<Tag>();
+		post.setTime(LocalDateTime.now());
+		String tagArr[] = tags.split(",");
+		for(int i = 0; i < tagArr.length; i++) {
+			Tag t = new Tag();
+			t.setName(tagArr[i]);
+			
+			listTag.add(t);
+		}
+		model.addAttribute("post", post);
+		model.addAttribute("content", post.getContent());
+		model.addAttribute("listTag", listTag);
+		Topic topic = topicService.getById(post.getTopicId());
+		model.addAttribute("topic", topic.getName());
+		model.addAttribute("authorName", CurrentLogin.fullName);
 
 		PostContent postContent = newPostContent(post.getContent());
 		int postContentId = post.getPostContentId();
@@ -148,8 +190,37 @@ public class AuthorController {
 	@RequestMapping("/dashboard")
 	public String dashBoard(ModelMap model) {
 		
-		if(CurrentLogin.loggingIn == false) {
+		
+		
+		if (loggingIn == false) {
 			return "redirect:/login/";
+		}else if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("AUTHOR")) {
+			return "author/cannotmodify";
+		}
+		
+//		if(CurrentLogin.roles.get(0).getRoleName().equals("AUTHOR")) {
+//			List<Post> list = postService.getByAuthorId(CurrentLogin.id);
+//			model.addAttribute("listPost", list);
+//			
+//			List<String> topicName = new ArrayList<String>();
+//			for(Post item : list) {
+//				topicName.add(topicService.getById(item.getTopicId()).getName());
+//			}
+//			model.addAttribute("listTopicName", topicName);
+//			
+//			return "author/dashboard";
+//		}
+		
+		return "author/dashboard";
+	}
+	
+	@RequestMapping("/list-post")
+	public String list(ModelMap model) {
+		
+		if (loggingIn == false) {
+			return "redirect:/login/";
+		}else if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("AUTHOR")) {
+			return "author/cannotmodify";
 		}
 		
 		if(CurrentLogin.roles.get(0).getRoleName().equals("AUTHOR")) {
@@ -162,17 +233,19 @@ public class AuthorController {
 			}
 			model.addAttribute("listTopicName", topicName);
 			
-			return "author/dashboard";
+			return "author/list-post";
 		}
 		
-		return "author/dashboard";
+		return "author/list-post";
 	}
 	
 	@RequestMapping("/editPost/{id:\\d+}")
 	public String edit(ModelMap model, @PathVariable("id") int postId) {
 		
-		if(CurrentLogin.loggingIn == false) {
+		if (loggingIn == false) {
 			return "redirect:/login/";
+		}else if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("AUTHOR")) {
+			return "author/cannotmodify";
 		}
 		
 		Post postEdit = postService.getById(postId);
@@ -185,14 +258,19 @@ public class AuthorController {
 	@ResponseBody
 	public String delete(ModelMap model, @RequestParam int postId) {
 		
-		if(CurrentLogin.loggingIn == false) {
+		if (loggingIn == false) {
 			return "redirect:/login/";
+		}else if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("AUTHOR")) {
+			return "author/cannotmodify";
 		}
 		
-		boolean result = postService.deleteById(postId) == true;
-//		boolean result = true;
+		boolean result = postService.deleteById(postId);
 		
 		return result ? "true" : "false";
 	}
 	
+	@RequestMapping("*")
+	public String fallBackPage() {
+		return "fileNotFound";
+	}
 }

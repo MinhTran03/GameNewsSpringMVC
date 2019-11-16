@@ -23,11 +23,13 @@ D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\ServiceB
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\DAOBase.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\PostService.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\CommentDAOImpl.java
+D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\models\UserLogin.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\entities\TagEntity.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\entities\RoleEntity.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\models\Role.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\TagService.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\ReplyCommentDAOImpl.java
+D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\controllers\HomeController.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\PostServiceImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\entities\ReplyCommentEntity.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\ReplyCommentServiceImpl.java
@@ -35,6 +37,7 @@ D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\TopicSer
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\PostContentDAO.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\controllers\RegisterController.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\TagDAOImpl.java
+D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\validator\LoginValidator.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\TopicDAOImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\models\Post.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\models\UserInfo.java

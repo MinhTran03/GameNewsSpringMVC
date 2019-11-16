@@ -22,13 +22,20 @@ public class UserInfo {
 	private LocalDate registrationDay;
 	private int totalPost;
 	private String password;
+	private String confirmPassword;
 
 	public UserInfo() {
 		super();
-		this.firstName = "firstname";
-		this.lastName = "lastname";
 		this.totalPost = 0;
 		this.registrationDay = LocalDate.now();
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 	public String getFullName() {

@@ -22,31 +22,39 @@ public class UserValidator implements Validator {
 
 		UserInfo userInfo = (UserInfo) target;
 
-		ValidationUtils.rejectIfEmpty(errors, "firstName", "FirstName.NotEmpty");
-		ValidationUtils.rejectIfEmpty(errors, "lastName", "LastName.NotEmpty");
-		ValidationUtils.rejectIfEmpty(errors, "email", "Email.NotEmpty");
-		ValidationUtils.rejectIfEmpty(errors, "password", "Password.NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "FirstName.NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "LastName.NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Email.NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Password.NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birthday", "BirthDate.NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phoneNumber", "PhoneNumber.NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address", "Address.NotEmpty");
 
-		String email = userInfo.getEmail();
-		if (email.matches("^\\w+@\\w+\\..{2,3}(.{2,3})?$") == false) {
-			if(errors.getFieldErrorCount("email") == 0) {
-				errors.rejectValue("email", "Email.NotValid");
+		if(errors.getFieldErrorCount("email") == 0) {
+			String email = userInfo.getEmail();
+			if (email.matches("^\\w+@\\w+\\..{2,3}(.{2,3})?$") == false) {
+					errors.rejectValue("email", "Email.NotValid");
+				}
+		}
+		
+		if(errors.getFieldErrorCount("password") == 0) {
+			String password = userInfo.getPassword();
+			if (password.length() < 6) {
+					errors.rejectValue("password", "Password.Min");
+			}else {
+				String cp = userInfo.getConfirmPassword();
+				if(!password.equals(cp)) {
+					errors.rejectValue("password", "Password.NotConfirm");
+				}
 			}
 		}
 		
-		String password = userInfo.getPassword();
-		if (password.length() < 6) {
-			if(errors.getFieldErrorCount("password") == 0) {
-				errors.rejectValue("password", "Password.Min");
-			}
-		}
-		
-		LocalDate birth = userInfo.getBirthday();
-		if(birth != null) {
-			LocalDate today = LocalDate.now();
-			if (birth.isAfter(today)) {
-				if(errors.getFieldErrorCount("birthday") == 0) {
-					errors.rejectValue("birthday", "BirthDate.NotValid");
+		if(errors.getFieldErrorCount("birthday") == 0) {
+			LocalDate birth = userInfo.getBirthday();
+			if(birth != null) {
+				LocalDate today = LocalDate.now();
+				if (birth.isAfter(today)) {
+						errors.rejectValue("birthday", "BirthDate.NotValid");
 				}
 			}
 		}

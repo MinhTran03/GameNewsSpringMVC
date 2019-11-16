@@ -95,7 +95,20 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public boolean update(UserInfo userInfo) {
-		// TODO Auto-generated method stub
+		try {
+			
+			Session session = sessionFactory.getCurrentSession();
+			UserEntity entity = newEntity(userInfo);
+			int roleId = (int)session.createNativeQuery("select role_id from User_Role where user_id = " + userInfo.getUserId()).uniqueResult();
+			RoleEntity role = (RoleEntity)session.get(RoleEntity.class, roleId);
+			Set<RoleEntity> roles = new HashSet<RoleEntity>();
+			roles.add(role);
+			entity.setRoles(roles);
+			session.update(entity);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 

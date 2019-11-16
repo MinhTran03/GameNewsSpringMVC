@@ -47,13 +47,15 @@
 </head>
 <body>
 	<div class="container">
-	    <form:form class="form-horizontal" name="f" modelAttribute="newUser" action="register" method="POST" role="form">
+		<c:set var="rootName" value="${ pageContext.servletContext.contextPath }" />
+	    <form:form class="form-horizontal" name="f" modelAttribute="newUser" action="${ rootName }/sign-up/register" method="POST" role="form">
 	        <h2>Registration</h2>
 	        ${ message }
 	        <div class="form-group">
 	        		<spring:bind path="firstName">
-		            <label for="firstName" class="col-sm-3 control-label">First Name* </label>
+		            <label for="firstName" class="col-sm-3 control-label">First Name </label>
 		            <div class="col-sm-9">
+		            		<form:input path="userId" type="hidden" />
 		                <form:input type="text" path="firstName" placeholder="First Name" class="form-control" />
 		                <form:errors path="firstName" cssClass="error" />
 		            </div>
@@ -61,7 +63,7 @@
 	        </div>
 	        <div class="form-group">
 		        <spring:bind path="lastName">
-		            <label for="lastName" class="col-sm-3 control-label">Last Name* </label>
+		            <label for="lastName" class="col-sm-3 control-label">Last Name </label>
 		            <div class="col-sm-9">
 		                <form:input type="text" path="lastName" placeholder="Last Name" class="form-control" />
 		                <form:errors path="lastName" cssClass="error" />
@@ -70,7 +72,7 @@
 	        </div>
 	        <div class="form-group">
 		        <spring:bind path="email">
-		            <label for="email" class="col-sm-3 control-label">Email* </label>
+		            <label for="email" class="col-sm-3 control-label">Email </label>
 		            <div class="col-sm-9">
 		                <form:input type="email" path="email" placeholder="Email" class="form-control" name= "email" />
 		                <form:errors path="email" cssClass="error" />
@@ -79,19 +81,19 @@
 	        </div>
 	        <div class="form-group">
 		        <spring:bind path="password">
-		            <label for="password" class="col-sm-3 control-label">Password* </label>
+		            <label for="password" class="col-sm-3 control-label">Password </label>
 		            <div class="col-sm-9">
-		                <form:input type="password" path="password" placeholder="Password" class="form-control" />
+		                <form:input type="password" path="password" placeholder="Password" value="" class="form-control" />
 		                <form:errors path="password" cssClass="error" />
 		            </div>
 	            </spring:bind>
 	        </div>
 	        <div class="form-group">
 		        <spring:bind path="password">
-		            <label for="password" class="col-sm-3 control-label">Confirm Password* </label>
+		            <label for="password" class="col-sm-3 control-label">Confirm Password </label>
 		            <div class="col-sm-9">
-		                <input type="password" path="password" placeholder="Password" class="form-control" />
-		                <form:errors path="password" cssClass="error" />
+		                <form:input type="password" path="confirmPassword" placeholder="Confirm Password" class="form-control" />
+		                <form:errors path="confirmPassword" cssClass="error" />
 		            </div>
 	            </spring:bind>
 	        </div>
@@ -152,11 +154,11 @@
 	                </div>
 	            </div>
 	        </div> /.form-group -->
-	        <div class="form-group">
+	        <!-- <div class="form-group">
 	            <div class="col-sm-9 col-sm-offset-3">
 	                <span class="help-block">*Required fields</span>
 	            </div>
-	        </div>
+	        </div> -->
 	        <button type="submit" class="btn btn-primary btn-block">Register</button>
 	    </form:form> <!-- /form -->
 	</div> <!-- ./container -->

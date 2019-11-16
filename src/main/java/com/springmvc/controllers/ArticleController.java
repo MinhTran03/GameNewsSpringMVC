@@ -38,6 +38,7 @@ import com.springmvc.services.PostService;
 import com.springmvc.services.TagService;
 import com.springmvc.services.TopicService;
 import com.springmvc.services.UserService;
+import com.springmvc.util.CurrentLogin;
 import com.springmvc.util.PasswordGenerator;
 
 @Controller
@@ -65,6 +66,14 @@ public class ArticleController {
 	@Autowired
 	JavaMailSender mailer;
 
+	@ModelAttribute("avataUser")
+	public String getAvata(ModelMap model) {
+		model.addAttribute("loggingIn", CurrentLogin.loggingIn);
+		if(CurrentLogin.loggingIn)
+			model.addAttribute("role", CurrentLogin.roles.get(0).getRoleName());
+		return CurrentLogin.imagePath;
+	}
+	
 	@ModelAttribute(name = "listTopic")
 	public List<Topic> getListTopic() {
 		List<Topic> listTopic = topicServiceBase.getAll();
@@ -72,12 +81,16 @@ public class ArticleController {
 		return listTopic;
 	}
 
-	@RequestMapping(value = "/{shortTitle:[\\w\\W]+}/{postId:\\d+}")
+	@RequestMapping(value = {"/{shortTitle:[\\w\\W]+}/{postId:\\d+}*", "/{shortTitle:[\\\\w\\\\W]+}/{postId:\\\\d+}/*"})
 	public String showPost(@PathVariable int postId, ModelMap model) {
 
 		// ==================================== LOAD CONTENT
 		// ===============================
 		Post post = postService.getById(postId);
+		if(post == null) {
+			return "fileNotFound";
+		}
+		
 		postService.increaseViews(postId);
 		PostContent postContent = postContentService.getById(post.getPostContentId());
 		Topic topic = topicServiceBase.getById(post.getTopicId());
@@ -90,6 +103,7 @@ public class ArticleController {
 		model.addAttribute("listTag", listTag);
 		model.addAttribute("topic", topic.getName());
 		model.addAttribute("authorName", authorName);
+		model.addAttribute("authorId", post.getUserId());
 		// ===================================================================================
 
 		// ================================== LOAD COMMENT
@@ -215,5 +229,10 @@ public class ArticleController {
 		}
 
 		return true;
+	}
+	
+	@RequestMapping("*")
+	public String fallBackPage() {
+		return "fileNotFound";
 	}
 }

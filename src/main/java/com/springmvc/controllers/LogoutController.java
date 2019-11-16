@@ -10,10 +10,14 @@ import com.springmvc.util.CurrentLogin;
 @RequestMapping("/logout")
 public class LogoutController {
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(name = "/", method = RequestMethod.GET)
 	public String logout() {
 		CurrentLogin.loggingIn = false;
 		return "redirect:" + CurrentLogin.redirectStr;
 	}
 	
+	@RequestMapping("*")
+	public String fallBackPage() {
+		return "fileNotFound";
+	}
 }

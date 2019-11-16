@@ -32,23 +32,26 @@
 		<section class="section single-wrapper">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+				
+					<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+					</div>
+					<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
 						<div class="page-wrapper">
 						
 							<div class="blog-title-area text-center">
 								<ol class="breadcrumb hidden-xs-down">
 									<li class="breadcrumb-item"><a href="${ rootName }/">HOME</a></li>
-									<li class="breadcrumb-item"><a href="${ rootName }/${ topic.toLowerCase().replace(' ', '-') }">${ topic.toUpperCase() }</a></li>
+									<li class="breadcrumb-item"><a href="${ rootName }/topic/${ topic.toLowerCase().replace(' ', '-') }">${ topic.toUpperCase() }</a></li>
 									<li class="breadcrumb-item active">${ post.title.toUpperCase() }</li>
 								</ol>
 
-								<span class="color-orange"><a href="${ rootName }/${ topic.toLowerCase().replace(' ', '-') }" title="">${ topic.toUpperCase() }</a></span>
+								<span class="color-orange"><a href="${ rootName }/topic/${ topic.toLowerCase().replace(' ', '-') }" title="">${ topic.toUpperCase() }</a></span>
 
 								<h3>${ post.title }</h3>
 
 								<div class="blog-meta big-meta">
 									<small><a href="#" title="">${ post.stringTime }</a></small>
-									<small><a href="#" title="">by ${ authorName }</a></small>
+									<small><a href="${ rootName }/topic/profile/${authorId}" title="">by ${ authorName }</a></small>
 									<small><a href="#" title=""><i class="fa fa-eye"></i> ${ post.views }</a></small>
 								</div>
 								<!-- end meta -->
@@ -82,7 +85,7 @@
 									<c:if test="${ not empty listTag }">
 										<c:forEach var="tag" items="${ listTag }">
 											<small>
-												<a href="#" title="">${ tag.name }</a>
+												<a href="${ rootName }/topic/tag/${ tag.name }" title="">${ tag.name }</a>
 											</small>
 										</c:forEach>
 									</c:if>
@@ -107,46 +110,6 @@
 									<div class="banner-spot clearfix">
 										<div class="banner-img">
 											<img src="upload/banner_01.jpg" alt="" class="img-fluid">
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<hr class="invis1">
-
-							<div class="custombox prevnextpost clearfix">
-								<div class="row">
-									<div class="col-lg-6">
-										<div class="blog-list-widget">
-											<div class="list-group">
-												<a href="tech-single.html"
-													class="list-group-item list-group-item-action flex-column align-items-start">
-													<div class="w-100 justify-content-between text-right">
-														<img src="upload/tech_menu_19.jpg" alt=""
-															class="img-fluid float-right">
-														<h5 class="mb-1">5 Beautiful buildings you need to
-															before dying</h5>
-														<small>Prev Post</small>
-													</div>
-												</a>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-6">
-										<div class="blog-list-widget">
-											<div class="list-group">
-												<a href="tech-single.html"
-													class="list-group-item list-group-item-action flex-column align-items-start">
-													<div class="w-100 justify-content-between">
-														<img src="upload/tech_menu_20.jpg" alt=""
-															class="img-fluid float-left">
-														<h5 class="mb-1">Let's make an introduction to the
-															glorious world of history</h5>
-														<small>Next Post</small>
-													</div>
-												</a>
-											</div>
 										</div>
 									</div>
 								</div>
@@ -193,7 +156,7 @@
 
 							<!-- <hr class="invis1"> -->
 
-							<div class="custombox clearfix">
+							<%-- <div class="custombox clearfix">
 								<h4 class="small-title">You may also like</h4>
 								<div class="row">
 									<div class="col-lg-6">
@@ -239,7 +202,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> --%>
 
 							<hr class="invis1">
 

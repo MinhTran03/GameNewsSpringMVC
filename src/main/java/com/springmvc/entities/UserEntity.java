@@ -85,12 +85,17 @@ public class UserEntity {
 	public static UserEntity newEntity(UserInfo user) {
 		UserEntity entity = new UserEntity();
 		
+		entity.setUser_id(user.getUserId());
 		entity.setEmail(user.getEmail());
+		entity.setFirst_name(user.getFirstName());
 		entity.setLast_name(user.getLastName());
 		entity.setPassword(user.getPassword());
 		entity.setRegistration_day(user.getRegistrationDay());
 		entity.setTotal_post(user.getTotalPost());
 		entity.setImage(user.getImage());
+		entity.setBirthday(user.getBirthday());
+		entity.setPhone_number(user.getPhoneNumber());
+		entity.setAddress(user.getAddress());
 		
 		return entity;
 	}

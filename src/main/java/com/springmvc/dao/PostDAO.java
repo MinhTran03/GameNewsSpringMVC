@@ -20,4 +20,12 @@ public interface PostDAO extends DAOBase<Post> {
 	public List<Post> getByAuthorId(int id);
 	
 	public boolean deleteById(int id);
+	
+	public List<Post> getAllNotConfirm();
+	
+	public boolean acceptPost(int postId, int authorId);
+	
+	public List<Post> getByTag(String tagName);
+	
+	public List<Post> search(String keyword);
 }

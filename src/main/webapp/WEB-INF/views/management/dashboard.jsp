@@ -33,6 +33,165 @@
       position: absolute;
     }
   </style>
+  <style type="text/css">
+   	body {
+		   color: #566787;
+		   background: #f5f5f5;
+		   font-family: 'Varela Round', sans-serif;
+		   font-size: 13px;
+		}
+		.table-wrapper {
+		   background: #fff;
+		   padding: 20px 25px;
+		   margin: 30px 0;
+		   border-radius: 3px;
+		   box-shadow: 0 1px 1px rgba(0,0,0,.05);
+		}
+		.table-title {
+		   padding-bottom: 15px;
+		   background: #299be4;
+		   color: #fff;
+		   padding: 16px 30px;
+		   margin: -20px -25px 10px;
+		   border-radius: 3px 3px 0 0;
+		}
+		.table-title h2 {
+		   margin: 5px 0 0;
+		   font-size: 24px;
+		}
+		.table-title .btn {
+		   color: #566787;
+		   float: right;
+		   font-size: 13px;
+		   background: #fff;
+		   border: none;
+		   min-width: 50px;
+		   border-radius: 2px;
+		   border: none;
+		   outline: none !important;
+		   margin-left: 10px;
+		}
+		.table-title .btn:hover, .table-title .btn:focus {
+		   color: #566787;
+		   background: #f2f2f2;
+		}
+		.table-title .btn i {
+		   float: left;
+		   font-size: 21px;
+		   margin-right: 5px;
+		}
+		.table-title .btn span {
+		   float: left;
+		   margin-top: 2px;
+		}
+		table.table tr th, table.table tr td {
+		   border-color: #e9e9e9;
+		   padding: 12px 15px;
+		   vertical-align: middle;
+		}
+		table.table tr th:first-child {
+		   width: 60px;
+		}
+		table.table tr th:last-child {
+		   width: 100px;
+		}
+		table.table-striped tbody tr:nth-of-type(odd) {
+		   background-color: #fcfcfc;
+		}
+		table.table-striped.table-hover tbody tr:hover {
+		   background: #f5f5f5;
+		}
+		table.table th i {
+		   font-size: 13px;
+		   margin: 0 5px;
+		   cursor: pointer;
+		}	
+		table.table td:last-child i {
+		   opacity: 0.9;
+		   font-size: 22px;
+		   margin: 0 5px;
+		}
+		table.table td a {
+		   font-weight: bold;
+		   color: #566787;
+		   display: inline-block;
+		   text-decoration: none;
+		}
+		table.table td a:hover {
+		   color: #2196F3;
+		}
+		table.table td a.settings {
+		   color: #2196F3;
+		}
+		table.table td a.delete {
+		   color: #F44336;
+		}
+		table.table td i {
+		   font-size: 19px;
+		}
+		table.table .avatar {
+		   border-radius: 50%;
+		   vertical-align: middle;
+		   margin-right: 10px;
+		   width: 50px;
+		}
+		.status {
+		   font-size: 30px;
+		   margin: 2px 2px 0 0;
+		   display: inline-block;
+		   vertical-align: middle;
+		   line-height: 10px;
+		}
+		.text-success {
+		   color: #10c469;
+		}
+		.text-info {
+		   color: #62c9e8;
+		}
+		.text-warning {
+		   color: #FFC107;
+		}
+		.text-danger {
+		   color: #ff5b5b;
+		}
+		.pagination {
+		   float: right;
+		   margin: 0 0 5px;
+		}
+		.pagination li a {
+		   border: none;
+		   font-size: 13px;
+		   min-width: 30px;
+		   min-height: 30px;
+		   color: #999;
+		   margin: 0 2px;
+		   line-height: 30px;
+		   border-radius: 2px !important;
+		   text-align: center;
+		   padding: 0 6px;
+		}
+		.pagination li a:hover {
+		   color: #666;
+		}	
+		.pagination li.active a, .pagination li.active a.page-link {
+		   background: #03A9F4;
+		}
+		.pagination li.active a:hover {        
+		   background: #0397d6;
+		}
+		.pagination li.disabled i {
+		   color: #ccc;
+		}
+		.pagination li i {
+		   font-size: 16px;
+		   padding-top: 6px
+		}
+		.hint-text {
+		   float: left;
+		   margin-top: 10px;
+		   font-size: 13px;
+		}
+   </style>
 </head>
 
 <body class="grey lighten-3">
@@ -167,46 +326,36 @@
 
             <div class="card-body">
 
-              <table class="table table-hover">
-                <thead class="blue-grey lighten-4">
-                  <tr>
-                    <th>STT</th>
-                    <th>Post Name</th>
-                    <th>Views</th>
-                    <th>Post Date</th>
-                    <th>Topic</th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                	<c:if test="${ not empty listPost }">
-                	 <c:forEach var="list" items="${ listPost }" varStatus="status">
-	                  <tr>
-	                    <th scope="row">${ status.index }</th>
-	                    <td style="width: 500px">${ list.title }</td>
-	                    <td>${ list.views }</td>
-	                    <td>${ list.stringTime }</td>
-	                    <td>${ listTopicName.get(status.index) }</td>
-	                    <!-- <td> -->
-	                    		<c:choose>
-	                    			<c:when test="${ list.status == true }">
-	                    				<td><a href="editPost/${ list.postId }" style="color: blue">Edit</a></td>
-	                    			</c:when>
-	                    		</c:choose>
-	                    		<c:choose>
-	                    			<c:when test="${ list.status == false }">
-	                    				<td>Edit</td>
-	                    			</c:when>
-	                    		</c:choose>
-                    		<!-- </td> -->
-	                    <td><a href="#">Remove</a></td>
-	                  </tr>                	                	 
-                	 </c:forEach>
-                	</c:if>
-                </tbody>
-              </table>
+              <table class="table table-striped table-hover">
+	            <thead>
+	               <tr>
+	                  <th>#</th>
+	                  <th>Title</th>
+	                  <th>Topic</th>
+	                  <th>Author</th>
+	                  <th>Date</th>
+	                  <th>#</th>
+	                  <th>#</th>
+	                  <th>#</th>
+	               </tr>
+	            </thead>
+	            <tbody>
+	            	<c:if test="${ not empty listPost }">
+	            		<c:forEach var="post" items="${ listPost }" varStatus="status">
+			               <tr>
+			                  <td>${ post.postId }</td>
+			                  <td>${ post.title }</td>
+			                  <td>${ listTopicName.get(status.index) }</td>
+			                  <td id="${ listAuthorId.get(status.index) }">${ listAuthorName.get(status.index) }</td>
+			                  <td>${ post.stringTime }</td>
+			                  <td><a href="demo/${ post.postId }" style="color: blue">Demo</a></td>
+			                  <td>Delete</td>
+			                  <td><a class="acceptPost" id="${ listAuthorId.get(status.index) }" style="color: blue">Accept</a></td>
+			               </tr>
+		               </c:forEach>
+	               </c:if>
+	            </tbody>
+	         </table>
 
             </div>
 
@@ -285,7 +434,8 @@
 
   </footer>
   <!--/.Footer-->
-
+	
+	<script type="text/javascript" src="<c:url value="/lib/dashboard/js/index.js" />" ></script>
   <!-- SCRIPTS -->
   <!-- JQuery -->
   <script type="text/javascript" src="<c:url value="/lib/js/jquery-3.4.1.min.js" />" ></script>

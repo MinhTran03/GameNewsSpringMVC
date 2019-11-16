@@ -32,10 +32,10 @@
                                  </a>
                               </h4>
                               <small>
-                              	<a href="tech-single.html" title=""> <c:out value="${ topPost.get(0).stringTime }" /></a>
+                              	<a href="" title=""> <c:out value="${ topPost.get(0).stringTime }" /></a>
                               </small>
                               <small>
-                              	<a href="tech-author.html" title="">by <c:out value="${ topAuthorName.get(0) }" /></a>
+                              	<a href="${ rootName }/topic/profile/${topAuthorId.get(0)}" title="">by <c:out value="${ topAuthorName.get(0) }" /></a>
                              	</small>
                            </div>
                         </div>
@@ -54,9 +54,9 @@
                                  	<c:out value="${ topPost.get(1).title }" />
                                  </a>
                               </h4>
-                              <small><a href="tech-single.html" title="">
+                              <small><a href="" title="">
                                     <c:out value="${ topPost.get(1).stringTime }" /></a></small> <small><a
-                                    href="tech-author.html" title="">by <c:out value="${ topAuthorName.get(1) }" /></a></small>
+                                    href="${ rootName }/topic/profile/${topAuthorId.get(1)}" title="">by <c:out value="${ topAuthorName.get(1) }" /></a></small>
                            </div>
                         </div>
                      </div>
@@ -74,9 +74,9 @@
                                  	<c:out value="${ topPost.get(2).title }" />
                                  </a>
                               </h4>
-                              <small><a href="tech-single.html" title="">
+                              <small><a href="" title="">
                                     <c:out value="${ topPost.get(2).stringTime }" /></a></small> <small><a
-                                    href="tech-author.html" title="">by <c:out value="${ topAuthorName.get(2) }" /></a></small>
+                                    href="${ rootName }/topic/profile/${topAuthorId.get(2)}" title="">by <c:out value="${ topAuthorName.get(2) }" /></a></small>
                            </div>
                         </div>
                      </div>
@@ -90,7 +90,11 @@
 		<section class="section">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+					
+					<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+					</div>
+					
+					<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
 						<div class="page-wrapper">
 							<div class="blog-top clearfix">
 								<h4 class="pull-left">
@@ -121,7 +125,7 @@
 												<p>${ post.description }</p>
 												<!-- <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">Gadgets</a></small> -->
 												<small><a href="tech-single.html" title="">${ post.stringTime }</a></small>
-												<small><a href="${ rootName }/profile/${ post.userId }" title="">by ${ listAuthorName[status.index] }</a></small>
+												<small><a href="${ rootName }/topic/profile/${ post.userId }" title="">by ${ listAuthorName[status.index] }</a></small>
 												<small><a href="tech-single.html" title=""><i class="fa fa-eye"></i>${ post.views }</a></small>
 											</div>
 										</div>
@@ -154,194 +158,6 @@
 						</div>
 					</div>
 
-					<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-						<div class="sidebar">
-							<div class="widget">
-								<div class="banner-spot clearfix">
-									<div class="banner-img">
-										<img src="<c:url value="/lib/upload/banner_07.jpg" />" alt="" class="img-fluid">
-									</div>
-								</div>
-							</div>
-
-							<div class="widget">
-								<h2 class="widget-title">Trend Videos</h2>
-								<div class="trend-videos">
-									<div class="blog-box">
-										<div class="post-media">
-											<a href="tech-single.html" title=""> <img
-												src="<c:url value="/lib/upload/tech_video_01.jpg" />" alt="" class="img-fluid">
-												<div class="hovereffect">
-													<span class="videohover"></span>
-												</div>
-											</a>
-										</div>
-										<div class="blog-meta">
-											<h4>
-												<a href="tech-single.html" title="">We prepared the best
-													10 laptop presentations for you</a>
-											</h4>
-										</div>
-									</div>
-
-									<hr class="invis">
-
-									<div class="blog-box">
-										<div class="post-media">
-											<a href="tech-single.html" title=""> <img
-												src="<c:url value="/lib/upload/tech_video_02.jpg" />" alt="" class="img-fluid">
-												<div class="hovereffect">
-													<span class="videohover"></span>
-												</div> 
-											</a>
-										</div>
-										<div class="blog-meta">
-											<h4>
-												<a href="tech-single.html" title="">We are guests of ABC
-													Design Studio - Vlog</a>
-											</h4>
-										</div>
-									</div>
-
-									<hr class="invis">
-
-									<div class="blog-box">
-										<div class="post-media">
-											<a href="tech-single.html" title=""> <img
-												src="<c:url value="/lib/upload/tech_video_03.jpg" />" alt="" class="img-fluid">
-												<div class="hovereffect">
-													<span class="videohover"></span>
-												</div> 
-											</a>
-										</div>
-										<div class="blog-meta">
-											<h4>
-												<a href="tech-single.html" title="">Both blood pressure
-													monitor and intelligent clock</a>
-											</h4>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="widget">
-								<h2 class="widget-title">Popular Posts</h2>
-								<div class="blog-list-widget">
-									<div class="list-group">
-										<a href="tech-single.html"
-											class="list-group-item list-group-item-action flex-column align-items-start">
-											<div class="w-100 justify-content-between">
-												<img src="<c:url value="/lib/upload/tech_blog_08.jpg" />" alt=""
-													class="img-fluid float-left">
-												<h5 class="mb-1">5 Beautiful buildings you need..</h5>
-												<small>12 Jan, 2016</small>
-											</div>
-										</a> <a href="tech-single.html"
-											class="list-group-item list-group-item-action flex-column align-items-start">
-											<div class="w-100 justify-content-between">
-												<img src="<c:url value="/lib/upload/tech_blog_01.jpg" />" alt=""
-													class="img-fluid float-left">
-												<h5 class="mb-1">Let's make an introduction for..</h5>
-												<small>11 Jan, 2016</small>
-											</div>
-										</a> <a href="tech-single.html"
-											class="list-group-item list-group-item-action flex-column align-items-start">
-											<div class="w-100 last-item justify-content-between">
-												<img src="<c:url value="/lib/upload/tech_blog_03.jpg" />" alt=""
-													class="img-fluid float-left">
-												<h5 class="mb-1">Did you see the most beautiful..</h5>
-												<small>07 Jan, 2016</small>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-
-							<div class="widget">
-								<h2 class="widget-title">Recent Reviews</h2>
-								<div class="blog-list-widget">
-									<div class="list-group">
-										<a href="tech-single.html"
-											class="list-group-item list-group-item-action flex-column align-items-start">
-											<div class="w-100 justify-content-between">
-												<img src="<c:url value="/lib/upload/tech_blog_02.jpg" />" alt=""
-													class="img-fluid float-left">
-												<h5 class="mb-1">Banana-chip chocolate cake recipe..</h5>
-												<span class="rating"> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i>
-												</span>
-											</div>
-										</a> <a href="tech-single.html"
-											class="list-group-item list-group-item-action flex-column align-items-start">
-											<div class="w-100 justify-content-between">
-												<img src="<c:url value="/lib/upload/tech_blog_03.jpg" />" alt=""
-													class="img-fluid float-left">
-												<h5 class="mb-1">10 practical ways to choose organic..</h5>
-												<span class="rating"> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i>
-												</span>
-											</div>
-										</a> <a href="tech-single.html"
-											class="list-group-item list-group-item-action flex-column align-items-start">
-											<div class="w-100 last-item justify-content-between">
-												<img src="<c:url value="/lib/upload/tech_blog_07.jpg" />" alt=""
-													class="img-fluid float-left">
-												<h5 class="mb-1">We are making homemade ravioli..</h5>
-												<span class="rating"> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i>
-												</span>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-
-							<div class="widget">
-								<h2 class="widget-title">Follow Us</h2>
-
-								<div class="row text-center">
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-										<a href="#" class="social-button facebook-button"> <i
-											class="fa fa-facebook"></i>
-											<p>27k</p>
-										</a>
-									</div>
-
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-										<a href="#" class="social-button twitter-button"> <i
-											class="fa fa-twitter"></i>
-											<p>98k</p>
-										</a>
-									</div>
-
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-										<a href="#" class="social-button google-button"> <i
-											class="fa fa-google-plus"></i>
-											<p>17k</p>
-										</a>
-									</div>
-
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-										<a href="#" class="social-button youtube-button"> <i
-											class="fa fa-youtube"></i>
-											<p>22k</p>
-										</a>
-									</div>
-								</div>
-							</div>
-
-							<div class="widget">
-								<div class="banner-spot clearfix">
-									<div class="banner-img">
-										<img src="<c:url value="/lib/upload/banner_03.jpg" />" alt="" class="img-fluid">
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</section>

@@ -16,9 +16,10 @@ import org.springframework.stereotype.Repository;
 
 import com.springmvc.entities.PostEntity;
 import com.springmvc.entities.TagEntity;
+import com.springmvc.entities.UserEntity;
 import com.springmvc.models.Post;
 import com.springmvc.models.Tag;
-
+import com.springmvc.util.CurrentLogin;
 @Repository
 public class PostDAOImpl implements PostDAO {
 
@@ -198,6 +199,7 @@ public class PostDAOImpl implements PostDAO {
 			
 			session.save(postEntity);
 			
+			
 			id = postEntity.getPost_id();
 			
 		} catch (Exception e) {
@@ -222,6 +224,7 @@ public class PostDAOImpl implements PostDAO {
 		return flag;
 	}
 	
+	@Override
 	public List<Post> getByAuthorId(int id){
 		List<Post> list = new ArrayList<Post>();
 		
@@ -229,7 +232,33 @@ public class PostDAOImpl implements PostDAO {
 			Session session = sessionFactory.getCurrentSession();
 			
 //			Query query = session.createSQLQuery("select * from Post where user_id = " + id);
-			Query query = session.createNativeQuery("select * from Post where user_id = " + id, PostEntity.class);
+			Query query = session.createNativeQuery("select * from Post where user_id = " + id + " ORDER BY time desc", PostEntity.class);
+			
+			@SuppressWarnings("unchecked")
+			List<PostEntity> listE = (List<PostEntity>)query.getResultList();
+			
+			for(PostEntity item : listE) {
+				Post p = new Post();
+				p.entity2model(item);
+				list.add(p);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			list = null;
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Post> getAllNotConfirm(){
+		List<Post> list = new ArrayList<Post>();
+		
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+			Query query = session.createNativeQuery("select * from Post where status = " + 0 + " ORDER BY time", PostEntity.class);
 			
 			@SuppressWarnings("unchecked")
 			List<PostEntity> listE = (List<PostEntity>)query.getResultList();
@@ -261,6 +290,7 @@ public class PostDAOImpl implements PostDAO {
 				result = session.createNativeQuery("DELETE FROM dbo.Post_Tag WHERE post_id = " + id).executeUpdate();
 				result = session.createNativeQuery("DELETE FROM dbo.Post WHERE post_id = " + id).executeUpdate();				
 				result = session.createNativeQuery("DELETE FROM dbo.PostContent WHERE post_content_id = " + p.getPostContentId()).executeUpdate();
+				result = session.createNativeQuery("UPDATE dbo.[User] SET total_post = total_post - 1 WHERE USER_ID = " + CurrentLogin.id).executeUpdate();
 			}
 			
 			
@@ -270,5 +300,81 @@ public class PostDAOImpl implements PostDAO {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	@Override
+	public boolean acceptPost(int postId, int authorId) {
+		
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+			PostEntity p = session.get(PostEntity.class, postId);
+			p.setStatus(true);
+			session.update(p);
+			
+			UserEntity u = session.get(UserEntity.class, authorId);
+			u.setTotal_post(u.getTotal_post() + 1);
+			session.update(u);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
+	
+	@Override
+	public List<Post> getByTag(String tagName){
+		List<Post> list = new ArrayList<Post>();
+		
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+//			Query query = session.createSQLQuery("select * from Post where user_id = " + id);
+			Query query = session.createNativeQuery("SELECT * FROM dbo.Post WHERE post_id IN (SELECT post_id FROM dbo.Post_Tag WHERE tag_id = (SELECT tag_id FROM dbo.Tag WHERE name = '" + tagName + "'))", PostEntity.class);
+			
+			@SuppressWarnings("unchecked")
+			List<PostEntity> listE = (List<PostEntity>)query.getResultList();
+			
+			for(PostEntity item : listE) {
+				Post p = new Post();
+				p.entity2model(item);
+				list.add(p);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			list = null;
+		}
+		
+		return list;
+	}
+	
+	public List<Post> search(String keyword){
+		
+		List<Post> list = new ArrayList<Post>();
+		
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			
+//			Query query = session.createSQLQuery("select * from Post where user_id = " + id);
+			Query query = session.createNativeQuery("SELECT * FROM dbo.Post WHERE (title LIKE '%" + keyword + "%' OR description LIKE '%" + keyword + "%') AND status = 1", PostEntity.class);
+			
+			@SuppressWarnings("unchecked")
+			List<PostEntity> listE = (List<PostEntity>)query.getResultList();
+			
+			for(PostEntity item : listE) {
+				Post p = new Post();
+				p.entity2model(item);
+				list.add(p);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			list = null;
+		}
+		
+		return list;
 	}
 }
