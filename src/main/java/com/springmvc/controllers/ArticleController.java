@@ -38,7 +38,6 @@ import com.springmvc.services.PostService;
 import com.springmvc.services.TagService;
 import com.springmvc.services.TopicService;
 import com.springmvc.services.UserService;
-import com.springmvc.util.CurrentLogin;
 import com.springmvc.util.PasswordGenerator;
 
 @Controller
@@ -66,14 +65,6 @@ public class ArticleController {
 	@Autowired
 	JavaMailSender mailer;
 
-	@ModelAttribute("avataUser")
-	public String getAvata(ModelMap model) {
-		model.addAttribute("loggingIn", CurrentLogin.loggingIn);
-		if(CurrentLogin.loggingIn)
-			model.addAttribute("role", CurrentLogin.roles.get(0).getRoleName());
-		return CurrentLogin.imagePath;
-	}
-	
 	@ModelAttribute(name = "listTopic")
 	public List<Topic> getListTopic() {
 		List<Topic> listTopic = topicServiceBase.getAll();
@@ -145,45 +136,6 @@ public class ArticleController {
 
 		return jsonAsString;
 	}
-
-//	@RequestMapping(value = "/{shortTitle:[\\w\\W]+}/commentWithoutLogin", method = RequestMethod.POST)
-//	@ResponseBody
-//	public String postCommentNotLogin(@RequestParam String name, @RequestParam String email, @RequestParam int postId,
-//			@RequestParam String content, ModelMap model) {
-//
-//		int userId = userService.getIdByEmail(email);
-//
-//		UserInfo user = new UserInfo();
-//		if (userId == -1) {
-//			user = newUserCommentHander(user, name, email);
-//		} else {
-//			// email đã tồn tại => hiện popup đăng nhập
-//		}
-//
-//		userId = user.getUserId();
-//		Comment comment = newComment(content, postId, userId);
-//		int cmId = commentService.save(comment);
-//
-//		Map<String, String> json = new HashMap<String, String>();
-//		if (cmId != -1) {
-//			json.put("imageSrc", user.getImage());
-//			json.put("name", user.getLastName());
-//			json.put("valid", "1");
-//		} else {
-//			json.put("valid", "0");
-//		}
-//
-//		String jsonAsString = "";
-//		try {
-//			ObjectMapper mapper = new ObjectMapper();
-//			jsonAsString = mapper.writeValueAsString(json);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return jsonAsString;
-//		
-//	}
 
 	public UserInfo newUserCommentHander(UserInfo user, String name, String email) {
 		

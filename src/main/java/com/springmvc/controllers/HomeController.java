@@ -33,22 +33,19 @@ public class HomeController {
 	@RequestMapping(value = "/edit-user")
 	public String editUser(ModelMap model) {
 		
-		if(CurrentLogin.loggingIn == false) {
-			return "redirect:login";
-		}
-		
 		UserInfo user = userService.getById(CurrentLogin.id);
 		model.addAttribute("newUser", user);
+		model.addAttribute("edit", true);
 		
 		return "login/register-page";
 	}
 	
 	@RequestMapping(value = "/")
-	public String home() {
+	public String home(@RequestParam(name = "language", defaultValue = "en") String lang) {
 		return "redirect:topic/game-home";
 	}
 	
-	@RequestMapping(value="/home")
+	@RequestMapping(value = "/home")
 	public String search(@RequestParam String search, ModelMap model) {
 		
 		// Topic taskbar
@@ -68,6 +65,11 @@ public class HomeController {
 
 		return "topic/search-post";
 		
+	}
+	
+	@RequestMapping("/not-have-permistion")
+	public String fail() {
+		return "cannotmodify";
 	}
 	
 	@RequestMapping("*")

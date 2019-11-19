@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Video Game News, Game News, Entertainment News - Game Sport</title>
 	<jsp:include page="../import/importHeader.jsp"></jsp:include>
 </head>
 <body>

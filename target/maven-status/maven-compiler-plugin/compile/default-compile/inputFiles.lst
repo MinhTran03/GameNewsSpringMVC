@@ -1,9 +1,11 @@
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\UserDAO.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\models\Comment.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\CommentService.java
+D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\interceptor\ManagerInterceptor.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\controllers\TopicController.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\TopicDAO.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\entities\PostContentEntity.java
+D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\interceptor\AuthorInterceptor.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\ReplyCommentService.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\controllers\LogoutController.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\TagDAO.java
@@ -32,6 +34,7 @@ D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\ReplyCommentD
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\controllers\HomeController.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\PostServiceImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\entities\ReplyCommentEntity.java
+D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\interceptor\SaveInfoInterceptor.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\ReplyCommentServiceImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\TopicServiceImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\PostContentDAO.java
@@ -47,6 +50,7 @@ D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\util\PasswordGene
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\entities\PostEntity.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\TagServiceImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\models\PostContent.java
+D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\interceptor\UserInfoInterceptor.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\util\CurrentLogin.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\UserService.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\UserDAOImpl.java
@@ -54,6 +58,7 @@ D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\controllers\Autho
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\services\UserServiceImpl.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\util\MailSenderSupport.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\controllers\LoginController.java
+D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\interceptor\LoginInterceptor.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\entities\CommentEntity.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\models\Topic.java
 D:\LapTrinhWeb-SpringJava\GameNews\src\main\java\com\springmvc\dao\CommentDAO.java

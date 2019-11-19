@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,36 +35,6 @@ public class TopicController {
 	@Autowired
 	UserService userService;
 
-//	@ModelAttribute(name = "listTopic")
-//	public List<Topic> getListTopic() {
-//		List<Topic> listTopic = topicServiceBase.getAll();
-//
-//		return listTopic;
-//	}
-//
-//	// get top 3 newest post
-//	@ModelAttribute(name = "topPost")
-//	public List<Post> getTopPost(ModelMap model) {
-//
-//		List<Post> topNPost = postService.getTopNewest(3, 1);
-//
-//		List<String> topAuthorName = new ArrayList<>();
-//		for (int i = 0; i < topNPost.size(); i++) {
-//			topAuthorName.add(authorService.getFullName(topNPost.get(i).getAuthorId()));
-//		}
-//		model.addAttribute("topAuthorName", topAuthorName);
-//
-//		return topNPost;
-//	}
-	
-	@ModelAttribute("avataUser")
-	public String getAvata(ModelMap model) {
-		model.addAttribute("loggingIn", CurrentLogin.loggingIn);
-		if(CurrentLogin.loggingIn)
-			model.addAttribute("role", CurrentLogin.roles.get(0).getRoleName());
-		return CurrentLogin.imagePath;
-	}
-	
 	@RequestMapping(value = "/{topicName:[a-zA-Z0-9-]+}", method = RequestMethod.GET)
 	public String home(ModelMap model, @PathVariable String topicName, @RequestParam(defaultValue = "1") int page) {
 

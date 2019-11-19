@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,237 +33,16 @@
       width: 100%;
       position: absolute;
     }
+    
+    body{
+    	font-size: 13px;
+    }
   </style>
-  <style type="text/css">
-   	body {
-		   color: #566787;
-		   background: #f5f5f5;
-		   font-family: 'Varela Round', sans-serif;
-		   font-size: 13px;
-		}
-		.table-wrapper {
-		   background: #fff;
-		   padding: 20px 25px;
-		   margin: 30px 0;
-		   border-radius: 3px;
-		   box-shadow: 0 1px 1px rgba(0,0,0,.05);
-		}
-		.table-title {
-		   padding-bottom: 15px;
-		   background: #299be4;
-		   color: #fff;
-		   padding: 16px 30px;
-		   margin: -20px -25px 10px;
-		   border-radius: 3px 3px 0 0;
-		}
-		.table-title h2 {
-		   margin: 5px 0 0;
-		   font-size: 24px;
-		}
-		.table-title .btn {
-		   color: #566787;
-		   float: right;
-		   font-size: 13px;
-		   background: #fff;
-		   border: none;
-		   min-width: 50px;
-		   border-radius: 2px;
-		   border: none;
-		   outline: none !important;
-		   margin-left: 10px;
-		}
-		.table-title .btn:hover, .table-title .btn:focus {
-		   color: #566787;
-		   background: #f2f2f2;
-		}
-		.table-title .btn i {
-		   float: left;
-		   font-size: 21px;
-		   margin-right: 5px;
-		}
-		.table-title .btn span {
-		   float: left;
-		   margin-top: 2px;
-		}
-		table.table tr th, table.table tr td {
-		   border-color: #e9e9e9;
-		   padding: 12px 15px;
-		   vertical-align: middle;
-		}
-		table.table tr th:first-child {
-		   width: 60px;
-		}
-		table.table tr th:last-child {
-		   width: 100px;
-		}
-		table.table-striped tbody tr:nth-of-type(odd) {
-		   background-color: #fcfcfc;
-		}
-		table.table-striped.table-hover tbody tr:hover {
-		   background: #f5f5f5;
-		}
-		table.table th i {
-		   font-size: 13px;
-		   margin: 0 5px;
-		   cursor: pointer;
-		}	
-		table.table td:last-child i {
-		   opacity: 0.9;
-		   font-size: 22px;
-		   margin: 0 5px;
-		}
-		table.table td a {
-		   font-weight: bold;
-		   color: #566787;
-		   display: inline-block;
-		   text-decoration: none;
-		}
-		table.table td a:hover {
-		   color: #2196F3;
-		}
-		table.table td a.settings {
-		   color: #2196F3;
-		}
-		table.table td a.delete {
-		   color: #F44336;
-		}
-		table.table td i {
-		   font-size: 19px;
-		}
-		table.table .avatar {
-		   border-radius: 50%;
-		   vertical-align: middle;
-		   margin-right: 10px;
-		   width: 50px;
-		}
-		.status {
-		   font-size: 30px;
-		   margin: 2px 2px 0 0;
-		   display: inline-block;
-		   vertical-align: middle;
-		   line-height: 10px;
-		}
-		.text-success {
-		   color: #10c469;
-		}
-		.text-info {
-		   color: #62c9e8;
-		}
-		.text-warning {
-		   color: #FFC107;
-		}
-		.text-danger {
-		   color: #ff5b5b;
-		}
-		.pagination {
-		   float: right;
-		   margin: 0 0 5px;
-		}
-		.pagination li a {
-		   border: none;
-		   font-size: 13px;
-		   min-width: 30px;
-		   min-height: 30px;
-		   color: #999;
-		   margin: 0 2px;
-		   line-height: 30px;
-		   border-radius: 2px !important;
-		   text-align: center;
-		   padding: 0 6px;
-		}
-		.pagination li a:hover {
-		   color: #666;
-		}	
-		.pagination li.active a, .pagination li.active a.page-link {
-		   background: #03A9F4;
-		}
-		.pagination li.active a:hover {        
-		   background: #0397d6;
-		}
-		.pagination li.disabled i {
-		   color: #ccc;
-		}
-		.pagination li i {
-		   font-size: 16px;
-		   padding-top: 6px
-		}
-		.hint-text {
-		   float: left;
-		   margin-top: 10px;
-		   font-size: 13px;
-		}
-   </style>
 </head>
 
 <body class="grey lighten-3">
-
+	<c:set var="rootName" value="${ pageContext.request.contextPath }" />
   <header>
-
-    <!-- Navbar -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
-      <div class="container-fluid">
-
-        <!-- Brand -->
-        <a class="navbar-brand waves-effect" href="https://mdbootstrap.com/docs/jquery/" target="_blank">
-          <strong class="blue-text">MDB</strong>
-        </a>
-
-        <!-- Collapse -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Links -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-          <!-- Left -->
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link waves-effect" href="#">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link waves-effect" href="https://mdbootstrap.com/docs/jquery/" target="_blank">About
-                MDB</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link waves-effect" href="https://mdbootstrap.com/docs/jquery/getting-started/download/"
-                target="_blank">Free
-                download</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link waves-effect" href="https://mdbootstrap.com/education/bootstrap/" target="_blank">Free
-                tutorials</a>
-            </li>
-          </ul>
-
-          <!-- Right -->
-          <ul class="navbar-nav nav-flex-icons">
-            <li class="nav-item">
-              <a href="https://www.facebook.com/mdbootstrap" class="nav-link waves-effect" target="_blank">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="https://twitter.com/MDBootstrap" class="nav-link waves-effect" target="_blank">
-                <i class="fab fa-twitter"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="https://github.com/mdbootstrap/bootstrap-material-design"
-                class="nav-link border border-light rounded waves-effect" target="_blank">
-                <i class="fab fa-github mr-2"></i>MDB GitHub
-              </a>
-            </li>
-          </ul>
-
-        </div>
-
-      </div>
-    </nav>
-    <!-- Navbar -->
 
     <!-- Sidebar -->
     <div class="sidebar-fixed position-fixed">
@@ -272,17 +52,12 @@
       </a>
 
       <div class="list-group list-group-flush">
-        <a href="#" class="list-group-item active waves-effect">
-          <i class="fas fa-chart-pie mr-3"></i>Dashboard
-        </a>
-        <a href="#" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-user mr-3"></i>Profile</a>
-        <a href="#" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-table mr-3"></i>Tables</a>
-        <a href="#" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-map mr-3"></i>Maps</a>
-        <a href="#" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-money-bill-alt mr-3"></i>Orders</a>
+        <a href="" class="list-group-item active waves-effect">
+          <i class="fas fa-chart-pie mr-3"></i><s:message code="dashboard.dashboard" /></a>
+        <a href="${ rootName }/management/duyet-bai" class="list-group-item list-group-item-action waves-effect">
+          <i class="fas fa-table mr-3"></i><s:message code="dashboard.checkpost" /></a>
+        <a href="${ rootName }/edit-user" target="_blank" class="list-group-item list-group-item-action waves-effect">
+          <i class="fas fa-user mr-3"></i><s:message code="dashboard.profileuser" /></a>
       </div>
 
     </div>
@@ -292,7 +67,7 @@
 
   <main class="pt-5 mx-lg-5">
   
-    <div class="container-fluid mt-5">
+    <div class="container-fluid">
 
       <div class="card mb-4 wow fadeIn">
 
@@ -300,9 +75,9 @@
         <div class="card-body d-sm-flex justify-content-between">
 
           <h4 class="mb-2 mb-sm-0 pt-1">
-            <a href="https://mdbootstrap.com/docs/jquery/" target="_blank">Home Page</a>
+            <a href="/GameNews/topic/game-home" target="_blank"><s:message code="dashboard.home" /></a>
             <span>/</span>
-            <span>Dashboard</span>
+            <span><s:message code="dashboard.dashboard" /></span>
           </h4>
 
           <form class="d-flex justify-content-center">
@@ -326,36 +101,7 @@
 
             <div class="card-body">
 
-              <table class="table table-striped table-hover">
-	            <thead>
-	               <tr>
-	                  <th>#</th>
-	                  <th>Title</th>
-	                  <th>Topic</th>
-	                  <th>Author</th>
-	                  <th>Date</th>
-	                  <th>#</th>
-	                  <th>#</th>
-	                  <th>#</th>
-	               </tr>
-	            </thead>
-	            <tbody>
-	            	<c:if test="${ not empty listPost }">
-	            		<c:forEach var="post" items="${ listPost }" varStatus="status">
-			               <tr>
-			                  <td>${ post.postId }</td>
-			                  <td>${ post.title }</td>
-			                  <td>${ listTopicName.get(status.index) }</td>
-			                  <td id="${ listAuthorId.get(status.index) }">${ listAuthorName.get(status.index) }</td>
-			                  <td>${ post.stringTime }</td>
-			                  <td><a href="demo/${ post.postId }" style="color: blue">Demo</a></td>
-			                  <td>Delete</td>
-			                  <td><a class="acceptPost" id="${ listAuthorId.get(status.index) }" style="color: blue">Accept</a></td>
-			               </tr>
-		               </c:forEach>
-	               </c:if>
-	            </tbody>
-	         </table>
+              
 
             </div>
 
@@ -434,7 +180,6 @@
 
   </footer>
   <!--/.Footer-->
-	
 	<script type="text/javascript" src="<c:url value="/lib/dashboard/js/index.js" />" ></script>
   <!-- SCRIPTS -->
   <!-- JQuery -->

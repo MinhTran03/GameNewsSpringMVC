@@ -2,10 +2,10 @@
 	isELIgnored="false" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <!DOCTYPE html>
 <html lang="en">
 
-<title>Demo post</title>
 <jsp:include page="../import/importHeader.jsp"></jsp:include>
 <style>
 	figure,
@@ -109,7 +109,7 @@
 								<div class="col-lg-12">
 									<div class="banner-spot clearfix">
 										<div class="banner-img">
-											<img src="upload/banner_01.jpg" alt="" class="img-fluid">
+											<!-- <img src="upload/banner_01.jpg" alt="" class="img-fluid"> -->
 										</div>
 									</div>
 								</div>
@@ -207,7 +207,7 @@
 							<hr class="invis1">
 
 							<div class="custombox clearfix">
-								<h4 class="small-title commen-count">${ listComment.size() } Comments</h4>
+								<h4 class="small-title commen-count">${ listComment.size() } <s:message code="title.comment" /></h4>
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="comments-list">
@@ -219,10 +219,10 @@
 													<div class="media-body">
 														<h4 class="media-heading user_name">
 															${ listUser[status.index].fullName }
-															<small>${ list.time }</small>
+															<small>${ list.stringTime }</small>
 														</h4>
 														<p>${ list.content }</p>
-														<a href="#" class="btn btn-primary btn-sm">Reply</a>
+														<a href="#" class="btn btn-primary btn-sm"><s:message code="title.replycomment" /></a>
 													</div>
 												</div>
 											</c:forEach>
@@ -234,19 +234,19 @@
 							<hr class="invis1">
 
 							<div class="custombox clearfix">
-								<h4 class="small-title">Leave a Reply</h4>
+								<h4 class="small-title"><s:message code="title.leavereplycomment" /></h4>
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="form-wrapper">
 											<c:if test="${ loggingIn == false }">
 												<!-- <input id="input-name" type="text" class="form-control" placeholder="Your name" />
 												<input id="input-email" type="text" class="form-control" placeholder="Email address" /> -->
-												<a id="cmtLinkLogin" href="${ rootName }/login2cmt">Đăng nhập để bình luận</a>
+												<a id="cmtLinkLogin" href="${ rootName }/login2cmt"><s:message code="title.loginforcomment" /></a>
 												
 											</c:if>
 											<c:if test="${ loggingIn == true }">
 												<textarea class="form-control comment-content" placeholder="Your comment"></textarea>
-												<button type="submit" class="btn btn-primary post-comment">Submit Comment</button>												
+												<button type="submit" class="btn btn-primary post-comment"><s:message code="title.submitcomment" /></button>												
 											</c:if>
 										</div>
 									</div>

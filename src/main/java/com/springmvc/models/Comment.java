@@ -1,6 +1,7 @@
 package com.springmvc.models;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.springmvc.entities.CommentEntity;
 
@@ -72,6 +73,10 @@ public class Comment {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	
+	public String getStringTime() {
+		return time.format(DateTimeFormatter.ofPattern("dd MMM, yyyy"));
 	}
 	
 	public void entity2model(CommentEntity entity) {

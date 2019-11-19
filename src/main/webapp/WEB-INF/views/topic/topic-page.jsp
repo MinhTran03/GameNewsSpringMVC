@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	isELIgnored="false" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Video Game News, Game News, Entertainment News - Game Sport</title>
 	<jsp:include page="../import/importHeader.jsp"></jsp:include>
 	<style type="text/css">
 	</style>
@@ -144,13 +143,13 @@
 								<nav aria-label="Page navigation">
 									<ul class="pagination justify-content-start">
 										<c:if test="${ currentPage > 1 }">
-											<li class="page-item"><a class="page-link" href="${ pageLink }${ currentPage - 1 }">Previous</a>
+											<li class="page-item"><a class="page-link" href="${ pageLink }${ currentPage - 1 }"><s:message code="title.pervious" /></a>
 										</c:if>
 										<c:forEach begin="0" end="${ pageCount }" varStatus="status">
 											<li class="page-item"><a class="page-link" href="${ pageLink }${ status.index + 1 }">${ status.index + 1 }</a></li>
 										</c:forEach>
 										<c:if test="${ currentPage <= pageCount }">
-											<li class="page-item"><a class="page-link" href="${ pageLink }${ currentPage + 1 }">Next</a></li>
+											<li class="page-item"><a class="page-link" href="${ pageLink }${ currentPage + 1 }"><s:message code="title.next" /></a></li>
 										</c:if>
 									</ul>
 								</nav>
@@ -164,7 +163,12 @@
 
 
 		<div class="dmtop">Scroll to Top</div>
-
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			document.getElementsByClassName('dmtop')[0].onclick = function(){
+				$('html, body').animate({ scrollTop: 0 }, 'medium');
+			}
+		</script>
 
 		<jsp:include page="../import/footer.jsp"></jsp:include>
 

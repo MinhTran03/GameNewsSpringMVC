@@ -1,20 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	isELIgnored="false" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <!DOCTYPE html>
 <html>
+<head>
+	<title><s:message code="home.company"/></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
 <body>
 <style>
 	.avata{
 		width: 42px !important;
 		height:42px !important;
-		border-radius: 50%;
+		border-radius: 37px !important;
 		padding: 0;
 	}
-	/* .navbar{
-		padding: 0rem 15rem !important;
-	} */
-	
+	#username{
+		margin: auto;
+		padding-right: 10px;
+		color: white
+	}
+	#lnkSearch{
+		background: #00b0e5 !important
+	}
+	.navbar-nav a[data-lang]{
+		color: white !important;
+	}
+	.dropdown-item{
+		color: black !important;
+	}
 </style>
 
 	<c:set var="rootName" value="${ pageContext.request.contextPath }" />
@@ -42,32 +57,40 @@
 						</c:if>
 					</ul>
 					<ul class="navbar-nav mr-4">
-						<input id="searchText" style="height: 30px; margin-top: 7px" type="text" placeholder="Search..">
-						<button style="height: 30px; margin-top: 7px" id="search"><a id="lnkSearch" href="${ rootName }/home/?search=">Search</a></button>
+						<a style="height: 30px; margin-top: 7px; color: white" href="#" data-lang="en">English</a>
+						<li style="height: 30px; margin-top: 7px" >/</li>
+						<a style="height: 30px; margin-top: 7px; margin-right:5px; color: white" href="#" data-lang="vi">Viet Nam</a>
+					</ul>
+					<ul class="navbar-nav mr-auto">
+						  <input id="searchText" type="text" class="form-control" placeholder="<s:message code="title.searchPlace" />" aria-label="Recipient's username" aria-describedby="button-addon2">
+							<a id="lnkSearch" class="btn btn-light abc" href="${ rootName }/home/?search=" role="button"><s:message code="title.search" /></a>
 					</ul>
 					<ul class="navbar-nav mr-2">
 						<div class="btn-group">
 							<c:if test="${ loggingIn == false}">
 							  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							    Login/SignUp
+							    <s:message code="title.login" />/<s:message code="title.signup" />
 							  </button>
 							  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							    <a class="dropdown-item" href="${ rootName }/login">Login</a>
-							    <a class="dropdown-item" href="${ rootName }/sign-up/">SignUp</a>
+							    <a class="dropdown-item" href="${ rootName }/login"><s:message code="title.login" /></a>
+							    <a class="dropdown-item" href="${ rootName }/sign-up/"><s:message code="title.signup" /></a>
 							  </div>
 						  </c:if>
 							<c:if test="${ loggingIn == true}">
+							<p id="username">${ nameUser }</p>
+						    
+								
 							  <img src="<c:url value="${ avataUser }" />" class="avata btn btn-secondary dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
 							  <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left">
 							  		<c:if test="${ role=='AUTHOR' }">
-								  		<a class="dropdown-item" href="${ rootName }/author/dashboard">Dashboard</a>							  		
+								  		<a class="dropdown-item" href="${ rootName }/author/dashboard"><s:message code="title.dashboard" /></a>							  		
 							  		</c:if>
 							  		<c:if test="${ role=='MANAGER' }">
-								  		<a class="dropdown-item" href="${ rootName }/management/duyet-bai">Dashboard</a>							  		
+								  		<a class="dropdown-item" href="${ rootName }/management/dashboard"><s:message code="title.dashboard" /></a>							  		
 							  		</c:if>
-								  <a class="dropdown-item" href="${ rootName }/edit-user/">Edit Info</a>
+								  <a class="dropdown-item" href="${ rootName }/edit-user/"><s:message code="title.editinfo" /></a>
 								  <div class="dropdown-divider"></div>
-								  <a class="dropdown-item" href="${ rootName }/logout/">Logout</a>
+								  <a class="dropdown-item" href="${ rootName }/logout/"><s:message code="title.logout" /></a>
 							  </div>
 						  </c:if>
 						</div>

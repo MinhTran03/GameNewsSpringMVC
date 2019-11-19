@@ -16,7 +16,6 @@ import com.springmvc.models.Topic;
 import com.springmvc.services.PostService;
 import com.springmvc.services.TopicService;
 import com.springmvc.services.UserService;
-import com.springmvc.util.CurrentLogin;
 
 @Controller
 @RequestMapping("/management")
@@ -36,12 +35,6 @@ public class ManagementController {
 	@RequestMapping("/user-list")
 	public String userList(ModelMap model, @RequestParam(defaultValue = "1") int page) {
 		
-		if(CurrentLogin.loggingIn == false) {
-			return "redirect:/login/";
-		}else if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("MANAGER")) {
-			return "author/cannotmodify";
-		}
-		
 		int calPage = page - 1;
 		int totalUser = userService.countUserOfRole("AUTHOR");
 		int pageCount = (totalUser - 0) / MAX_USER_PER_PAGE - ((totalUser % MAX_USER_PER_PAGE) == 0 ? 1 : 0);
@@ -54,14 +47,31 @@ public class ManagementController {
 		return "management/user-list";
 	}
 
+	@RequestMapping(value = "/dashboard")
+	public String dashb(ModelMap model, @RequestParam(defaultValue = "1") int page) {
+		
+		// lấy bài đăng status = false
+//		List<Post> list = postService.getAllNotConfirm();
+//		
+//		List<String> topicName = new ArrayList<String>();
+//		List<String> authorName = new ArrayList<String>();
+//		List<Integer> authorId = new ArrayList<Integer>();
+//		for(Post item : list) {
+//			topicName.add(topicService.getById(item.getTopicId()).getName());
+//			authorName.add(userService.getById(item.getUserId()).getFullName());
+//			authorId.add(item.getUserId());
+//		}
+//		model.addAttribute("listTopicName", topicName);
+//		model.addAttribute("listAuthorName", authorName);
+//		model.addAttribute("listAuthorId", authorId);
+//		
+//		model.addAttribute("listPost", list);
+		
+		return "management/dashboard";
+	}
+	
 	@RequestMapping(value = "/duyet-bai")
 	public String baiDangChoDuyet(ModelMap model, @RequestParam(defaultValue = "1") int page) {
-		
-		if(CurrentLogin.loggingIn == false) {
-			return "redirect:/login/";
-		}else if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("MANAGER")) {
-			return "author/cannotmodify";
-		}
 		
 		// lấy bài đăng status = false
 		List<Post> list = postService.getAllNotConfirm();
@@ -80,17 +90,11 @@ public class ManagementController {
 		
 		model.addAttribute("listPost", list);
 		
-		return "management/dashboard";
+		return "management/duyetbai";
 	}
 	
 	@RequestMapping(value="demo/{postId}")
 	public String demo(ModelMap model, @PathVariable int postId) {
-		
-		if(CurrentLogin.loggingIn == false) {
-			return "redirect:/login/";
-		}else if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("MANAGER")) {
-			return "author/cannotmodify";
-		}
 		
 		Post post = postService.getById(postId);
 		
@@ -107,12 +111,6 @@ public class ManagementController {
 	@RequestMapping(value="/acceptPost")
 	@ResponseBody
 	public String acceptPost(@RequestParam int postId, @RequestParam int authorId) {
-		
-		if(CurrentLogin.loggingIn == false) {
-			return "redirect:/login/";
-		}else if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("MANAGER")) {
-			return "author/cannotmodify";
-		}
 		
 		boolean result = postService.acceptPost(postId, authorId);
 		

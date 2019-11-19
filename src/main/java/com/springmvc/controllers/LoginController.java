@@ -65,6 +65,7 @@ public class LoginController {
 			return "login/login-page";
 		}else {
 			UserInfo userLogin = userService.getById(userService.getIdByEmail(user.getEmail()));
+			model.addAttribute("loggingIn", true);
 			loggingIn = true;
 			userName = user.getEmail();
 			roles = listRole;

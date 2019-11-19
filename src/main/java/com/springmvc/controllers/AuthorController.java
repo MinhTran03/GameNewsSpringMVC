@@ -2,7 +2,6 @@ package com.springmvc.controllers;
 
 import static com.springmvc.models.PostContent.newPostContent;
 import static com.springmvc.util.CurrentLogin.id;
-import static com.springmvc.util.CurrentLogin.loggingIn;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -75,12 +74,6 @@ public class AuthorController {
 	@RequestMapping(value = "/add-post", method = RequestMethod.GET)
 	public String addPost(ModelMap model) {
 
-		if (loggingIn == false) {
-			return "redirect:/login/";
-		}else if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("AUTHOR")) {
-			return "author/cannotmodify";
-		}
-		
 		Post p = new Post();
 		model.addAttribute("newPost", p);
 
@@ -191,13 +184,6 @@ public class AuthorController {
 	public String dashBoard(ModelMap model) {
 		
 		
-		
-		if (loggingIn == false) {
-			return "redirect:/login/";
-		}else if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("AUTHOR")) {
-			return "author/cannotmodify";
-		}
-		
 //		if(CurrentLogin.roles.get(0).getRoleName().equals("AUTHOR")) {
 //			List<Post> list = postService.getByAuthorId(CurrentLogin.id);
 //			model.addAttribute("listPost", list);
@@ -217,36 +203,20 @@ public class AuthorController {
 	@RequestMapping("/list-post")
 	public String list(ModelMap model) {
 		
-		if (loggingIn == false) {
-			return "redirect:/login/";
-		}else if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("AUTHOR")) {
-			return "author/cannotmodify";
-		}
+		List<Post> list = postService.getByAuthorId(CurrentLogin.id);
+		model.addAttribute("listPost", list);
 		
-		if(CurrentLogin.roles.get(0).getRoleName().equals("AUTHOR")) {
-			List<Post> list = postService.getByAuthorId(CurrentLogin.id);
-			model.addAttribute("listPost", list);
-			
-			List<String> topicName = new ArrayList<String>();
-			for(Post item : list) {
-				topicName.add(topicService.getById(item.getTopicId()).getName());
-			}
-			model.addAttribute("listTopicName", topicName);
-			
-			return "author/list-post";
+		List<String> topicName = new ArrayList<String>();
+		for(Post item : list) {
+			topicName.add(topicService.getById(item.getTopicId()).getName());
 		}
+		model.addAttribute("listTopicName", topicName);
 		
 		return "author/list-post";
 	}
 	
 	@RequestMapping("/editPost/{id:\\d+}")
 	public String edit(ModelMap model, @PathVariable("id") int postId) {
-		
-		if (loggingIn == false) {
-			return "redirect:/login/";
-		}else if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("AUTHOR")) {
-			return "author/cannotmodify";
-		}
 		
 		Post postEdit = postService.getById(postId);
 		model.addAttribute("newPost", postEdit);
@@ -257,12 +227,6 @@ public class AuthorController {
 	@RequestMapping(value = "/deletePost", method = RequestMethod.GET)
 	@ResponseBody
 	public String delete(ModelMap model, @RequestParam int postId) {
-		
-		if (loggingIn == false) {
-			return "redirect:/login/";
-		}else if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("AUTHOR")) {
-			return "author/cannotmodify";
-		}
 		
 		boolean result = postService.deleteById(postId);
 		

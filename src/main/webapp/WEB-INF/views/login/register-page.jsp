@@ -2,11 +2,12 @@
 	isELIgnored="false" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Registrator new user</title>
+	<title><s:message code="title.register.regisnewuser" /></title>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -46,14 +47,22 @@
 	</style>
 </head>
 <body>
+	<c:set var="rootName" value="${ pageContext.servletContext.contextPath }" />
 	<div class="container">
-		<c:set var="rootName" value="${ pageContext.servletContext.contextPath }" />
+	<a href="${ rootName }/">
+		 <s:message code="title.backtohome" />
+	</a>
 	    <form:form class="form-horizontal" name="f" modelAttribute="newUser" action="${ rootName }/sign-up/register" method="POST" role="form">
-	        <h2>Registration</h2>
+	    		<c:if test="${ edit == false }">
+		        <h2><s:message code="title.register.registration" /></h2>	        
+	        </c:if>
+	        <c:if test="${ edit == true }">
+		        <h2><s:message code="title.register.editinfo" /></h2>	        
+	        </c:if>
 	        ${ message }
 	        <div class="form-group">
 	        		<spring:bind path="firstName">
-		            <label for="firstName" class="col-sm-3 control-label">First Name </label>
+		            <label for="firstName" class="col-sm-3 control-label"><s:message code="title.register.firstname" /></label>
 		            <div class="col-sm-9">
 		            		<form:input path="userId" type="hidden" />
 		                <form:input type="text" path="firstName" placeholder="First Name" class="form-control" />
@@ -63,7 +72,7 @@
 	        </div>
 	        <div class="form-group">
 		        <spring:bind path="lastName">
-		            <label for="lastName" class="col-sm-3 control-label">Last Name </label>
+		            <label for="lastName" class="col-sm-3 control-label"><s:message code="title.register.lastname" /></label>
 		            <div class="col-sm-9">
 		                <form:input type="text" path="lastName" placeholder="Last Name" class="form-control" />
 		                <form:errors path="lastName" cssClass="error" />
@@ -81,7 +90,7 @@
 	        </div>
 	        <div class="form-group">
 		        <spring:bind path="password">
-		            <label for="password" class="col-sm-3 control-label">Password </label>
+		            <label for="password" class="col-sm-3 control-label"><s:message code="title.register.password" /></label>
 		            <div class="col-sm-9">
 		                <form:input type="password" path="password" placeholder="Password" value="" class="form-control" />
 		                <form:errors path="password" cssClass="error" />
@@ -90,7 +99,7 @@
 	        </div>
 	        <div class="form-group">
 		        <spring:bind path="password">
-		            <label for="password" class="col-sm-3 control-label">Confirm Password </label>
+		            <label for="password" class="col-sm-3 control-label"><s:message code="title.register.confirmpassword" /></label>
 		            <div class="col-sm-9">
 		                <form:input type="password" path="confirmPassword" placeholder="Confirm Password" class="form-control" />
 		                <form:errors path="confirmPassword" cssClass="error" />
@@ -99,7 +108,7 @@
 	        </div>
 	        <div class="form-group">
 		        <spring:bind path="birthday">
-		            <label for="birthDate" class="col-sm-3 control-label">Date of Birth </label>
+		            <label for="birthDate" class="col-sm-3 control-label"><s:message code="title.register.birthday" /></label>
 		            <div class="col-sm-9">
 		                <form:input type="date" path="birthday" class="form-control" />
 		                <form:errors path="birthday" cssClass="error" />
@@ -108,7 +117,7 @@
 	        </div>
 	        <div class="form-group">
 	        		<spring:bind path="phoneNumber">
-		            <label for="phoneNumber" class="col-sm-3 control-label">Phone number </label>
+		            <label for="phoneNumber" class="col-sm-3 control-label"><s:message code="title.register.phonenumber" /></label>
 		            <div class="col-sm-9">
 		                <form:input type="phoneNumber" path="phoneNumber" placeholder="Phone number" class="form-control" />
 		                <form:errors path="phoneNumber" cssClass="error" />
@@ -117,7 +126,7 @@
 	        </div>
 	        <div class="form-group">
 	        		<spring:bind path="address">
-		            <label for="address" class="col-sm-3 control-label">Address </label>
+		            <label for="address" class="col-sm-3 control-label"><s:message code="title.register.address" /></label>
 		            <div class="col-sm-9">
 		                <form:input type="text" path="address" placeholder="Address" class="form-control" />
 		                <form:errors path="address" cssClass="error" />
@@ -159,7 +168,7 @@
 	                <span class="help-block">*Required fields</span>
 	            </div>
 	        </div> -->
-	        <button type="submit" class="btn btn-primary btn-block">Register</button>
+	        <button type="submit" class="btn btn-primary btn-block"><s:message code="title.register.submit" /></button>
 	    </form:form> <!-- /form -->
 	</div> <!-- ./container -->
 </body>

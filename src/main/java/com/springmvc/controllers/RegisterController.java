@@ -52,7 +52,7 @@ public class RegisterController {
 	public String register(ModelMap model) {
 		
 		model.addAttribute("newUser", new UserInfo());
-		
+		model.addAttribute("edit", false);
 		return "login/register-page";
 	}
 	

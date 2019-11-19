@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,6 +33,9 @@
       width: 100%;
       position: absolute;
     }
+    body{
+    	font-size: 13px;
+    }
   </style>
 </head>
 
@@ -47,15 +51,14 @@
       </a>
 
       <div class="list-group list-group-flush">
-        <a href="${ rootName }/author/dashboard" class="list-group-item active waves-effect">
-          <i class="fas fa-chart-pie mr-3"></i>Dashboard
-        </a>
+        <a href="" class="list-group-item active waves-effect">
+          <i class="fas fa-chart-pie mr-3"></i><s:message code="dashboard.dashboard" /></a>
         <a href="${ rootName }/author/add-post" target="_blank" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-plus-circle mr-3"></i>Add Post</a>
+          <i class="fas fa-plus-circle mr-3"></i><s:message code="dashboard.post.add" /></a>
         <a href="${ rootName }/author/list-post" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-table mr-3"></i>Tables</a>
+          <i class="fas fa-table mr-3"></i><s:message code="dashboard.post.list" /></a>
         <a href="${ rootName }/edit-user" target="_blank" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-user mr-3"></i>Edit Profile</a>
+          <i class="fas fa-user mr-3"></i><s:message code="dashboard.profileuser" /></a>
       </div>
 
     </div>
@@ -73,9 +76,9 @@
         <div class="card-body d-sm-flex justify-content-between">
 
           <h4 class="mb-2 mb-sm-0 pt-1">
-            <a href="/GameNews/topic/game-home" target="_blank">Home Page</a>
+            <a href="/GameNews/topic/game-home" target="_blank"><s:message code="dashboard.home" /></a>
             <span>/</span>
-            <span>Dashboard</span>
+            <span><s:message code="dashboard.dashboard" /></span>
           </h4>
 
           <form class="d-flex justify-content-center">
@@ -98,45 +101,6 @@
           <div class="card">
 
             <div class="card-body">
-
-              <table class="table table-hover">
-                <thead class="blue-grey lighten-4">
-                  <tr>
-                    <th>STT</th>
-                    <th>Post Name</th>
-                    <th>Views</th>
-                    <th>Post Date</th>
-                    <th>Topic</th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                	<c:if test="${ not empty listPost }">
-                	 <c:forEach var="list" items="${ listPost }" varStatus="status">
-	                  <tr>
-	                    <th scope="row">${ status.index + 1 }</th>
-	                    <td style="width: 500px">${ list.title }</td>
-	                    <td>${ list.views }</td>
-	                    <td>${ list.stringTime }</td>
-	                    <td>${ listTopicName.get(status.index) }</td>
-                    		<c:choose>
-                    			<c:when test="${ list.status == false }">
-                    				<td><a href="editPost/${ list.postId }" target="_blank" style="color: blue">Edit</a></td>
-                    			</c:when>
-                    		</c:choose>
-                    		<c:choose>
-                    			<c:when test="${ list.status == true }">
-                    				<td>Edit</td>
-                    			</c:when>
-                    		</c:choose>
-	                    <td><a class="deleteLnk" id="${ list.postId }" style="color: blue">Delete</a></td>
-	                  </tr>                	                	 
-                	 </c:forEach>
-                	</c:if>
-                </tbody>
-              </table>
 
             </div>
 
