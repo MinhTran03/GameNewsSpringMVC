@@ -19,7 +19,7 @@ public interface PostDAO extends DAOBase<Post> {
 	
 	public List<Post> getByAuthorId(int id);
 	
-	public boolean deleteById(int id);
+	public boolean deleteById(int id, int userId);
 	
 	public List<Post> getAllNotConfirm();
 	

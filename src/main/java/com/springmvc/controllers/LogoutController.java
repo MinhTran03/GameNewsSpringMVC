@@ -1,19 +1,21 @@
 package com.springmvc.controllers;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.springmvc.util.CurrentLogin;
 
 @Controller
 @RequestMapping("/logout")
 public class LogoutController {
 
 	@RequestMapping(name = "/", method = RequestMethod.GET)
-	public String logout() {
-		CurrentLogin.loggingIn = false;
-		return "redirect:" + CurrentLogin.redirectStr;
+	public String logout(HttpSession httpSession) {
+
+		httpSession.setAttribute("current_user", null);
+		
+		return "redirect:/";
 	}
 	
 	@RequestMapping("*")

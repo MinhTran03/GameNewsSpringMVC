@@ -1,7 +1,6 @@
 package com.springmvc.controllers;
 
 import static com.springmvc.models.PostContent.newPostContent;
-import static com.springmvc.util.CurrentLogin.id;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -11,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -31,11 +31,11 @@ import com.springmvc.models.Post;
 import com.springmvc.models.PostContent;
 import com.springmvc.models.Tag;
 import com.springmvc.models.Topic;
+import com.springmvc.models.UserInfo;
 import com.springmvc.services.PostContentService;
 import com.springmvc.services.PostService;
 import com.springmvc.services.TagService;
 import com.springmvc.services.TopicService;
-import com.springmvc.util.CurrentLogin;
 
 @Controller
 @RequestMapping("/author/")
@@ -81,10 +81,12 @@ public class AuthorController {
 	}
 
 	@RequestMapping(value = "/review-post", method = RequestMethod.POST)
-	public String demoPost(ModelMap model,
+	public String demoPost(HttpSession httpSession, ModelMap model,
 			@ModelAttribute("newPost") Post post,
 			@RequestParam("tags") String tags,
 			@RequestParam("imageHeader") MultipartFile imageHeader) {
+		
+		UserInfo currentUser = (UserInfo)httpSession.getAttribute("current_user");
 		
 		List<Tag> listTag = new ArrayList<Tag>();
 		post.setTime(LocalDateTime.now());
@@ -100,17 +102,19 @@ public class AuthorController {
 		model.addAttribute("listTag", listTag);
 		Topic topic = topicService.getById(post.getTopicId());
 		model.addAttribute("topic", topic.getName());
-		model.addAttribute("authorName", CurrentLogin.fullName);
+		model.addAttribute("authorName", currentUser.getFullName());
 		
 		return "author/post-demo";
 	}
 	
 	@RequestMapping(value = "/save-post", method = RequestMethod.POST)
-	public String savePost(ModelMap model,
+	public String savePost(HttpSession httpSession, ModelMap model,
 			@ModelAttribute("newPost") Post post,
 			@RequestParam("tags") String tags,
 			@RequestParam("imageHeader") MultipartFile imageHeader) {
 
+		UserInfo currentUser = (UserInfo)httpSession.getAttribute("current_user");
+		
 		List<Tag> listTag = new ArrayList<Tag>();
 		post.setTime(LocalDateTime.now());
 		String tagArr[] = tags.split(",");
@@ -125,7 +129,7 @@ public class AuthorController {
 		model.addAttribute("listTag", listTag);
 		Topic topic = topicService.getById(post.getTopicId());
 		model.addAttribute("topic", topic.getName());
-		model.addAttribute("authorName", CurrentLogin.fullName);
+		model.addAttribute("authorName", currentUser.getFullName());
 
 		PostContent postContent = newPostContent(post.getContent());
 		int postContentId = post.getPostContentId();
@@ -157,7 +161,7 @@ public class AuthorController {
 			}
 		}
 		
-		post = post.setPost(id, postContentId, imageSavePath);
+		post = post.setPost(currentUser.getUserId(), postContentId, imageSavePath);
 		post.setPostContentId(postContentId);
 		int postId = post.getPostId();
 		if(!isEdit) {
@@ -201,9 +205,11 @@ public class AuthorController {
 	}
 	
 	@RequestMapping("/list-post")
-	public String list(ModelMap model) {
+	public String list(HttpSession httpSession, ModelMap model) {
 		
-		List<Post> list = postService.getByAuthorId(CurrentLogin.id);
+		UserInfo currentUser = (UserInfo)httpSession.getAttribute("current_user");
+		
+		List<Post> list = postService.getByAuthorId(currentUser.getUserId());
 		model.addAttribute("listPost", list);
 		
 		List<String> topicName = new ArrayList<String>();
@@ -226,9 +232,11 @@ public class AuthorController {
 	
 	@RequestMapping(value = "/deletePost", method = RequestMethod.GET)
 	@ResponseBody
-	public String delete(ModelMap model, @RequestParam int postId) {
+	public String delete(ModelMap model, @RequestParam int postId, HttpSession httpSession) {
 		
-		boolean result = postService.deleteById(postId);
+		UserInfo currentUser = (UserInfo)httpSession.getAttribute("current_user");
+		
+		boolean result = postService.deleteById(postId, currentUser.getUserId());
 		
 		return result ? "true" : "false";
 	}

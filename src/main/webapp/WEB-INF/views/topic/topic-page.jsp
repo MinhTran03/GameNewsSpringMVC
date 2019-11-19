@@ -97,7 +97,7 @@
 						<div class="page-wrapper">
 							<div class="blog-top clearfix">
 								<h4 class="pull-left">
-									Recent News <a href="#"><i class="fa fa-rss"></i></a>
+									<s:message code="title.recent" /> <a href="#"><i class="fa fa-rss"></i></a>
 								</h4>
 							</div>
 

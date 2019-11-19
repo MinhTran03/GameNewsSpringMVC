@@ -2,10 +2,11 @@
 	isELIgnored="false" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <!DOCTYPE html>
 <html lang="en">
 
-<title>Demo post</title>
+<title><s:message code="title.demopost" /></title>
 <jsp:include page="../import/importHeader.jsp"></jsp:include>
 <style>
 	figure,

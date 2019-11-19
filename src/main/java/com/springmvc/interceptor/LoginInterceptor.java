@@ -2,21 +2,27 @@ package com.springmvc.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.springmvc.util.CurrentLogin;
+import com.springmvc.models.UserInfo;
 
 public class LoginInterceptor implements HandlerInterceptor{
 
+	@Autowired
+	HttpSession httpSession;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		if(CurrentLogin.loggingIn == false){
+		UserInfo currentUser = (UserInfo)httpSession.getAttribute("current_user");
+		
+		if(currentUser == null){
 			String path = request.getContextPath();
-			System.out.println("==================================================Chưa login");
 			// Chuyển về trang login.htm
 			response.sendRedirect(path + "/login");
 			return false;

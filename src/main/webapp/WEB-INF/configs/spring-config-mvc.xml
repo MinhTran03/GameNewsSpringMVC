@@ -55,10 +55,10 @@
    </mvc:interceptors>
 	
 	<mvc:interceptors>
-       	<bean class="com.springmvc.interceptor.SaveInfoInterceptor"></bean>
-<!-- 		<mvc:interceptor>
-       	<mvc:exclude-mapping path="/login"/>
-       </mvc:interceptor> -->
+		<mvc:interceptor>
+       	<mvc:mapping path="/sign-up/**"/>
+       	<bean class="com.springmvc.interceptor.LogoutInterceptor"></bean>
+       </mvc:interceptor>
 		<mvc:interceptor>
        	<mvc:mapping path="/author/**"/>
        	<mvc:mapping path="/edit-user/"/>

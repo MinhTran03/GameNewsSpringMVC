@@ -67,7 +67,7 @@
 					</ul>
 					<ul class="navbar-nav mr-2">
 						<div class="btn-group">
-							<c:if test="${ loggingIn == false}">
+							<c:if test="${ current_user == null }">
 							  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							    <s:message code="title.login" />/<s:message code="title.signup" />
 							  </button>
@@ -76,16 +76,16 @@
 							    <a class="dropdown-item" href="${ rootName }/sign-up/"><s:message code="title.signup" /></a>
 							  </div>
 						  </c:if>
-							<c:if test="${ loggingIn == true}">
-							<p id="username">${ nameUser }</p>
+							<c:if test="${ current_user != null }">
+							<p id="username">${ current_user.fullName }</p>
 						    
 								
-							  <img src="<c:url value="${ avataUser }" />" class="avata btn btn-secondary dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+							  <img src="<c:url value="${ current_user.image }" />" class="avata btn btn-secondary dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
 							  <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left">
-							  		<c:if test="${ role=='AUTHOR' }">
+							  		<c:if test="${ current_user.roleName=='AUTHOR' }">
 								  		<a class="dropdown-item" href="${ rootName }/author/dashboard"><s:message code="title.dashboard" /></a>							  		
 							  		</c:if>
-							  		<c:if test="${ role=='MANAGER' }">
+							  		<c:if test="${ current_user.roleName=='MANAGER' }">
 								  		<a class="dropdown-item" href="${ rootName }/management/dashboard"><s:message code="title.dashboard" /></a>							  		
 							  		</c:if>
 								  <a class="dropdown-item" href="${ rootName }/edit-user/"><s:message code="title.editinfo" /></a>

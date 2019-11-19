@@ -42,8 +42,10 @@ public class UserDAOImpl implements UserDAO {
 			Session session = sessionFactory.getCurrentSession();
 
 			UserEntity authorEntity = (UserEntity) session.get(UserEntity.class, id);
+			String roleName = (String)session.createNativeQuery("SELECT role_name FROM dbo.Role WHERE role_id IN (SELECT role_id FROM dbo.User_Role WHERE user_id = " + id + ")").uniqueResult();
 
 			user.entity2model(authorEntity);
+			user.setRoleName(roleName);
 
 		} catch (Exception e) {
 			e.printStackTrace();

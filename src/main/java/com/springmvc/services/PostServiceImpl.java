@@ -82,8 +82,8 @@ public class PostServiceImpl implements PostService {
 	}
 	
 	@Override
-	public boolean deleteById(int id) {
-		return postDAO.deleteById(id);
+	public boolean deleteById(int id, int userId) {
+		return postDAO.deleteById(id, userId);
 	}
 	
 	@Override

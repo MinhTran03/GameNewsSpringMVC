@@ -19,7 +19,6 @@ import com.springmvc.entities.TagEntity;
 import com.springmvc.entities.UserEntity;
 import com.springmvc.models.Post;
 import com.springmvc.models.Tag;
-import com.springmvc.util.CurrentLogin;
 @Repository
 public class PostDAOImpl implements PostDAO {
 
@@ -278,7 +277,7 @@ public class PostDAOImpl implements PostDAO {
 	}
 	
 	@Override
-	public boolean deleteById(int id) {
+	public boolean deleteById(int id, int userId) {
 		
 		try {
 			Session session = sessionFactory.getCurrentSession();
@@ -290,7 +289,7 @@ public class PostDAOImpl implements PostDAO {
 				result = session.createNativeQuery("DELETE FROM dbo.Post_Tag WHERE post_id = " + id).executeUpdate();
 				result = session.createNativeQuery("DELETE FROM dbo.Post WHERE post_id = " + id).executeUpdate();				
 				result = session.createNativeQuery("DELETE FROM dbo.PostContent WHERE post_content_id = " + p.getPostContentId()).executeUpdate();
-				result = session.createNativeQuery("UPDATE dbo.[User] SET total_post = total_post - 1 WHERE USER_ID = " + CurrentLogin.id).executeUpdate();
+				result = session.createNativeQuery("UPDATE dbo.[User] SET total_post = total_post - 1 WHERE USER_ID = " + userId).executeUpdate();
 			}
 			
 			

@@ -20,7 +20,7 @@ public interface PostService extends ServiceBase<Post> {
 	
 	public List<Post> getByAuthorId(int id);
 	
-	public boolean deleteById(int id);
+	public boolean deleteById(int id, int userId);
 	
 	public List<Post> getAllNotConfirm();
 	

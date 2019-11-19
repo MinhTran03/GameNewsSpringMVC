@@ -7,6 +7,7 @@
 <html lang="en">
 
 <jsp:include page="../import/importHeader.jsp"></jsp:include>
+<title>${ post.title }</title>
 <style>
 	figure,
 	figure a img,

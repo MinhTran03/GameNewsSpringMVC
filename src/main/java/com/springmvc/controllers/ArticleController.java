@@ -1,8 +1,6 @@
 package com.springmvc.controllers;
 
 import static com.springmvc.models.Comment.newComment;
-import static com.springmvc.util.CurrentLogin.id;
-import static com.springmvc.util.CurrentLogin.loggingIn;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -12,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +72,10 @@ public class ArticleController {
 	}
 
 	@RequestMapping(value = {"/{shortTitle:[\\w\\W]+}/{postId:\\d+}*", "/{shortTitle:[\\\\w\\\\W]+}/{postId:\\\\d+}/*"})
-	public String showPost(@PathVariable int postId, ModelMap model) {
+	public String showPost(@PathVariable int postId, ModelMap model, HttpSession httpSession) {
 
+		UserInfo currentUser = (UserInfo)httpSession.getAttribute("current_user");
+		
 		// ==================================== LOAD CONTENT
 		// ===============================
 		Post post = postService.getById(postId);
@@ -88,7 +89,7 @@ public class ArticleController {
 		String authorName = userService.getFullName(post.getUserId());
 		List<Tag> listTag = tagService.getByPostId(postId);
 
-		model.addAttribute("loggingIn", loggingIn);
+		model.addAttribute("loggingIn", currentUser != null);
 		model.addAttribute("post", post);
 		model.addAttribute("content", postContent.getContent());
 		model.addAttribute("listTag", listTag);
@@ -111,14 +112,16 @@ public class ArticleController {
 
 	@RequestMapping(value = "/{shortTitle:[\\w\\W]+}/comment", method = RequestMethod.GET)
 	@ResponseBody
-	public String postCommentLogin(@RequestParam int postId, @RequestParam String content) {
+	public String postCommentLogin(@RequestParam int postId, @RequestParam String content, HttpSession httpSession) {
 
-		Comment comment = newComment(content, postId, id);
+		UserInfo currentUser = (UserInfo)httpSession.getAttribute("current_user");
+		
+		Comment comment = newComment(content, postId, currentUser.getUserId());
 		int cmId = commentService.save(comment);
 
 		Map<String, String> json = new HashMap<String, String>();
 		if (cmId != -1) {
-			UserInfo user = userService.getById(id);
+			UserInfo user = userService.getById(currentUser.getUserId());
 			json.put("imageSrc", user.getImage());
 			json.put("name", user.getFirstName() + ' ' + user.getLastName());
 			json.put("valid", "1");

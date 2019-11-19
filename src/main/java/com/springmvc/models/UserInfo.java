@@ -23,6 +23,8 @@ public class UserInfo {
 	private int totalPost;
 	private String password;
 	private String confirmPassword;
+	private String roleName;
+	private String privateCode;
 
 	public UserInfo() {
 		super();
@@ -156,5 +158,21 @@ public class UserInfo {
 		this.setFirstName(entity.getFirst_name());
 		this.setImage(entity.getImage());
 		this.setLastName(entity.getLast_name());
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public String getPrivateCode() {
+		return privateCode;
+	}
+
+	public void setPrivateCode(String privateCode) {
+		this.privateCode = privateCode;
 	}
 }

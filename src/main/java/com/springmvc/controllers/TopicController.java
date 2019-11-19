@@ -3,6 +3,8 @@ package com.springmvc.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,7 +19,6 @@ import com.springmvc.models.UserInfo;
 import com.springmvc.services.PostService;
 import com.springmvc.services.TopicService;
 import com.springmvc.services.UserService;
-import com.springmvc.util.CurrentLogin;
 
 @Controller
 @RequestMapping("/topic")
@@ -91,7 +92,7 @@ public class TopicController {
 			}
 			model.addAttribute("listAuthorName", listAuthorName);
 		}
-		model.addAttribute("redirectUrl", CurrentLogin.redirectStr);
+
 		return "topic/topic-page";
 	}
 
@@ -142,8 +143,10 @@ public class TopicController {
 	}
 	
 	@RequestMapping(value = "/login2cmt", method = RequestMethod.GET)
-	public String logintocmt(@RequestParam("url") String url) {
-		CurrentLogin.redirectStr = url;
+	public String logintocmt(HttpSession httpSession, @RequestParam("url") String url) {
+		
+		httpSession.setAttribute("save_url", url);
+		
 		return "redirect:/login";
 	}
 	

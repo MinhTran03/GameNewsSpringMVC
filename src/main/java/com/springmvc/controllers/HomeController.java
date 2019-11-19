@@ -3,11 +3,18 @@ package com.springmvc.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.springmvc.models.Post;
 import com.springmvc.models.Topic;
@@ -15,10 +22,10 @@ import com.springmvc.models.UserInfo;
 import com.springmvc.services.PostService;
 import com.springmvc.services.TopicService;
 import com.springmvc.services.UserService;
-import com.springmvc.util.CurrentLogin;
-
+import com.springmvc.util.PasswordGenerator;
 
 @Controller
+@SessionAttributes("temp_user")
 public class HomeController {
 
 	@Autowired
@@ -30,10 +37,15 @@ public class HomeController {
 	@Autowired
 	PostService postService;
 	
+	@Autowired
+	JavaMailSender mailer;
+	
 	@RequestMapping(value = "/edit-user")
-	public String editUser(ModelMap model) {
+	public String editUser(ModelMap model, HttpSession httpSession) {
 		
-		UserInfo user = userService.getById(CurrentLogin.id);
+		UserInfo currentUser = (UserInfo)httpSession.getAttribute("current_user");
+		
+		UserInfo user = userService.getById(currentUser.getUserId());
 		model.addAttribute("newUser", user);
 		model.addAttribute("edit", true);
 		
@@ -41,7 +53,8 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/")
-	public String home(@RequestParam(name = "language", defaultValue = "en") String lang) {
+	public String home(@RequestParam(name = "language", defaultValue = "en") String lang, ModelMap model) {
+		
 		return "redirect:topic/game-home";
 	}
 	
@@ -65,6 +78,55 @@ public class HomeController {
 
 		return "topic/search-post";
 		
+	}
+	
+	@RequestMapping(value="/forget-pass")
+	public String forget() {
+		
+		return "login/input-email";
+	}
+	
+	@RequestMapping(value="/forget-pass/commit", method = RequestMethod.GET)
+	public String forgetcommit(@RequestParam String email, ModelMap model) {
+		
+		// Tạo password ngẫu nhiên
+		PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder().useDigits(true)
+				.useLower(true).useUpper(true).build();
+		String secrectCode = passwordGenerator.generate(12);
+		
+		// Gửi password tới email đăng ký
+		sendMail(email, "Notification from Game News", "Your private code is " + secrectCode);
+		
+		UserInfo newUser = new UserInfo();
+		newUser.setEmail(email);
+		newUser.setPrivateCode(secrectCode);
+		model.addAttribute("temp_user", newUser);
+		
+		return "login/confirm-email";
+	}
+	
+	public boolean sendMail(String to, String subject, String body) {
+		try {
+			// tạo mail
+			MimeMessage mail = mailer.createMimeMessage();
+
+			// sử dụng lớp trợ giúp
+			MimeMessageHelper helper = new MimeMessageHelper(mail);
+			String from = "tranconminh503@gmail.com";
+			helper.setFrom(from);
+			helper.setTo(to);
+			helper.setReplyTo(from, from);
+			helper.setSubject(subject);
+			helper.setText(body, true);
+
+			mailer.send(mail);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
 	}
 	
 	@RequestMapping("/not-have-permistion")

@@ -4,7 +4,6 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
 	<jsp:include page="../import/importHeader.jsp"></jsp:include>
 </head>
 <body>

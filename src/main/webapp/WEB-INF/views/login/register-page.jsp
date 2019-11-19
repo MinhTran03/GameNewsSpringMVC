@@ -7,7 +7,12 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title><s:message code="title.register.regisnewuser" /></title>
+	<c:if test="${ edit == false }">
+		<title><s:message code="title.register.registration" /></title>
+	</c:if>
+	<c:if test="${ edit == true }">
+		<title><s:message code="title.register.editinfo" /></title>
+	</c:if>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

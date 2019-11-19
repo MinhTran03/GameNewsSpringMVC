@@ -8,7 +8,7 @@
 <head>
 
 	<meta charset="UTF-8">
-	<title>${ message }</title>
+	<title><s:message code="title.loginform" /></title>
 	
 	<script>
         addEventListener("load", function () {
@@ -75,7 +75,7 @@
 							<button class="btn"><s:message code="title.login" /></button>
 						</div>
 						<div class="links">
-							<p><a href="#"><s:message code="title.forgetpass" /></a></p>
+							<p><a href="${ rootName }/forget-pass"><s:message code="title.forgetpass" /></a></p>
 							<p class="right"><a href="${ rootName }/sign-up/"><s:message code="title.newuser" /></a></p>
 							<div class="clear"></div>
 						</div>

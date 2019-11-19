@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -19,15 +20,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.springmvc.models.UserInfo;
 import com.springmvc.services.UserService;
-import com.springmvc.util.CurrentLogin;
 import com.springmvc.util.PasswordGenerator;
 import com.springmvc.validator.UserValidator;
 
 @Controller
 @RequestMapping("/sign-up")
+@SessionAttributes("temp_user")
 public class RegisterController {
 	
 	@Autowired
@@ -71,16 +73,17 @@ public class RegisterController {
 				// Tạo password ngẫu nhiên
 				PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder().useDigits(true)
 						.useLower(true).useUpper(true).build();
-				String secrectCode = passwordGenerator.generate(6);
+				String secrectCode = passwordGenerator.generate(12);
 	
 				// Gửi password tới email đăng ký
 				sendMail(newUser.getEmail(), "Notification from Game News", "Your private code is " + secrectCode);
-				CurrentLogin.privateCode = secrectCode;
-				CurrentLogin.userWaitEmail = newUser;
+				newUser.setPrivateCode(secrectCode);
+				model.addAttribute("temp_user", newUser);
+				
 				return "login/confirm-email";
-				//userService.save(newUser);
 			}else {
 				bind.rejectValue("email", "Email.Exist");
+				
 				return "login/register-page";
 			}
 		}else {
@@ -91,16 +94,27 @@ public class RegisterController {
 			userService.update(newUser);
 			return "redirect:/topic/game-home";
 		}
-		
-//		return "redirect:/topic/game-home";
 	}
 	
 	@RequestMapping(value = "/confirm-email", method = RequestMethod.GET)
-	public String confirmEmail(ModelMap model, @RequestParam String privateCode) {
+	public String confirmEmail(HttpSession httpSession, ModelMap model, @RequestParam String privateCode) {
 		
-		if(privateCode.contentEquals(CurrentLogin.privateCode)) {
-			userService.save(CurrentLogin.userWaitEmail);
-			return "redirect:/topic/game-home";
+		UserInfo user = (UserInfo)httpSession.getAttribute("temp_user");
+		
+		if(user.getPrivateCode().contentEquals(privateCode)) {
+			if(user.getPassword() == null) {
+				
+				user = userService.getById(userService.getIdByEmail(user.getEmail()));
+				
+				httpSession.setAttribute("current_user", user);
+				model.addAttribute("newUser", user);
+				model.addAttribute("edit", true);
+				
+				return "login/register-page";
+			}else {
+				userService.save(user);
+				return "redirect:/topic/game-home";				
+			}
 		}
 		model.addAttribute("errorCode", "Code not match");
 		return "login/confirm-email";

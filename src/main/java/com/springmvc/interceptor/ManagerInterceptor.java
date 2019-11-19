@@ -2,20 +2,27 @@ package com.springmvc.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.springmvc.util.CurrentLogin;
+import com.springmvc.models.UserInfo;
 
 public class ManagerInterceptor implements HandlerInterceptor{
 
+	@Autowired
+	HttpSession httpSession;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		// TODO Auto-generated method stub
-		if(!CurrentLogin.roles.get(0).getRoleName().contentEquals("MANAGER")) {
-			System.out.println("==================================================Not manager");
+		
+		UserInfo currentUser = (UserInfo)httpSession.getAttribute("current_user");
+		
+		if(!currentUser.getRoleName().contentEquals("MANAGER")) {
+			
 			String path = request.getContextPath();
 			response.sendRedirect(path + "/not-have-permistion");
 			return false;
