@@ -13,27 +13,22 @@
 	<c:if test="${ edit == true }">
 		<title><s:message code="title.register.editinfo" /></title>
 	</c:if>
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<!------ Include the above in your HEAD tag ---------->
-	
-	<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
 	
+	<link href="<c:url value="/lib/login/css/style.css" />" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" href="<c:url value="/lib/login/css/login.css" />" />
 	<style type="text/css">
-		body {
-		     background: url('https://static-communitytable.parade.com/wp-content/uploads/2014/03/rethink-target-heart-rate-number-ftr.jpg') fixed;
-		    background-size: cover;
-		}
 		
 		*[role="form"] {
 		    max-width: 550px;
 		    padding: 15px;
-		    margin: 0 auto;
-		    border-radius: 0.3em;
+		    margin: 2rem auto;
+		    /* border-radius: 0.3em; */
 		    background-color: #f2f2f2;
+		    background: rgba(255, 255, 255, 2);
+		    box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
 		}
 		
 		*[role="form"] h2 { 
@@ -41,7 +36,7 @@
 		    font-size: 40px;
 		    font-weight: 600;
 		    color: #000000;
-		    margin-top: 5%;
+		    margin-bottom: 5%;
 		    text-align: center;
 		    text-transform: uppercase;
 		    letter-spacing: 4px;
@@ -49,14 +44,22 @@
 		.error{
          color: red;
       }
+      .btn{
+      	border-radius: 0;
+      	background: #007cc0;
+      	margin-top: 5%;
+      }
+      input{
+      	border-radius: 0 !important;
+      }
 	</style>
 </head>
 <body>
 	<c:set var="rootName" value="${ pageContext.servletContext.contextPath }" />
 	<div class="container">
-	<a href="${ rootName }/">
+	<%-- <a href="${ rootName }/">
 		 <s:message code="title.backtohome" />
-	</a>
+	</a> --%>
 	    <form:form class="form-horizontal" name="f" modelAttribute="newUser" action="${ rootName }/sign-up/register" method="POST" role="form">
 	    		<c:if test="${ edit == false }">
 		        <h2><s:message code="title.register.registration" /></h2>	        

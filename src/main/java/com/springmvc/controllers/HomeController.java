@@ -40,8 +40,11 @@ public class HomeController {
 	@Autowired
 	JavaMailSender mailer;
 	
+	@Autowired
+	HttpSession httpSession;
+	
 	@RequestMapping(value = "/edit-user")
-	public String editUser(ModelMap model, HttpSession httpSession) {
+	public String editUser(ModelMap model) {
 		
 		UserInfo currentUser = (UserInfo)httpSession.getAttribute("current_user");
 		
@@ -86,8 +89,14 @@ public class HomeController {
 		return "login/input-email";
 	}
 	
-	@RequestMapping(value="/forget-pass/commit", method = RequestMethod.GET)
+	@RequestMapping(value="/forget-pass", method = RequestMethod.POST)
 	public String forgetcommit(@RequestParam String email, ModelMap model) {
+		
+		int id = userService.getIdByEmail(email);
+		if(id == -1) {
+			model.addAttribute("errorCode", "Email chưa đăng ký, vui lòng kiểm tra lại");
+			return "login/input-email";
+		}
 		
 		// Tạo password ngẫu nhiên
 		PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder().useDigits(true)
@@ -127,6 +136,37 @@ public class HomeController {
 		}
 
 		return true;
+	}
+	
+	@RequestMapping(value="/change-pass", method = RequestMethod.POST)
+	public String changepass(ModelMap model, @RequestParam String privateCode) {
+		
+		UserInfo user = (UserInfo)httpSession.getAttribute("temp_user");
+		
+		if(user.getPrivateCode().contentEquals(privateCode)) {
+			
+			return "login/new-pwd";
+		}
+		
+		model.addAttribute("errorCode", "Code không đúng");
+		return "login/confirm-email";
+	}
+	
+	@RequestMapping(value="/commit-pass", method = RequestMethod.POST)
+	public String commitPass(ModelMap model, @RequestParam String pass, @RequestParam String confirmPass) {
+		
+		if(!pass.contentEquals(confirmPass)) {
+			model.addAttribute("errorCode", "Không khớp");
+			return "login/new-pwd";
+		}
+		
+		UserInfo user = (UserInfo)httpSession.getAttribute("temp_user");
+		user = userService.getById(userService.getIdByEmail(user.getEmail()));
+		user.setPassword(pass);
+		userService.save(user);
+		model.addAttribute("changeSuccess", "CHange pass success");
+		
+		return "redirect:login";
 	}
 	
 	@RequestMapping("/not-have-permistion")

@@ -39,7 +39,7 @@ h1 {
 	text-transform: uppercase;
 	letter-spacing: 4px;
 	text-align: center;
-	padding: 1em 0 0.4em 0;
+	padding: 0.4em 0 0.4em 0;
 }
 /*-- slide --*/
 
@@ -62,7 +62,7 @@ h1 {
 }
 
 .w3layouts-main{
-    background-image: url('../images/girl.jpg');
+    background-image: url('../images/banner.jpg');
     background-repeat: repeat-x;
     animation: slideleft 40000s infinite linear;
     -webkit-animation: slideleft 40000s infinite linear;
@@ -116,7 +116,7 @@ a {
 	margin: 0 auto;
 	position: relative;
 	z-index: 999;
-	padding: 3em 2em;
+	padding: 2em 1.5em;
 	background: rgba(255, 255, 255, 0.04);
 	-webkit-box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
 	-moz-box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);

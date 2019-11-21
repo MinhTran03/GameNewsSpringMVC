@@ -7,6 +7,10 @@
 <head>
 	<jsp:include page="../import/importHeader.jsp"></jsp:include>
 	<style type="text/css">
+		body{
+			background-color: #f9f9f9 !important;
+			background: #f9f9f9 !important;
+		}
 	</style>
 </head>
 <body>

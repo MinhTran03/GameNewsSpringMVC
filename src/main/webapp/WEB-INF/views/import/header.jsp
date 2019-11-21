@@ -11,24 +11,52 @@
 <body>
 <style>
 	.avata{
-		width: 42px !important;
-		height:42px !important;
+		width: 39px !important;
+		height: 39px !important;
 		border-radius: 37px !important;
 		padding: 0;
 	}
 	#username{
 		margin: auto;
 		padding-right: 10px;
-		color: white
+		color: black;
 	}
 	#lnkSearch{
-		background: #00b0e5 !important
+		background: #24292e !important
 	}
 	.navbar-nav a[data-lang]{
 		color: white !important;
 	}
 	.dropdown-item{
 		color: black !important;
+	}
+	#logo{
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+	}
+	
+	.dropdown-menu{
+			background-color: #f9f9f9;
+			border-radius: 10px !important;
+        animation: fadeInAnimation ease .5s; 
+        animation-iteration-count: 1; 
+        animation-fill-mode: forwards; 
+    } 
+    @keyframes fadeInAnimation { 
+        0% { 
+            opacity: 0; 
+        } 
+        100% { 
+            opacity: 1; 
+        } 
+    }
+    
+    .btn-secondary {
+	    color: #292b2c !important;
+	    background-color: #f9f9f9 !important;
+	    background: #f9f9f9 !important;
+	    border: none !important;
 	}
 </style>
 
@@ -43,9 +71,12 @@
 					aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<a class="navbar-brand" href="${ rootName }/"><img src="<c:url value="/lib/images/version/tech-logo.png" />" alt=""></a>
+				<a class="navbar-brand" href="${ rootName }/"><img id="logo" src="<c:url value="/lib/images/version/logo.png" />" alt=""></a>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
-					
+					<ul class="navbar-nav mr-4">
+						  <input id="searchText" type="text" class="form-control" placeholder="<s:message code="title.searchPlace" />" aria-label="Recipient's username" aria-describedby="button-addon2">
+							<a id="lnkSearch" class="btn" href="${ rootName }/home/?search=" role="button"><s:message code="title.search" /></a>
+					</ul>
 					<ul class="navbar-nav mr-auto">
 						<c:if test="${not empty listTopic}">
 							<c:forEach var="list" items="${ listTopic }">
@@ -61,10 +92,7 @@
 						<li style="height: 30px; margin-top: 7px" >/</li>
 						<a style="height: 30px; margin-top: 7px; margin-right:5px; color: white" href="#" data-lang="vi">Viet Nam</a>
 					</ul>
-					<ul class="navbar-nav mr-auto">
-						  <input id="searchText" type="text" class="form-control" placeholder="<s:message code="title.searchPlace" />" aria-label="Recipient's username" aria-describedby="button-addon2">
-							<a id="lnkSearch" class="btn btn-light abc" href="${ rootName }/home/?search=" role="button"><s:message code="title.search" /></a>
-					</ul>
+					
 					<ul class="navbar-nav mr-2">
 						<div class="btn-group">
 							<c:if test="${ current_user == null }">
@@ -77,11 +105,13 @@
 							  </div>
 						  </c:if>
 							<c:if test="${ current_user != null }">
-							<p id="username">${ current_user.fullName }</p>
+							<%-- <p id="username">${ current_user.fullName }</p> --%>
 						    
 								
 							  <img src="<c:url value="${ current_user.image }" />" class="avata btn btn-secondary dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
 							  <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left">
+							  		<h6 class="dropdown-header" id="username">${ current_user.fullName }</h6>
+							  		<div class="dropdown-divider"></div>
 							  		<c:if test="${ current_user.roleName=='AUTHOR' }">
 								  		<a class="dropdown-item" href="${ rootName }/author/dashboard"><s:message code="title.dashboard" /></a>							  		
 							  		</c:if>

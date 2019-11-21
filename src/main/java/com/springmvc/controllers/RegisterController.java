@@ -70,12 +70,12 @@ public class RegisterController {
 			
 			if(userService.isContainEmail(newUser.getEmail()) == false) {
 				
-				// Tạo password ngẫu nhiên
+				// Tạo code ngẫu nhiên
 				PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder().useDigits(true)
 						.useLower(true).useUpper(true).build();
 				String secrectCode = passwordGenerator.generate(12);
 	
-				// Gửi password tới email đăng ký
+				// Gửi code tới email đăng ký
 				sendMail(newUser.getEmail(), "Notification from Game News", "Your private code is " + secrectCode);
 				newUser.setPrivateCode(secrectCode);
 				model.addAttribute("temp_user", newUser);
@@ -96,7 +96,7 @@ public class RegisterController {
 		}
 	}
 	
-	@RequestMapping(value = "/confirm-email", method = RequestMethod.GET)
+	@RequestMapping(value = "/confirm-email", method = RequestMethod.POST)
 	public String confirmEmail(HttpSession httpSession, ModelMap model, @RequestParam String privateCode) {
 		
 		UserInfo user = (UserInfo)httpSession.getAttribute("temp_user");

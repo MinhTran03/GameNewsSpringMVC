@@ -1,0 +1,21 @@
+.title {
+   font-size: 26px;
+}
+
+.my-color{
+   background-color: #f9f9f9;
+}
+
+.email {
+   font-weight: 400;
+}
+
+.forget-password {
+   border-radius: 5px;
+   background-color: white;
+   padding: 0 10px !important;
+}
+
+html{
+   height: 100% !important;
+}

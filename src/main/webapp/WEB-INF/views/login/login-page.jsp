@@ -40,9 +40,9 @@
 	<c:set var="rootName" value="${ pageContext.request.contextPath }"></c:set>
 	<div class="w3layouts-main">
 	<div class="bg-layer">
-	<a href="${ rootName }/" style="margin-left: 200px !important">
+	<%-- <a href="${ rootName }/" style="margin-left: 200px !important">
 		 <s:message code="title.backtohome" />
-	</a>
+	</a> --%>
 		<h1><s:message code="title.loginform" /></h1>
 			
 			<div class="header-main">
@@ -68,9 +68,9 @@
 								<form:errors path="password" cssClass="error" />
 							</spring:bind>
 						</div>
-						<div class="login-check">
+						<%-- <div class="login-check">
 							 <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i><s:message code="title.savepassword" /></label>
-						</div>
+						</div> --%>
 						<div class="bottom">
 							<button class="btn"><s:message code="title.login" /></button>
 						</div>
@@ -93,7 +93,7 @@
 			
 		<!-- copyright -->
 		<div class="copyright">
-			<p>© 2019 Slide Login Form . All rights reserved | Design by <a href="http://w3layouts.com/" target="_blank">W3layouts</a></p>
+			<!-- <p>© 2019 Slide Login Form . All rights reserved | Design by <a href="http://w3layouts.com/" target="_blank">W3layouts</a></p> -->
 		</div>
 		<!-- //copyright --> 
 	</div>
