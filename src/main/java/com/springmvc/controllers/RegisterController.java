@@ -79,6 +79,7 @@ public class RegisterController {
 				sendMail(newUser.getEmail(), "Notification from Game News", "Your private code is " + secrectCode);
 				newUser.setPrivateCode(secrectCode);
 				model.addAttribute("temp_user", newUser);
+				model.addAttribute("regis", true);
 				
 				return "login/confirm-email";
 			}else {

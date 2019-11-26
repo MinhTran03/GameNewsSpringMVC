@@ -96,7 +96,7 @@ public class TopicController {
 		return "topic/topic-page";
 	}
 
-	@RequestMapping(value = "/tag/{tagName:[a-zA-Z0-9 ]+}", method = RequestMethod.GET)
+	@RequestMapping(value = "/tag/{tagName}", method = RequestMethod.GET)
 	public String postBytag(@PathVariable String tagName, ModelMap model) {
 		
 		// Topic taskbar

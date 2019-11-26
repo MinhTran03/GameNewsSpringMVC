@@ -60,7 +60,7 @@ public class LoginController {
 		
 		if(listRole == null) {
 			// login fail
-			model.addAttribute("message", "Login fail");
+			model.addAttribute("message", "Login fail, please check your email and password");
 			return "login/login-page";
 		}else {
 			UserInfo userLogin = userService.getById(userService.getIdByEmail(user.getEmail()));

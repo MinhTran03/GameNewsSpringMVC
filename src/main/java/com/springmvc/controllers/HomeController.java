@@ -110,6 +110,7 @@ public class HomeController {
 		newUser.setEmail(email);
 		newUser.setPrivateCode(secrectCode);
 		model.addAttribute("temp_user", newUser);
+		model.addAttribute("regis", false);
 		
 		return "login/confirm-email";
 	}
@@ -163,7 +164,7 @@ public class HomeController {
 		UserInfo user = (UserInfo)httpSession.getAttribute("temp_user");
 		user = userService.getById(userService.getIdByEmail(user.getEmail()));
 		user.setPassword(pass);
-		userService.save(user);
+		userService.update(user);
 		model.addAttribute("changeSuccess", "CHange pass success");
 		
 		return "redirect:login";

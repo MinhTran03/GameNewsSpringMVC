@@ -50,7 +50,7 @@
 					<span class="fa fa-eercast"></span>
 				</div>
 				<div class="header-left-bottom">
-					${ message }
+					<span class="error">${ message }</span>
 					<form:form name="f" modelAttribute="userLogin" action="login" method="POST">
 						<div class="icon1">
 							<s:message code="title.emailaddress" var="emailaddr"/>

@@ -20,6 +20,9 @@
 		height: 466px !important;
 	}
 	
+	img{
+		width: 100%;
+	}
 	
 </style>
 </head>
